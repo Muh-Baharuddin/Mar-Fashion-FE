@@ -5,6 +5,9 @@
     "airbnb",
     "next/core-web-vitals"
   ],
+  "linebreak-style": [
+    "error", "windows"
+  ],
   "overrides": [
     {
       "files": [
