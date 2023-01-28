@@ -10,21 +10,30 @@ import Link from 'next/link'
 import { SyntheticEvent, useState } from 'react'
 import { useRouter } from 'next/router'
 import Image from 'next/image'
+import axios from 'axios'
 
 const Login: NextPage = () => {
   const router = useRouter()
-  const [submitting, setSubmitting] = useState(false)
+  const [userName, setUserName] = useState('')
+  const [password, setPassword] = useState('')
 
-  const login = (e: SyntheticEvent) => {
-    e.stopPropagation()
-    e.preventDefault()
-
-    setSubmitting(true)
-
-    setTimeout(() => {
-      setSubmitting(false)
+  const handleSubmit = async (event: SyntheticEvent) => {
+    event.preventDefault()
+    axios({
+      method: 'post',
+      url: `${process.env.API_ENDPOINT}auth/login`,
+      data: {
+        userName,
+        password,
+      },
+    }).then((response) => {
+      console.log(response.data)
+      console.log(response.status)
+      localStorage.setItem('token', response.data.accessToken)
       router.push('/')
-    }, 2000)
+    }).catch((error) => {
+      console.error(error)
+    })
   }
 
   return (
@@ -38,7 +47,7 @@ const Login: NextPage = () => {
                   <h1>Login</h1>
                   <p className="text-black-50">Silahkan masukkan akun anda</p>
 
-                  <form onSubmit={login}>
+                  <form>
                     <InputGroup className="mb-3">
                       <InputGroup.Text>
                         <FontAwesomeIcon
@@ -49,9 +58,12 @@ const Login: NextPage = () => {
                       <Form.Control
                         name="username"
                         required
-                        disabled={submitting}
                         placeholder="Username"
                         aria-label="Username"
+                        // onChange={handleChange}
+                        onChange={(e) => {
+                          setUserName(e.target.value)
+                        }}
                       />
                     </InputGroup>
 
@@ -66,14 +78,17 @@ const Login: NextPage = () => {
                         type="password"
                         name="password"
                         required
-                        disabled={submitting}
                         placeholder="Password"
                         aria-label="Password"
+                        // onChange={handleChange}
+                        onChange={(e) => {
+                          setPassword(e.target.value)
+                        }}
                       />
                     </InputGroup>
 
                     <Row>
-                      <Button className="px-4" variant="secondary" type="submit" disabled={submitting}>Login</Button>
+                      <Button onClick={handleSubmit} className="px-4" variant="secondary" type="submit">Login</Button>
                     </Row>
                   </form>
                 </div>
