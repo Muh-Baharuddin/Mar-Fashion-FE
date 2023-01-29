@@ -18,10 +18,10 @@ export const Login = () => {
               </Col>
               <Col
                 md={5}
-                className="bg-secondary text-white d-flex align-items-center justify-content-center p-5"
+                className="bg-white border p-5 text-white d-flex align-items-center justify-content-center p-5"
               >
                 <div className="text-center">
-                  <Image src="/MarFashion.png" alt="Mar Fashion Logo" width={300} height={300} />
+                  <Image src="/MarFashion.png" alt="Mar Fashion Logo" width={250} height={250} />
                 </div>
               </Col>
             </Row>
