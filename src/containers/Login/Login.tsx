@@ -1,8 +1,11 @@
 import { Col, Container, Row } from 'react-bootstrap'
 import Image from 'next/image'
 import { LoginForm } from './LoginForm'
+import { UserContext } from 'src/context/UserContext';
+import { useContext } from 'react'
 
 export const Login = () => {
+  const { user, setUser } = useContext(UserContext);
   return (
     <div className="bg-light min-vh-100 d-flex flex-row align-items-center dark:bg-transparent">
       <Container>
@@ -12,8 +15,8 @@ export const Login = () => {
               <Col md={7} className="bg-white border p-5">
                 <div className="">
                   <h1>Login</h1>
-                  <p className="text-black-50">Silahkan masukkan akun anda</p>
-                  <LoginForm />
+                  <p className="text-black-50">Silahkan masukkan akun anda {user.userName}</p>
+                    <LoginForm />
                 </div>
               </Col>
               <Col

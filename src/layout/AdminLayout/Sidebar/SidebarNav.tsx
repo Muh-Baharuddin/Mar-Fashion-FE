@@ -6,7 +6,7 @@ import {
 } from '@fortawesome/free-regular-svg-icons'
 import {
   faChartPie,
-  faChevronUp, faCMonefaMoneyBill,
+  faChevronUp,
   faShirt,
   faPencil,
   faRightToBracket,
@@ -20,6 +20,7 @@ import {
 } from 'react-bootstrap'
 import classNames from 'classnames'
 import Link from 'next/link'
+import { UserContext } from 'src/context/UserContext'
 
 type SidebarNavItemProps = {
   href: string;
@@ -118,6 +119,9 @@ const SidebarNavGroup = (props: SidebarNavGroupProps) => {
 }
 
 export default function SidebarNav() {
+  const {user} = useContext(UserContext);
+  console.log(user);
+
   return (
     <ul className="list-unstyled">
       <SidebarNavTitle>Dashboard</SidebarNavTitle>
