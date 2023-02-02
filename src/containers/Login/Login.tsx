@@ -1,11 +1,12 @@
 import { Col, Container, Row } from 'react-bootstrap'
 import Image from 'next/image'
 import { LoginForm } from './LoginForm'
-import { UserContext } from 'src/context/UserContext';
+import { MarFashionContext } from 'src/context/MarFashionProvider'
 import { useContext } from 'react'
 
 export const Login = () => {
-  const { user, setUser } = useContext(UserContext);
+  const { user } = useContext(MarFashionContext);
+  console.log('Login ', user.userName)
   return (
     <div className="bg-light min-vh-100 d-flex flex-row align-items-center dark:bg-transparent">
       <Container>

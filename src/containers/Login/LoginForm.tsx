@@ -3,44 +3,20 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faUser } from '@fortawesome/free-regular-svg-icons'
 import { faLock } from '@fortawesome/free-solid-svg-icons'
 import { SyntheticEvent, useContext, useEffect, useState } from 'react'
-import { useRouter } from 'next/router'
-import jwtDecode from 'jwt-decode'
-import axios from 'axios'
-import { IUser, UserContext } from 'src/context/UserContext'
+import { MarFashionContext } from 'src/context/MarFashionProvider'
 
 export const LoginForm = () => {
-  const { user, setUser } = useContext(UserContext);
-  const router = useRouter()
+  const { user, Login } = useContext(MarFashionContext);
   const [userName, setUserName] = useState('')
   const [password, setPassword] = useState('')
 
   useEffect(() => {
-    console.log('ini user ', user)
+    console.log('login form', user)
   },[user])
   
   const handleSubmit = async (event: SyntheticEvent) => {
     event.preventDefault()
-    axios({
-      method: 'post',
-      url: `${process.env.API_ENDPOINT}auth/login`,
-      data: {
-        userName,
-        password,
-      },
-    }).then((response) => {
-      console.log(response.data)
-      console.log(response.status)
-      const token = response.data.accessToken;
-      const userData = jwtDecode<IUser>(token);
-      setUser(userData);
-      localStorage.setItem('token', token)
-      router.push('/')
-    }).catch((error) => {
-      setUserName('');
-      setPassword('');
-      alert(error)
-      console.error(error)
-    })
+    Login(userName, password)
   }
 
   return (
