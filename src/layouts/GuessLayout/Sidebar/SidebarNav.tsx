@@ -20,7 +20,7 @@ import {
 } from 'react-bootstrap'
 import classNames from 'classnames'
 import Link from 'next/link'
-import { UserContext } from 'src/context/UserContext'
+import { MarFashionContext } from 'src/context/MarFashionProvider'
 
 type SidebarNavItemProps = {
   href: string;
@@ -119,27 +119,15 @@ const SidebarNavGroup = (props: SidebarNavGroupProps) => {
 }
 
 export default function SidebarNav() {
-  const {user} = useContext(UserContext);
-  console.log(user);
+  const { user } = useContext(MarFashionContext);
+  console.log('ini dari sideNav',user);
 
   return (
     <ul className="list-unstyled">
       <SidebarNavTitle>Dashboard</SidebarNavTitle>
-      <SidebarNavItem icon={faShirt} href="/">Barang</SidebarNavItem>
-      <SidebarNavGroup toggleIcon={faMoneyBill} toggleText="Keuanga">
-        <SidebarNavItem href="/">Keuangan</SidebarNavItem>
-        <SidebarNavItem href="/">Nota Pembelian</SidebarNavItem>
-        <SidebarNavItem href="/">Nota Penjualan</SidebarNavItem>
-      </SidebarNavGroup>
-      <SidebarNavItem icon={faPencil} href="typography.html">Karyawan</SidebarNavItem>
-      <SidebarNavItem icon={faChartPie} href="charts.html">Supplier</SidebarNavItem>
-      <SidebarNavItem icon={faChartPie} href="charts.html">Retur</SidebarNavItem>
-      <SidebarNavGroup toggleIcon={faStar} toggleText="User">
-        <SidebarNavItem icon={faAddressCard} href="register">Buat Akun</SidebarNavItem>
-        <SidebarNavItem icon={faRightToBracket} href="login">Login</SidebarNavItem>
-        <SidebarNavItem icon={faRightToBracket} href="login">Log Out</SidebarNavItem>
-      </SidebarNavGroup>
-
+      <SidebarNavItem icon={faShirt} href="/">{user.userName}</SidebarNavItem>
+      <SidebarNavItem icon={faChartPie} href="charts.html">Toko</SidebarNavItem>
+      <SidebarNavItem icon={faRightToBracket} href="login">Login</SidebarNavItem>
     </ul>
   )
 }

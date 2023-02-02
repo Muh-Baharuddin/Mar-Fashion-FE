@@ -12,7 +12,7 @@ import {
 import React, { PropsWithChildren, useEffect, useState } from 'react'
 import ReactPaginate from 'react-paginate'
 import { useRouter } from 'next/router'
-import { BaseLayout } from '@layouts/BaseLayout'
+import { GuessLayout } from '@layouts/GuessLayout/index'
 
 const typeColorMap: Record<string, string> = {
   normal: '#aa9',
@@ -207,7 +207,7 @@ const Pokemons: NextPage<Props> = (props) => {
   } = props
 
   return (
-    <BaseLayout>
+    <GuessLayout>
       {/* <Card>
         <Card.Header>Pokémon</Card.Header>
         <Card.Body>
@@ -275,7 +275,7 @@ const Pokemons: NextPage<Props> = (props) => {
           <Pagination meta={meta} />
         </Card.Body>
       </Card> */}
-    </BaseLayout>
+    </GuessLayout>
   )
 }
 
