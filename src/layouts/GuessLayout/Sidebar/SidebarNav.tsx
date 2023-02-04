@@ -125,8 +125,8 @@ export default function SidebarNav() {
   return (
     <ul className="list-unstyled">
       <SidebarNavTitle>Dashboard</SidebarNavTitle>
-      <SidebarNavItem icon={faShirt} href="/">{user.userName}</SidebarNavItem>
-      <SidebarNavItem icon={faChartPie} href="charts.html">Toko</SidebarNavItem>
+      <SidebarNavItem icon={faChartPie} href="/toko">Toko</SidebarNavItem>
+      <SidebarNavItem icon={faShirt} href="/">Barang</SidebarNavItem>
       <SidebarNavItem icon={faRightToBracket} href="login">Login</SidebarNavItem>
     </ul>
   )
