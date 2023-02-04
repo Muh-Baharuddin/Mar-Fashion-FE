@@ -1,6 +1,6 @@
 import { Button, Card, Container, Row, Col } from "react-bootstrap";
 import Link from "next/link";
-import { AdminLayout } from '@layout'
+import { AdminLayout } from '@layouts/AdminLayout/index'
 
 const Home = () => {
   return (

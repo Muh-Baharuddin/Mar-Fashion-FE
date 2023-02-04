@@ -17,6 +17,8 @@ export const LoginForm = () => {
   const handleSubmit = async (event: SyntheticEvent) => {
     event.preventDefault()
     Login(userName, password)
+    setUserName('')
+    setPassword('')
   }
 
   return (

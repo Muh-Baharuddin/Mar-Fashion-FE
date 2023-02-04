@@ -2,7 +2,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faBars } from '@fortawesome/free-solid-svg-icons'
 import Link from 'next/link'
 import { Button, Container } from 'react-bootstrap'
-import HeaderProfileNav from './HeaderProfileNav'
 
 type HeaderProps = {
   toggleSidebar: () => void;
@@ -37,9 +36,6 @@ export default function Header(props: HeaderProps) {
             <use xlinkHref="/assets/brand/marFashion.svg#full" />
           </svg>
         </Link>
-        <div className="header-nav">
-          <HeaderProfileNav />
-        </div>
       </Container>
       <div className="header-divider border-top my-2 ms-n2 me-n2" />
     </header>

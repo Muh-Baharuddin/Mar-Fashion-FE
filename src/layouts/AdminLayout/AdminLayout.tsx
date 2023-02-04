@@ -7,7 +7,6 @@ import Sidebar, { SidebarOverlay } from '@layouts/AdminLayout/Sidebar/Sidebar'
 import Header from '@layouts/AdminLayout/Header/Header'
 import Footer from '@layouts/AdminLayout/Footer/Footer'
 import { Container } from 'react-bootstrap'
-import Header2 from './Header/Header2'
 
 export default function AdminLayout({ children }: PropsWithChildren) {
   // Show status for xs screen
@@ -56,7 +55,7 @@ export default function AdminLayout({ children }: PropsWithChildren) {
           <Sidebar isShow={isShowSidebar} isShowMd={isShowSidebarMd} />
         
         <div className="wrapper d-flex flex-column min-vh-100 bg-light">
-          <Header2 toggleSidebar={toggleIsShowSidebar} toggleSidebarMd={toggleIsShowSidebarMd} />
+          <Header toggleSidebar={toggleIsShowSidebar} toggleSidebarMd={toggleIsShowSidebarMd} />
           <div className="body flex-grow-1 px-3">
             <Container fluid="lg">
               {children}
