@@ -12,7 +12,7 @@ import {
 import React, { PropsWithChildren, useEffect, useState } from 'react'
 import ReactPaginate from 'react-paginate'
 import { useRouter } from 'next/router'
-import { KaryawanLayout } from '@layouts/KaryawanLayout'
+import { KaryawanLayout } from '@layouts/KaryawanLayout/index'
 
 const typeColorMap: Record<string, string> = {
   normal: '#aa9',
