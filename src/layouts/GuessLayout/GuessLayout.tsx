@@ -5,14 +5,9 @@ import NavbarComp from 'src/components/Navbar/NavbarComp';
 
 
 export default function GuessLayout() {
-  const [login, setLogin] = React.useState(false);
-  const loginHandler = () => {
-    setLogin(!login)
-  }
   return (
     <div>
-      <NavbarComp isLogin={login}/>
-      <button className="btn btn-primary" onClick={loginHandler}>{login ? 'Logout':'Login'}</button>
+      <NavbarComp />
       <CarouselComp/>
       <div className="container" style={{ marginTop:'100px', marginBottom:'100px' }}>
           <h2>Tentang Kami</h2>

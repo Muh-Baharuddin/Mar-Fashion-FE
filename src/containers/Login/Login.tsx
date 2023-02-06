@@ -9,13 +9,14 @@ export const Login = () => {
   const { user } = useContext(MarFashionContext);
   console.log('Login ', user.userName)
 
-  const [login, setLogin] = useState(false);
+  const [login, setLogin] = useState(true);
   const loginHandler = () => {
     setLogin(!login)
   }
+
   return (
     <div>
-      <NavbarComp isLogin={login}/>
+      <NavbarComp />
       <div className="bg-light min-vh-100 d-flex flex-row align-items-center dark:bg-transparent">
       <Container>
         <Row className="justify-content-center align-items-center px-3">

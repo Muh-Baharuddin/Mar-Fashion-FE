@@ -11,12 +11,12 @@ export default function BaseLayout({ children }: PropsWithChildren) {
   useEffect(() => {
     if (cookies.user?.role === 'ADMIN') {
       router.push('/admin', undefined, { shallow: true })
-    } else if (cookies.user?.role === 'KARYAWAN')
+    } 
+    if (cookies.user?.role === 'KARYAWAN') {
       router.push('/karyawan', undefined, { shallow: true })
-    else {
-      router.push('/guess', undefined, { shallow: true })
     }
 
+    router.push('/guess', undefined, { shallow: true })
   }, [cookies.user])
 
   return (

@@ -1,15 +1,15 @@
-import { Button, Card, Container, Row, Col } from "react-bootstrap";
-import Link from "next/link";
+import { Container } from "react-bootstrap";
 import NavbarComp from "src/components/Navbar/NavbarComp";
-import React from "react";
+import { useContext, useState } from "react";
 import CardComp from "src/components/Cards/Cards";
+import { MarFashionContext } from "src/context/MarFashionProvider";
 
 const TokoPage = () => {
-  const [login, setLogin] = React.useState(false);
-  
+  // const { isLogin, setIsLogin } = useContext(MarFashionContext);
+  // setIsLogin(!isLogin)
   return (
     <div>
-      <NavbarComp isLogin={login}/>
+      <NavbarComp />
       <Container>
         <CardComp />
       </Container>

@@ -1,10 +1,18 @@
 import { Navbar, Container, Nav } from "react-bootstrap";
 import Link from "next/link";
 import Image from "next/image";
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { MarFashionContext } from "src/context/MarFashionProvider";
 
-const NavbarComp = (props: {isLogin: boolean}) => {
-  const { isLogin } = props
+const NavbarComp = () => {
+  const { isLogin, setIsLogin } = useContext(MarFashionContext);
+  const loginHandler = () => {
+    setIsLogin(!isLogin)
+  }
+
+  const tokoHandler = () => {
+    setIsLogin(false)
+  }
 
   return (
     <Navbar bg="light" expand="lg">
@@ -21,11 +29,13 @@ const NavbarComp = (props: {isLogin: boolean}) => {
             <Link href={'/guess'} className="nav-link">
               Beranda
             </Link>
-            <Link href={'/toko'} className="nav-link">
+            <Link href={'/toko'} onClick={tokoHandler} className="nav-link">
               Toko
             </Link>
             {isLogin ? 
-              '' : <Link href={'/login'} className="nav-link">
+              <Link href={'/guess'} onClick={loginHandler} className="nav-link">
+              Back
+              </Link> : <Link href={'/login'} onClick={loginHandler} className="nav-link">
               Login
               </Link>
             }
