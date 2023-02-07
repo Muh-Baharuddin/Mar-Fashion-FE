@@ -18,6 +18,7 @@
     "@reduxjs/toolkit": "^1.8.5",
     "axios": "^0.27.2",
     "bootstrap": "^5.2.1",
+    "bootstrap-icons": "^1.10.3",
     "chart.js": "^3.9.1",
     "classnames": "^2.3.2",
     "jwt-decode": "^3.1.2",

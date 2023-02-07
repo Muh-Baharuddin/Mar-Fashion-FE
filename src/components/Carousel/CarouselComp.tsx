@@ -9,9 +9,9 @@ const CarouselComp = () => {
 
 	return ( 
 		<Carousel activeIndex={idx} onSelect={handleSelect}>
-			{[1,2,3].map(e => {
+			{[1,2,3].map((e, index) => {
 				return (
-					<Carousel.Item>
+					<Carousel.Item key={index}>
 						<img src={'https://i.pinimg.com/originals/b6/c9/17/b6c9173bd58f62f49eb550635a5e259f.jpg'} alt="Carousel 3" className="d-block w-100" />
 						<Carousel.Caption>
 						<h3>First slide label</h3>

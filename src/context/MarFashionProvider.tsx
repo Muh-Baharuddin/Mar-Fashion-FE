@@ -49,6 +49,7 @@ const MarFashionProvider: FC<Props> = ({ children }) => {
       const token = response.data.accessToken;
       const userData = jwtDecode<IUser>(token);
       setUser(userData);
+      setIsLogin(true);
       setCookie('token', token, {
         path: '/'
       });

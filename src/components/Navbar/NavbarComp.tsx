@@ -7,12 +7,18 @@ const NavbarComp = (props: {isLogin: boolean}) => {
   return (
     <Navbar bg="light" expand="lg">
       <Container>
-        <Navbar.Brand href="#home">
+      <Navbar.Brand href="#home">
+          <Image src="/MarFashion.png" alt="logo" width={50} height={50}/>
+          <Link className="navbar-brand" href='/guess' legacyBehavior>
+            <strong className="ms-3">MAR Fashion</strong>
+          </Link>
+        </Navbar.Brand>
+        {/* <Navbar.Brand href="#home">
           <Link className="navbar-brand" href='/guess'>
             <Image src="/MarFashion.png" alt="logo" width={50} height={50}/>
             <strong className="ms-3">MAR Fashion</strong>
           </Link>
-        </Navbar.Brand>
+        </Navbar.Brand> */}
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="ms-auto">

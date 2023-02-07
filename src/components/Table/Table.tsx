@@ -2,6 +2,7 @@ import React from 'react';
 import axios from 'axios';
 import Link from 'next/link';
 import { MarFashionContext } from 'src/context/MarFashionProvider';
+import 'bootstrap-icons/font/bootstrap-icons.css';
 
 interface Data {
   id: string;
@@ -33,7 +34,7 @@ const TableComp: React.FC = () => {
     <div className="card">
     <div className="card-header">
       {!isLogin && <button className="btn btn-primary">
-        Tambah
+        <i className="bi bi-plus-square"></i>
       </button> }
       
     </div>
@@ -64,9 +65,13 @@ const TableComp: React.FC = () => {
                 </td>
                 {!isLogin && <td> 
                   <Link href={`/edit/${d.id}`} className="btn btn-primary" legacyBehavior>
-                    <a >Edit</a>
+                    <button className="btn btn-primary ms-3">
+                      <i className="bi bi-pencil-square"></i>  
+                    </button>
                   </Link>
-                  <button className="btn btn-danger ms-3">Delete</button>
+                  <button className="btn btn-danger ms-3">
+                    <i className="bi bi-trash3-fill"></i>  
+                  </button>
                 </td> }
               </tr>
             );
