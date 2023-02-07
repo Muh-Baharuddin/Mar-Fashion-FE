@@ -1,13 +1,16 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import CarouselComp from 'src/components/Carousel/CarouselComp';
 import FooterComp from 'src/components/Footer/FooterComp';
 import NavbarComp from 'src/components/Navbar/NavbarComp';
+import { MarFashionContext } from 'src/context/MarFashionProvider';
 
 
 export default function GuessLayout() {
+  const {isLogin, login, Logout} = useContext(MarFashionContext)
   return (
     <div>
-      <NavbarComp />
+      <NavbarComp isLogin={isLogin}/>
+      {isLogin ? <button className="btn btn-primary" onClick={Logout}>Login</button> : <button onClick={login} className="btn btn-primary">Logout</button> }
       <CarouselComp/>
       <div className="container" style={{ marginTop:'100px', marginBottom:'100px' }}>
           <h2>Tentang Kami</h2>

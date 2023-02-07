@@ -65,11 +65,16 @@ const MarFashionProvider: FC<Props> = ({ children }) => {
   const Logout = () => {
     removeCookie("user")
     removeCookie("token")
+    setIsLogin(false);
     router.push('/', undefined, { shallow: true })
   }
 
+  const login = () => {
+    setIsLogin(true);
+  }
+
   return (
-    <MarFashionContext.Provider value={{ user, setUser, Login, Logout, isLogin, setIsLogin }}>
+    <MarFashionContext.Provider value={{ user, setUser, Login, Logout, login, isLogin }}>
       {children}
     </MarFashionContext.Provider>
   )
