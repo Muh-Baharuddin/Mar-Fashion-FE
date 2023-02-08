@@ -30,6 +30,14 @@ const TableComp = (props: handleShowType) => {
   //     // setProducts(res.data.results)
   // }
 
+  const handleDelete = (id: string) => {
+    axios.delete('http://localhost:4000/barang/' + id).then(response => {
+      console.log("ini nilai respon", response )
+      alert(response.data.message)
+      window.location.reload()
+    })
+  }
+
   React.useEffect(() => {
     axios.get('http://localhost:4000/barang').then(response => {
       setData(response.data)
@@ -48,7 +56,7 @@ const TableComp = (props: handleShowType) => {
       <table className="table table-bordered">
         <thead>
           <tr>
-            <th>#</th>
+            <th>Id</th>
             <th>Merek</th>
             <th>Size</th>
             <th>Warna</th>
@@ -58,10 +66,10 @@ const TableComp = (props: handleShowType) => {
           </tr>
         </thead>
         <tbody>
-          {data && Object.values(data).map((d) => {
+          {data && Object.values(data).map((d, index) => {
             return (
               <tr key={d.id}>
-                <td>{d.id}</td>
+                <td>{++index}</td>
                 <td>{d.merek.slice(0, 150)}</td>
                 <td>{d.size}</td>
                 <td>{d.warna}</td>
@@ -73,7 +81,7 @@ const TableComp = (props: handleShowType) => {
                   <button onClick={handleShow} className="btn btn-primary ms-3">
                     <i className="bi bi-pencil-square"></i>  
                   </button>
-                  <button className="btn btn-danger ms-3">
+                  <button onClick={() => handleDelete(d.id)} className="btn btn-danger ms-3">
                     <i className="bi bi-trash3-fill"></i>  
                   </button>
                 </td> }

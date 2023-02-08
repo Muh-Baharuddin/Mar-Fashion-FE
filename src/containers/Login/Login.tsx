@@ -9,11 +9,6 @@ export const Login = () => {
   const { isLogin, user } = useContext(MarFashionContext);
   console.log('Login ', user.userName)
 
-  // const [login, setLogin] = useState(true);
-  // const loginHandler = () => {
-  //   setLogin(!login)
-  // }
-
   return (
     <div>
       <NavbarComp isLogin={isLogin}/>

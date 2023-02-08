@@ -15,8 +15,8 @@ const BarangPage = () => {
         <>
             <NavbarComp isLogin={isLogin} />
             <div className="container">
-                <ModalComp show={show} handleClose={handleClose}/>
                 <TableComp show={show} handleShow={handleShow}/>
+                <ModalComp show={show} handleClose={handleClose}/>
             </div>
         </>
     )
