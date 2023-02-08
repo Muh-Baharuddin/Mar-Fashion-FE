@@ -13,8 +13,14 @@ interface Data {
   harga: number;
 }
 
-const TableComp: React.FC = () => {
+type handleShowType = {
+  show: boolean;
+  handleShow: () => void;
+}
+
+const TableComp = (props: handleShowType) => {
   const { isLogin } = React.useContext(MarFashionContext);
+  const { handleShow } = props
   const [data, setData] = React.useState<Data[]>([]);
   // const [products, setProducts] = React.useState();
   // const getProducts =  () => {
@@ -33,7 +39,7 @@ const TableComp: React.FC = () => {
   return (
     <div className="card">
     <div className="card-header">
-      {!isLogin && <button className="btn btn-primary">
+      {!isLogin && <button  onClick={handleShow} className="btn btn-primary">
         <i className="bi bi-plus-square"></i>
       </button> }
       
@@ -43,7 +49,7 @@ const TableComp: React.FC = () => {
         <thead>
           <tr>
             <th>#</th>
-            <th>Merk</th>
+            <th>Merek</th>
             <th>Size</th>
             <th>Warna</th>
             <th>Stok</th>
@@ -64,11 +70,9 @@ const TableComp: React.FC = () => {
                     {d.harga}
                 </td>
                 {!isLogin && <td> 
-                  <Link href={`/edit/${d.id}`} className="btn btn-primary" legacyBehavior>
-                    <button className="btn btn-primary ms-3">
-                      <i className="bi bi-pencil-square"></i>  
-                    </button>
-                  </Link>
+                  <button onClick={handleShow} className="btn btn-primary ms-3">
+                    <i className="bi bi-pencil-square"></i>  
+                  </button>
                   <button className="btn btn-danger ms-3">
                     <i className="bi bi-trash3-fill"></i>  
                   </button>

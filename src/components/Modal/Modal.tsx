@@ -2,18 +2,16 @@ import React, { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 
-function Example() {
-  const [show, setShow] = useState(false);
+type handleShowType = {
+  show: boolean;
+  handleClose: () => void;
+}
 
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
+function ModalComp(props: handleShowType) {
+  const {show, handleClose} = props
 
   return (
     <>
-      <Button variant="primary" onClick={handleShow}>
-        Launch static backdrop modal
-      </Button>
-
       <Modal
         show={show}
         onHide={handleClose}
@@ -21,21 +19,45 @@ function Example() {
         keyboard={false}
       >
         <Modal.Header closeButton>
-          <Modal.Title>Modal title</Modal.Title>
+          <Modal.Title>Modal heading</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          I will not close if you click outside me. Don't even try to press
-          escape key.
+        <div className="mb-3">
+            <label htmlFor="exampleFormControlInput1" className="form-label">Merek</label>
+            <input type="text" className="form-control" id="exampleFormControlInput1" />
+        </div>
+        <div className="mb-3">
+            <label htmlFor="exampleFormControlInput1" className="form-label">Size</label>
+            <input type="text" className="form-control" id="exampleFormControlInput1" />
+        </div>
+        <div className="mb-3">
+            <label htmlFor="exampleFormControlInput1" className="form-label">Warna</label>
+            <input type="text" className="form-control" id="exampleFormControlInput1" />
+        </div>
+        <div className="mb-3">
+            <label htmlFor="exampleFormControlInput1" className="form-label">Stok</label>
+            <input type="number" className="form-control" id="exampleFormControlInput1" />
+        </div>
+        <div className="mb-3">
+            <label htmlFor="exampleFormControlInput1" className="form-label">Harga</label>
+            <input type="number" className="form-control" id="exampleFormControlInput1" />
+        </div>
+        {/* <div className="mb-3">
+            <label htmlFor="exampleFormControlTextarea1" className="form-label">Example textarea</label>
+            <textarea className="form-control" id="exampleFormControlTextarea1" rows={3}></textarea>
+        </div> */}
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleClose}>
             Close
           </Button>
-          <Button variant="primary">Understood</Button>
+          <Button variant="primary" onClick={handleClose}>
+            Save Changes
+          </Button>
         </Modal.Footer>
       </Modal>
     </>
   );
 }
 
-export default Example
+export default ModalComp

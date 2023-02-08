@@ -27,6 +27,6 @@
       "@image": ["public/assets/img"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "src/components/Navbar/NavbarLogin"],
   "exclude": ["node_modules"],
 }

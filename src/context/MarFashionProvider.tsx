@@ -25,7 +25,7 @@ export const MarFashionContext = createContext(defaultState)
 const MarFashionProvider: FC<Props> = ({ children }) => {
   const router = useRouter()
   const [cookies, setCookie, removeCookie] = useCookies(["user", "token"]);
-  const [isLogin, setIsLogin] = useState(false);
+  const [isLogin, setIsLogin] = useState(true);
 
   const [user, setUser] = useState<IUser>({
     id: '',
