@@ -14,21 +14,16 @@ interface Data {
 }
 
 type handleShowType = {
-  show: boolean;
-  handleShow: () => void;
+  showAdd: boolean;
+  showEdit: boolean;
+  handleShowAdd: () => void;
+  handleShowEdit: () => void;
 }
 
 const TableComp = (props: handleShowType) => {
   const { isLogin } = React.useContext(MarFashionContext);
-  const { handleShow } = props
+  const { handleShowAdd, handleShowEdit } = props
   const [data, setData] = React.useState<Data[]>([]);
-  // const [products, setProducts] = React.useState();
-  // const getProducts =  () => {
-  //     axios.get('https://fajartimur.com/api/items/').then(response => {
-  //       setData(response.data)
-  //     });
-  //     // setProducts(res.data.results)
-  // }
 
   const handleDelete = (id: string) => {
     axios.delete('http://localhost:4000/barang/' + id).then(response => {
@@ -47,7 +42,7 @@ const TableComp = (props: handleShowType) => {
   return (
     <div className="card">
     <div className="card-header">
-      {!isLogin && <button  onClick={handleShow} className="btn btn-primary">
+      {!isLogin && <button  onClick={handleShowAdd} className="btn btn-primary">
         <i className="bi bi-plus-square"></i>
       </button> }
       
@@ -78,7 +73,7 @@ const TableComp = (props: handleShowType) => {
                     {d.harga}
                 </td>
                 {!isLogin && <td> 
-                  <button onClick={handleShow} className="btn btn-primary ms-3">
+                  <button onClick={handleShowEdit} className="btn btn-primary ms-3">
                     <i className="bi bi-pencil-square"></i>  
                   </button>
                   <button onClick={() => handleDelete(d.id)} className="btn btn-danger ms-3">

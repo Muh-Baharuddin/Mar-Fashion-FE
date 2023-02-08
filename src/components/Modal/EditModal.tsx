@@ -3,23 +3,23 @@ import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 
 type handleShowType = {
-  show: boolean;
-  handleClose: () => void;
+  showEdit: boolean;
+  handleCloseEdit: () => void;
 }
 
-function ModalComp(props: handleShowType) {
-  const {show, handleClose} = props
+function EditModal(props: handleShowType) {
+  const {showEdit, handleCloseEdit} = props
 
   return (
     <>
       <Modal
-        show={show}
-        onHide={handleClose}
+        show={showEdit}
+        onHide={handleCloseEdit}
         backdrop="static"
         keyboard={false}
       >
         <Modal.Header closeButton>
-          <Modal.Title>Modal heading</Modal.Title>
+          <Modal.Title>Edit Barang</Modal.Title>
         </Modal.Header>
         <Modal.Body>
         <div className="mb-3">
@@ -48,10 +48,10 @@ function ModalComp(props: handleShowType) {
         </div> */}
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
+          <Button variant="secondary" onClick={handleCloseEdit}>
             Close
           </Button>
-          <Button variant="primary" onClick={handleClose}>
+          <Button variant="primary" onClick={handleCloseEdit}>
             Save Changes
           </Button>
         </Modal.Footer>
@@ -60,4 +60,4 @@ function ModalComp(props: handleShowType) {
   );
 }
 
-export default ModalComp
+export default EditModal
