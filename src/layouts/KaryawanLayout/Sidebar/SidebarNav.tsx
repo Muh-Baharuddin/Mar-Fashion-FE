@@ -126,11 +126,7 @@ export default function SidebarNav() {
     <ul className="list-unstyled">
       <SidebarNavTitle>Dashboard</SidebarNavTitle>
       <SidebarNavItem icon={faShirt} href="/barang">Barang</SidebarNavItem>
-      <SidebarNavGroup toggleIcon={faMoneyBill} toggleText="Keuanga">
-        <SidebarNavItem href="/">Keuangan</SidebarNavItem>
-        <SidebarNavItem href="/">Nota Pembelian</SidebarNavItem>
-        <SidebarNavItem href="/">Nota Penjualan</SidebarNavItem>
-      </SidebarNavGroup>
+      <SidebarNavItem icon={faMoneyBill} href="/barang">Nota Penjualan</SidebarNavItem>
       <SidebarNavItem icon={faPencil} href="typography.html">Karyawan</SidebarNavItem>
       <SidebarNavItem icon={faChartPie} href="charts.html">Retur</SidebarNavItem>
       <SidebarNavItem icon={faRightToBracket} href="login">Log Out</SidebarNavItem>

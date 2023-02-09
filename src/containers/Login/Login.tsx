@@ -2,13 +2,17 @@ import { Col, Container, Row } from 'react-bootstrap'
 import Image from 'next/image'
 import { LoginForm } from './LoginForm'
 import { MarFashionContext } from 'src/context/MarFashionProvider'
-import { useContext } from 'react'
+import { useContext, useState } from 'react'
+import NavbarComp from 'src/components/Navbar/NavbarComp'
 
 export const Login = () => {
-  const { user } = useContext(MarFashionContext);
+  const { isLogin, user } = useContext(MarFashionContext);
   console.log('Login ', user.userName)
+
   return (
-    <div className="bg-light min-vh-100 d-flex flex-row align-items-center dark:bg-transparent">
+    <div>
+      <NavbarComp isLogin={isLogin}/>
+      <div className="bg-light min-vh-100 d-flex flex-row align-items-center dark:bg-transparent">
       <Container>
         <Row className="justify-content-center align-items-center px-3">
           <Col lg={8}>
@@ -32,6 +36,7 @@ export const Login = () => {
           </Col>
         </Row>
       </Container>
+    </div>
     </div>
   )
 }

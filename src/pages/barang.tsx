@@ -1,189 +1,25 @@
-import { Button, Card, Container, Row, Col } from "react-bootstrap";
-import Link from "next/link";
-import { AdminLayout } from '@layouts/AdminLayout/index'
+import { useContext, useState } from 'react';
+import ModalComp from 'src/components/Modal/Modal';
+import NavbarComp from 'src/components/Navbar/NavbarComp';
+import TableComp from 'src/components/Table/Table';
+import { MarFashionContext } from 'src/context/MarFashionProvider';
 
-const Home = () => {
-  return (
-    <AdminLayout>
-      <Row className="my-4">
-        <Col>
-          <Card style={{ width: "100%" }}>
-            <Card.Body>
-              <Card.Title>Baju</Card.Title>
-              <Card.Text>
-                Terdapat berbagai macam baju dengan kualitas top dengan harga
-                termurah
-              </Card.Text>
-              <Button variant="danger">
-                <Link
-                  href="/daftarBarang/baju"
-                  style={{ textDecoration: "none", color: "white" }}
-                >
-                  Go somewhere
-                </Link>
-              </Button>
-            </Card.Body>
-          </Card>
-        </Col>
-        <Col>
-          <Card style={{ width: "100%" }}>
-            <Card.Body>
-              <Card.Title>Celana</Card.Title>
-              <Card.Text>
-                Some quick example text to build on the card title and make up
-                the bulk of the content.
-              </Card.Text>
-              <Button variant="danger">
-                <Link
-                  href="/daftarBarang/baju"
-                  style={{ textDecoration: "none", color: "white" }}
-                >
-                  Go somewhere
-                </Link>
-              </Button>
-            </Card.Body>
-          </Card>
-        </Col>
-        <Col>
-          <Card style={{ width: "100%" }}>
-            <Card.Body>
-              <Card.Title>Card Title</Card.Title>
-              <Card.Text>
-                Some quick example text to build on the card title and make up
-                the bulk of the content.
-              </Card.Text>
-              <Button variant="danger">
-                <Link
-                  href="/daftarBarang/baju"
-                  style={{ textDecoration: "none", color: "white" }}
-                >
-                  Go somewhere
-                </Link>
-              </Button>
-            </Card.Body>
-          </Card>
-        </Col>
-      </Row>
-      <Row className="my-4">
-        <Col>
-          <Card style={{ width: "100%" }}>
-            <Card.Body>
-              <Card.Title>Baju</Card.Title>
-              <Card.Text>
-                Terdapat berbagai macam baju dengan kualitas top dengan harga
-                termurah
-              </Card.Text>
-              <Button variant="danger">
-                <Link
-                  href="baju"
-                  style={{ textDecoration: "none", color: "white" }}
-                >
-                  Go somewhere
-                </Link>
-              </Button>
-            </Card.Body>
-          </Card>
-        </Col>
-        <Col>
-          <Card style={{ width: "100%" }}>
-            <Card.Body>
-              <Card.Title>Celana</Card.Title>
-              <Card.Text>
-                Some quick example text to build on the card title and make up
-                the bulk of the content.
-              </Card.Text>
-              <Button variant="danger">
-                <Link
-                  href="celana"
-                  style={{ textDecoration: "none", color: "white" }}
-                >
-                  Go somewhere
-                </Link>
-              </Button>
-            </Card.Body>
-          </Card>
-        </Col>
-        <Col>
-          <Card style={{ width: "100%" }}>
-            <Card.Body>
-              <Card.Title>Card Title</Card.Title>
-              <Card.Text>
-                Some quick example text to build on the card title and make up
-                the bulk of the content.
-              </Card.Text>
-              <Button variant="danger">
-                <Link
-                  href="/daftarBarang/baju"
-                  style={{ textDecoration: "none", color: "white" }}
-                >
-                  Go somewhere
-                </Link>
-              </Button>
-            </Card.Body>
-          </Card>
-        </Col>
-      </Row>
-      <Row className="my-4">
-        <Col>
-          <Card style={{ width: "100%" }}>
-            <Card.Body>
-              <Card.Title>Baju</Card.Title>
-              <Card.Text>
-                Terdapat berbagai macam baju dengan kualitas top dengan harga
-                termurah
-              </Card.Text>
-              <Button variant="danger">
-                <Link
-                  href="/daftarBarang/baju"
-                  style={{ textDecoration: "none", color: "white" }}
-                >
-                  Go somewhere
-                </Link>
-              </Button>
-            </Card.Body>
-          </Card>
-        </Col>
-        <Col>
-          <Card style={{ width: "100%" }}>
-            <Card.Body>
-              <Card.Title>Celana</Card.Title>
-              <Card.Text>
-                Some quick example text to build on the card title and make up
-                the bulk of the content.
-              </Card.Text>
-              <Button variant="danger">
-                <Link
-                  href="/daftarBarang/baju"
-                  style={{ textDecoration: "none", color: "white" }}
-                >
-                  Go somewhere
-                </Link>
-              </Button>
-            </Card.Body>
-          </Card>
-        </Col>
-        <Col>
-          <Card style={{ width: "100%" }}>
-            <Card.Body>
-              <Card.Title>Card Title</Card.Title>
-              <Card.Text>
-                Some quick example text to build on the card title and make up
-                the bulk of the content.
-              </Card.Text>
-              <Button variant="danger">
-                <Link
-                  href="/daftarBarang/baju"
-                  style={{ textDecoration: "none", color: "white" }}
-                >
-                  Go somewhere
-                </Link>
-              </Button>
-            </Card.Body>
-          </Card>
-        </Col>
-      </Row>
-    </AdminLayout>
-  );
+const BarangPage = () => {
+    const [show, setShow] = useState(false);
+    
+    const handleClose = () => setShow(false);
+    const handleShow = () => setShow(true);
+
+    const {isLogin} = useContext(MarFashionContext);
+    return (
+        <>
+            <NavbarComp isLogin={isLogin} />
+            <div className="container">
+                <TableComp show={show} handleShow={handleShow}/>
+                <ModalComp show={show} handleClose={handleClose}/>
+            </div>
+        </>
+    )
 }
- 
-export default Home;
+
+export default BarangPage;

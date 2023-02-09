@@ -25,6 +25,7 @@ export const MarFashionContext = createContext(defaultState)
 const MarFashionProvider: FC<Props> = ({ children }) => {
   const router = useRouter()
   const [cookies, setCookie, removeCookie] = useCookies(["user", "token"]);
+  const [isLogin, setIsLogin] = useState(true);
 
   const [user, setUser] = useState<IUser>({
     id: '',
@@ -48,6 +49,7 @@ const MarFashionProvider: FC<Props> = ({ children }) => {
       const token = response.data.accessToken;
       const userData = jwtDecode<IUser>(token);
       setUser(userData);
+      setIsLogin(true);
       setCookie('token', token, {
         path: '/'
       });
@@ -64,11 +66,16 @@ const MarFashionProvider: FC<Props> = ({ children }) => {
   const Logout = () => {
     removeCookie("user")
     removeCookie("token")
+    setIsLogin(false);
     router.push('/', undefined, { shallow: true })
   }
 
+  const login = () => {
+    setIsLogin(true);
+  }
+
   return (
-    <MarFashionContext.Provider value={{ user, setUser, Login, Logout }}>
+    <MarFashionContext.Provider value={{ user, setUser, Login, Logout, login, isLogin }}>
       {children}
     </MarFashionContext.Provider>
   )
