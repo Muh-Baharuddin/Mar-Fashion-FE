@@ -9,7 +9,7 @@ import { MarFashionContext } from 'src/context/MarFashionProvider';
 const BarangPage = () => {
     const [showAdd, setShowAdd] = useState(false);
     const [showEdit, setShowEdit] = useState(false);
-    const [ cookies ] = useCookies(["user"]);
+    // const [ cookies ] = useCookies(["user"]);
     // const [editId, setEditId] = useState("");
 
     // const handleShowAdd = () => setShowAdd(true);
