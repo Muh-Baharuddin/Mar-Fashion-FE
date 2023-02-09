@@ -25,7 +25,7 @@ type handleShowType = {
 
 const TableComp = (props: handleShowType) => {
   const { isLogin } = useContext(MarFashionContext);
-  const [ cookies ] = useCookies(["token"]);
+  const [ cookies ] = useCookies(["token", "user"]);
   const { showAdd, showEdit, setShowAdd, setShowEdit} = props
   const [data, setData] = useState<Data[]>([]);
   const [editId, setEditId] = useState("");
@@ -72,7 +72,7 @@ const TableComp = (props: handleShowType) => {
     <AddModal showAdd={showAdd} handleCloseAdd={handleCloseAdd}/>
     <EditModal showEdit={showEdit} editId={editId} handleCloseEdit={handleCloseEdit}/>
     
-      {isLogin && <button  onClick={handleShowAdd} className="btn btn-primary">
+      {cookies.user && <button  onClick={handleShowAdd} className="btn btn-primary">
         <i className="bi bi-plus-square"></i>
       </button> }
     </div>
@@ -86,7 +86,7 @@ const TableComp = (props: handleShowType) => {
             <th>Warna</th>
             <th>Stok</th>
             <th>Harga</th>
-            {isLogin && <th>Action</th> }
+            {cookies.user && <th>Action</th> }
           </tr>
         </thead>
         <tbody>
@@ -101,7 +101,7 @@ const TableComp = (props: handleShowType) => {
                 <td>
                     {d.harga}
                 </td>
-                {isLogin && <td> 
+                {cookies.user && <td> 
                   <button onClick={() =>handleShowEdit(d.id)} className="btn btn-primary ms-3">
                     <i className="bi bi-pencil-square"></i>  
                   </button>

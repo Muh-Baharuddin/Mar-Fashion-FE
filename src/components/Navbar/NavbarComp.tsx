@@ -1,9 +1,11 @@
 import { Navbar, Container, Nav } from "react-bootstrap";
 import Link from "next/link";
 import Image from "next/image";
+import { useCookies } from "react-cookie";
 
-const NavbarComp = (props: {isLogin: boolean}) => {
-  const { isLogin } = props;
+const NavbarComp = () => {
+  // const { isLogin } = props;
+  const [ cookies ] = useCookies(["user"]);
   return (
     <Navbar bg="light" expand="lg">
       <Container>
@@ -28,7 +30,7 @@ const NavbarComp = (props: {isLogin: boolean}) => {
             <Link href={'/toko'} className="nav-link">
               Toko
             </Link>
-            {isLogin ? 
+            {cookies.user !== undefined ? 
               <Link href={'/'} className="nav-link">
               Dashboard
               </Link> :
