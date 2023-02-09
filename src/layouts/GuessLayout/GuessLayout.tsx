@@ -1,5 +1,4 @@
 import React, { useContext } from 'react'
-import { useCookies } from 'react-cookie';
 import CarouselComp from 'src/components/Carousel/CarouselComp';
 import FooterComp from 'src/components/Footer/FooterComp';
 import NavbarComp from 'src/components/Navbar/NavbarComp';
@@ -8,14 +7,11 @@ import { MarFashionContext } from 'src/context/MarFashionProvider';
 
 export default function GuessLayout() {
   const {isLogin, login, Logout} = useContext(MarFashionContext)
-  const [ cookies ] = useCookies(["user"]);
-
-  console.log('ini nilai cookie',cookies.user)
-
+  
   return (
     <div>
       <NavbarComp />
-      {cookies.user !== undefined ? <button className="btn btn-primary" onClick={Logout}>Logout</button> : <button onClick={login} className="btn btn-primary">Login</button> }
+      {isLogin ? <button className="btn btn-primary" onClick={Logout}>Logout</button> : <button onClick={login} className="btn btn-primary">Login</button> }
       <CarouselComp/>
       <div className="container" style={{ marginTop:'100px', marginBottom:'100px' }}>
           <h2>Tentang Kami</h2>

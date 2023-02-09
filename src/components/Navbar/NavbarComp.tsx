@@ -1,10 +1,13 @@
 import { Navbar, Container, Nav } from "react-bootstrap";
 import Link from "next/link";
 import Image from "next/image";
+import { useContext } from 'react';
 import { useCookies } from "react-cookie";
+import { MarFashionContext } from "src/context/MarFashionProvider";
 
 const NavbarComp = () => {
   // const { isLogin } = props;
+  const { isLogin } = useContext(MarFashionContext)
   const [ cookies ] = useCookies(["user"]);
   return (
     <Navbar bg="light" expand="lg">
@@ -30,7 +33,7 @@ const NavbarComp = () => {
             <Link href={'/toko'} className="nav-link">
               Toko
             </Link>
-            {cookies.user !== undefined ? 
+            {isLogin ? 
               <Link href={'/'} className="nav-link">
               Dashboard
               </Link> :
