@@ -24,7 +24,6 @@ function AddModal(props: handleShowType) {
 
   const handleAdd = (data: any) => {
     axios.post('http://localhost:4000/barang', data, config).then(response => {
-      console.log("ini nilai respon", response )
       alert("Data berhasil ditambahkan")
       window.location.reload()
     })
@@ -75,10 +74,6 @@ function AddModal(props: handleShowType) {
             Close
           </Button>
           </form>
-        {/* <div className="mb-3">
-            <label htmlFor="exampleFormControlTextarea1" className="form-label">Example textarea</label>
-            <textarea className="form-control" id="exampleFormControlTextarea1" rows={3}></textarea>
-        </div> */}
         </Modal.Body>
       </Modal>
     </>

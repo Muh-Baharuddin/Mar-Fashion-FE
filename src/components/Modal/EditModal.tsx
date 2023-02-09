@@ -28,7 +28,6 @@ function EditModal(props: handleShowType) {
 
   const handleEdit = (data: any) => {
     axios.patch('http://localhost:4000/barang/' + editId, data, config).then(response => {
-      console.log("ini nilai respon", response )
       alert("Data berhasil diperbarui")
       window.location.reload()
     })

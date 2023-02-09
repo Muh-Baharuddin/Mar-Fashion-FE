@@ -1,6 +1,5 @@
 import { Dispatch, SetStateAction, useContext, useEffect, useState } from 'react';
 import axios from 'axios';
-import Link from 'next/link';
 import { MarFashionContext } from 'src/context/MarFashionProvider';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import AddModal from '../Modal/AddModal';
@@ -68,7 +67,6 @@ const TableComp = (props: handleShowType) => {
     <div className="card">
     <div className="card-header">
 
-    {/* Modal */}
     <AddModal showAdd={showAdd} handleCloseAdd={handleCloseAdd}/>
     <EditModal showEdit={showEdit} editId={editId} handleCloseEdit={handleCloseEdit}/>
     
