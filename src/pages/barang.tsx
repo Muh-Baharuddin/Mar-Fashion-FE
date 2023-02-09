@@ -8,21 +8,28 @@ import { MarFashionContext } from 'src/context/MarFashionProvider';
 const BarangPage = () => {
     const [showAdd, setShowAdd] = useState(false);
     const [showEdit, setShowEdit] = useState(false);
+    // const [editId, setEditId] = useState("");
 
-    const handleShowAdd = () => setShowAdd(true);
-    const handleCloseAdd = () => setShowAdd(false);
+    // const handleShowAdd = () => setShowAdd(true);
+    // const handleCloseAdd = () => setShowAdd(false);
 
-    const handleShowEdit = () => setShowEdit(true);
-    const handleCloseEdit = () => setShowEdit(false);
+    // const handleShowEdit = (id: string) => {
+    //     setEditId(id)
+    //     setShowEdit(true)
+    // };
+    // const handleCloseEdit = () => {
+    //     setEditId("")
+    //     setShowEdit(false)
+    // };
 
     const {isLogin} = useContext(MarFashionContext);
     return (
         <>
             <NavbarComp isLogin={isLogin} />
             <div className="container">
-                <TableComp showAdd={showAdd} showEdit={showEdit} handleShowAdd={handleShowAdd} handleShowEdit={handleShowEdit}/>
-                <AddModal showAdd={showAdd} handleCloseAdd={handleCloseAdd}/>
-                <EditModal showEdit={showEdit} handleCloseEdit={handleCloseEdit}/>
+                <TableComp showAdd={showAdd} showEdit={showEdit} setShowAdd={setShowAdd} setShowEdit={setShowEdit} />
+                {/* <AddModal showAdd={showAdd} handleCloseAdd={handleCloseAdd}/>
+                <EditModal showEdit={showEdit} handleCloseEdit={handleCloseEdit}/> */}
             </div>
         </>
     )

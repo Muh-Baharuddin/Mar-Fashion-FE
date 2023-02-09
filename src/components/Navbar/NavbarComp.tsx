@@ -29,10 +29,11 @@ const NavbarComp = (props: {isLogin: boolean}) => {
               Toko
             </Link>
             {isLogin ? 
+              <Link href={'/'} className="nav-link">
+              Dashboard
+              </Link> :
               <Link href={'/login'} className="nav-link">
               Login
-              </Link> : <Link href={'/'} className="nav-link">
-              Dashboard
               </Link>
             }
           </Nav>

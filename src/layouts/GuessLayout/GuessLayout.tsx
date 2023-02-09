@@ -10,7 +10,7 @@ export default function GuessLayout() {
   return (
     <div>
       <NavbarComp isLogin={isLogin}/>
-      {isLogin ? <button className="btn btn-primary" onClick={Logout}>Login</button> : <button onClick={login} className="btn btn-primary">Logout</button> }
+      {isLogin ? <button className="btn btn-primary" onClick={Logout}>Logout</button> : <button onClick={login} className="btn btn-primary">Login</button> }
       <CarouselComp/>
       <div className="container" style={{ marginTop:'100px', marginBottom:'100px' }}>
           <h2>Tentang Kami</h2>
