@@ -7,9 +7,10 @@ import { MarFashionContext } from 'src/context/MarFashionProvider';
 
 export default function GuessLayout() {
   const {isLogin, login, Logout} = useContext(MarFashionContext)
+  
   return (
     <div>
-      <NavbarComp isLogin={isLogin}/>
+      <NavbarComp />
       {isLogin ? <button className="btn btn-primary" onClick={Logout}>Logout</button> : <button onClick={login} className="btn btn-primary">Login</button> }
       <CarouselComp/>
       <div className="container" style={{ marginTop:'100px', marginBottom:'100px' }}>

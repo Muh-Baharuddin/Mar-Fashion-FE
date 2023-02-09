@@ -1,4 +1,5 @@
 import { useContext, useState } from 'react';
+import { useCookies } from 'react-cookie';
 import AddModal from 'src/components/Modal/AddModal';
 import EditModal from 'src/components/Modal/EditModal';
 import NavbarComp from 'src/components/Navbar/NavbarComp';
@@ -8,6 +9,7 @@ import { MarFashionContext } from 'src/context/MarFashionProvider';
 const BarangPage = () => {
     const [showAdd, setShowAdd] = useState(false);
     const [showEdit, setShowEdit] = useState(false);
+    const [ cookies ] = useCookies(["user"]);
     // const [editId, setEditId] = useState("");
 
     // const handleShowAdd = () => setShowAdd(true);
@@ -22,10 +24,10 @@ const BarangPage = () => {
     //     setShowEdit(false)
     // };
 
-    const {isLogin} = useContext(MarFashionContext);
+    // const {isLogin} = useContext(MarFashionContext);
     return (
         <>
-            <NavbarComp isLogin={isLogin} />
+            <NavbarComp />
             <div className="container">
                 <TableComp showAdd={showAdd} showEdit={showEdit} setShowAdd={setShowAdd} setShowEdit={setShowEdit} />
                 {/* <AddModal showAdd={showAdd} handleCloseAdd={handleCloseAdd}/>

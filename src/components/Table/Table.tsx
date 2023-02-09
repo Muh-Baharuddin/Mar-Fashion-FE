@@ -24,7 +24,7 @@ type handleShowType = {
 
 const TableComp = (props: handleShowType) => {
   const { isLogin } = useContext(MarFashionContext);
-  const [ cookies ] = useCookies(["token"]);
+  const [ cookies ] = useCookies(["token", "user"]);
   const { showAdd, showEdit, setShowAdd, setShowEdit} = props
   const [data, setData] = useState<Data[]>([]);
   const [editId, setEditId] = useState("");

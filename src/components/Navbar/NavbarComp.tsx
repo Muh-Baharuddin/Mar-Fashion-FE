@@ -1,9 +1,14 @@
 import { Navbar, Container, Nav } from "react-bootstrap";
 import Link from "next/link";
 import Image from "next/image";
+import { useContext } from 'react';
+import { useCookies } from "react-cookie";
+import { MarFashionContext } from "src/context/MarFashionProvider";
 
-const NavbarComp = (props: {isLogin: boolean}) => {
-  const { isLogin } = props;
+const NavbarComp = () => {
+  // const { isLogin } = props;
+  const { isLogin } = useContext(MarFashionContext)
+  const [ cookies ] = useCookies(["user"]);
   return (
     <Navbar bg="light" expand="lg">
       <Container>
