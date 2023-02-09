@@ -1,6 +1,3 @@
-import { Button, Col, Row } from 'react-bootstrap';
-import Card from 'react-bootstrap/Card';
-import ListGroup from 'react-bootstrap/ListGroup';
 import Link from "next/link";
 
 type data = {

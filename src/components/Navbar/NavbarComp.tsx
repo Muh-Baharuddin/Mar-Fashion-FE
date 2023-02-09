@@ -13,12 +13,6 @@ const NavbarComp = (props: {isLogin: boolean}) => {
             <strong className="ms-3">MAR Fashion</strong>
           </Link>
         </Navbar.Brand>
-        {/* <Navbar.Brand href="#home">
-          <Link className="navbar-brand" href='/guess'>
-            <Image src="/MarFashion.png" alt="logo" width={50} height={50}/>
-            <strong className="ms-3">MAR Fashion</strong>
-          </Link>
-        </Navbar.Brand> */}
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="ms-auto">
@@ -29,10 +23,11 @@ const NavbarComp = (props: {isLogin: boolean}) => {
               Toko
             </Link>
             {isLogin ? 
+              <Link href={'/'} className="nav-link">
+              Dashboard
+              </Link> :
               <Link href={'/login'} className="nav-link">
               Login
-              </Link> : <Link href={'/'} className="nav-link">
-              Dashboard
               </Link>
             }
           </Nav>
