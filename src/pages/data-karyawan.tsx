@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import NavbarComp from 'src/components/Navbar/NavbarComp'
-import TableBarang from 'src/components/Table/TableBarang'
+import TableKaryawan from 'src/components/Table/TableKaryawan'
 
 const BarangPage = () => {
   const [showAdd, setShowAdd] = useState(false)
@@ -9,7 +9,7 @@ const BarangPage = () => {
     <>
       <NavbarComp />
       <div className="container">
-        <TableBarang
+        <TableKaryawan
           showAdd={showAdd}
           showEdit={showEdit}
           setShowAdd={setShowAdd}
