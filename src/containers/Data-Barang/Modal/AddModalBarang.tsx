@@ -45,59 +45,54 @@ function AddModalBarang(props: handleShowType) {
         <Modal.Body>
           <form onSubmit={handleSubmit(handleAdd)}>
             <div className="mb-3">
-              <label htmlFor="exampleFormControlInput1" className="form-label">
+              <label className="form-label">
                 Merek
               </label>
               <input
                 type="text"
                 className="form-control"
-                id="exampleFormControlInput1"
                 {...register('merek', { required: true })}
               />
             </div>
             <div className="mb-3">
-              <label htmlFor="exampleFormControlInput1" className="form-label">
+              <label className="form-label">
                 Size
               </label>
               <input
                 type="text"
                 className="form-control"
-                id="exampleFormControlInput1"
                 {...register('size', { required: true })}
               />
             </div>
             <div className="mb-3">
-              <label htmlFor="exampleFormControlInput1" className="form-label">
+              <label className="form-label">
                 Warna
               </label>
               <input
                 type="text"
                 className="form-control"
-                id="exampleFormControlInput1"
                 {...register('warna', { required: true })}
               />
             </div>
             <div className="mb-3">
-              <label htmlFor="exampleFormControlInput1" className="form-label">
+              <label className="form-label">
                 Stok
               </label>
               <input
                 type="number"
                 min="0"
                 className="form-control"
-                id="exampleFormControlInput1"
                 {...register('stok', { required: true })}
               />
             </div>
             <div className="mb-3">
-              <label htmlFor="exampleFormControlInput1" className="form-label">
+              <label className="form-label">
                 Harga
               </label>
               <input
                 type="number"
                 min="0"
                 className="form-control"
-                id="exampleFormControlInput1"
                 {...register('harga', { required: true })}
               />
             </div>
