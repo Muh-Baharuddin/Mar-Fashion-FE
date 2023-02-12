@@ -82,7 +82,7 @@ const TableBarang = (props: handleShowType) => {
           handleCloseEdit={handleCloseEdit}
         />
 
-        {isLogin && (
+        {cookies.user && (
           <button onClick={handleShowAdd} className="btn btn-primary">
             <i className="bi bi-plus-square"></i>
           </button>
@@ -98,7 +98,7 @@ const TableBarang = (props: handleShowType) => {
               <th>Warna</th>
               <th>Stok</th>
               <th>Harga</th>
-              {isLogin && <th>Action</th>}
+              {cookies.user && <th>Action</th>}
             </tr>
           </thead>
           <tbody>
@@ -112,7 +112,7 @@ const TableBarang = (props: handleShowType) => {
                     <td>{d.warna}</td>
                     <td>{d.stok}</td>
                     <td>{d.harga}</td>
-                    {isLogin && (
+                    {cookies.user && (
                       <td>
                         <button
                           onClick={() => handleShowEdit(d.id)}
