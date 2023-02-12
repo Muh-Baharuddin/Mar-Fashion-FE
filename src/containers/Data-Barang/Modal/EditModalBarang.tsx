@@ -17,8 +17,6 @@ function EditModalBarang(props: handleShowType) {
   const { register, handleSubmit } = useForm();
   const [ cookies ] = useCookies(["token"]);
 
-  console.log(editId);
-
   let token = cookies.token;
   let config = {
     headers: {
