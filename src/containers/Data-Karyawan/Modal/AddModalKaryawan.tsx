@@ -24,7 +24,7 @@ function AddModalKaryawan(props: handleShowType) {
 
   const handleAdd = (data: any) => {
     axios
-      .post('http://localhost:4000/barang', data, config)
+      .post('http://localhost:4000/karyawan', data, config)
       .then((response) => {
         alert('Data berhasil ditambahkan')
         window.location.reload()
@@ -40,65 +40,38 @@ function AddModalKaryawan(props: handleShowType) {
         keyboard={false}
       >
         <Modal.Header closeButton>
-          <Modal.Title>Tambah Barang</Modal.Title>
+          <Modal.Title>Tambah Karyawan</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <form onSubmit={handleSubmit(handleAdd)}>
             <div className="mb-3">
-              <label htmlFor="exampleFormControlInput1" className="form-label">
-                Merek
+              <label className="form-label">
+                Nama
               </label>
               <input
                 type="text"
                 className="form-control"
-                id="exampleFormControlInput1"
-                {...register('merek', { required: true })}
+                {...register('nama', { required: true })}
               />
             </div>
             <div className="mb-3">
-              <label htmlFor="exampleFormControlInput1" className="form-label">
-                Size
+              <label className="form-label">
+                Alamat
               </label>
               <input
                 type="text"
                 className="form-control"
-                id="exampleFormControlInput1"
-                {...register('size', { required: true })}
+                {...register('alamat', { required: true })}
               />
             </div>
             <div className="mb-3">
-              <label htmlFor="exampleFormControlInput1" className="form-label">
-                Warna
+              <label className="form-label">
+                Nomor Telepon
               </label>
               <input
                 type="text"
                 className="form-control"
-                id="exampleFormControlInput1"
-                {...register('warna', { required: true })}
-              />
-            </div>
-            <div className="mb-3">
-              <label htmlFor="exampleFormControlInput1" className="form-label">
-                Stok
-              </label>
-              <input
-                type="number"
-                min="0"
-                className="form-control"
-                id="exampleFormControlInput1"
-                {...register('stok', { required: true })}
-              />
-            </div>
-            <div className="mb-3">
-              <label htmlFor="exampleFormControlInput1" className="form-label">
-                Harga
-              </label>
-              <input
-                type="number"
-                min="0"
-                className="form-control"
-                id="exampleFormControlInput1"
-                {...register('harga', { required: true })}
+                {...register('nomor_telepon', { required: true })}
               />
             </div>
             <Button variant="primary" onClick={() => handleAdd} type="submit">
