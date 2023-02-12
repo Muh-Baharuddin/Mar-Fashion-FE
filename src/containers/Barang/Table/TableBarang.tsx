@@ -1,12 +1,10 @@
 import {
   Dispatch,
   SetStateAction,
-  useContext,
   useEffect,
   useState,
 } from 'react'
 import axios from 'axios'
-import { MarFashionContext } from 'src/context/MarFashionProvider'
 import 'bootstrap-icons/font/bootstrap-icons.css'
 import AddModalBarang from '../Modal/AddModalBarang'
 import EditModalBarang from '../Modal/EditModalBarang'
@@ -30,7 +28,6 @@ type handleShowType = {
 }
 
 const TableBarang = (props: handleShowType) => {
-  const { isLogin } = useContext(MarFashionContext)
   const [cookies] = useCookies(['token', 'user'])
   const { showAdd, showEdit, setShowAdd, setShowEdit } = props
   const [data, setData] = useState<Data[]>([])
