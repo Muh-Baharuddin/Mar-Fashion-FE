@@ -1,4 +1,4 @@
-import { DataBarang } from '../containers/Barang'
+import { DataBarang } from '../containers/Data-Barang'
 
 const DataBarangPage = () => {
   return (
