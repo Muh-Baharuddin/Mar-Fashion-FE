@@ -1,39 +1,9 @@
-import { AdminLayout } from '@layouts/AdminLayout'
-import { KaryawanLayout } from '@layouts/KaryawanLayout'
-import { useState } from 'react'
-import { useCookies } from 'react-cookie'
-import TableKaryawan from 'src/components/Table/TableKaryawan'
+import { DataKaryawan } from '../containers/Data-Karyawan'
 
-const BarangPage = () => {
-  const [cookies] = useCookies(['user'])
-  const [showAdd, setShowAdd] = useState(false)
-  const [showEdit, setShowEdit] = useState(false)
+const DataKaryawanPage = () => {
   return (
-    <div>
-    { cookies.user?.role == "ADMIN" ? 
-      <AdminLayout>
-        <div className="container">
-          <TableKaryawan
-            showAdd={showAdd}
-            showEdit={showEdit}
-            setShowAdd={setShowAdd}
-            setShowEdit={setShowEdit}
-          />
-        </div>
-      </AdminLayout> :
-      <KaryawanLayout>
-        <div className="container">
-          <TableKaryawan
-            showAdd={showAdd}
-            showEdit={showEdit}
-            setShowAdd={setShowAdd}
-            setShowEdit={setShowEdit}
-          />
-        </div>
-      </KaryawanLayout>
-    }
-    </div>
+    <DataKaryawan />
   )
 }
 
-export default BarangPage
+export default DataKaryawanPage

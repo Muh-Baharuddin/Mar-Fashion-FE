@@ -43,21 +43,21 @@ export default function KaryawanLayout({ children }: PropsWithChildren) {
   }, [setIsShowSidebarMd])
 
   return (
-      <>
-        <div ref={ref} className="position-absolute w-100" />
-          <Sidebar isShow={isShowSidebar} isShowMd={isShowSidebarMd} />
-        
-        <div className="wrapper d-flex flex-column min-vh-100 bg-light">
-          <Header toggleSidebar={toggleIsShowSidebar} toggleSidebarMd={toggleIsShowSidebarMd} />
-          <div className="body flex-grow-1 px-3">
-            <Container fluid="lg">
-              {children}
-            </Container>
-          </div>
-          <Footer />
+    <>
+      <div ref={ref} className="position-absolute w-100" />
+        <Sidebar isShow={isShowSidebar} isShowMd={isShowSidebarMd} />
+      
+      <div className="wrapper d-flex flex-column min-vh-100 bg-light">
+        <Header toggleSidebar={toggleIsShowSidebar} toggleSidebarMd={toggleIsShowSidebarMd} />
+        <div className="body flex-grow-1 px-3">
+          <Container fluid="lg">
+            {children}
+          </Container>
         </div>
+        <Footer />
+      </div>
 
-        <SidebarOverlay isShowSidebar={isShowSidebar} toggleSidebar={toggleIsShowSidebar} />
-      </>
+      <SidebarOverlay isShowSidebar={isShowSidebar} toggleSidebar={toggleIsShowSidebar} />
+    </>
   )
 }
