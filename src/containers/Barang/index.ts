@@ -1,1 +1,1 @@
-export * from './Barang'
+export * from './Data-Barang'

@@ -4,7 +4,7 @@ import { useState } from 'react'
 import TableBarang from './Table/TableBarang'
 import { useCookies } from 'react-cookie'
 
-export const Barang = () => {
+export const DataBarang = () => {
   const [cookies] = useCookies(['user'])
   const [showAdd, setShowAdd] = useState(false)
   const [showEdit, setShowEdit] = useState(false)

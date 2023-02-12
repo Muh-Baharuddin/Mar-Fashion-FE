@@ -1,12 +1,10 @@
 import {
   Dispatch,
   SetStateAction,
-  useContext,
   useEffect,
   useState,
 } from 'react'
 import axios from 'axios'
-import { MarFashionContext } from 'src/context/MarFashionProvider'
 import 'bootstrap-icons/font/bootstrap-icons.css'
 import AddModalKaryawan from '../Modal/AddModalKaryawan'
 import EditModalKaryawan from '../Modal/EditModalKaryawan'
@@ -29,7 +27,6 @@ type handleShowType = {
 
 const TableKaryawan = (props: handleShowType) => {
   const { showAdd, showEdit, setShowAdd, setShowEdit } = props
-  const { isLogin } = useContext(MarFashionContext)
   const [cookies] = useCookies(['token', 'user'])
   const [data, setData] = useState<Data[]>([])
   const [editId, setEditId] = useState('')
@@ -80,7 +77,7 @@ const TableKaryawan = (props: handleShowType) => {
           handleCloseEdit={handleCloseEdit}
         />
 
-        {isLogin && (
+        {cookies.user && (
           <button onClick={handleShowAdd} className="btn btn-primary">
             <i className="bi bi-plus-square"></i>
           </button>
@@ -94,7 +91,7 @@ const TableKaryawan = (props: handleShowType) => {
               <th>Nama</th>
               <th>Alamat</th>
               <th>Nomor Telepon</th>
-              {isLogin && <th>Action</th>}
+              {cookies.user && <th>Action</th>}
             </tr>
           </thead>
           <tbody>
@@ -106,7 +103,7 @@ const TableKaryawan = (props: handleShowType) => {
                     <td>{d.nama}</td>
                     <td>{d.alamat}</td>
                     <td>{d.nomor_telepon}</td>
-                    {isLogin && (
+                    {cookies.user && (
                       <td>
                         <button
                           onClick={() => handleShowEdit(d.id)}

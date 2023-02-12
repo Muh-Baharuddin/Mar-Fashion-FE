@@ -140,10 +140,10 @@ export default function SidebarNav() {
   return (
     <ul className="list-unstyled">
       <SidebarNavTitle>Dashboard</SidebarNavTitle>
-      <SidebarNavItem icon={faShirt} href="/barang">
+      <SidebarNavItem icon={faShirt} href="/data-barang">
         Barang
       </SidebarNavItem>
-      <SidebarNavItem icon={faMoneyBill} href="/barang">
+      <SidebarNavItem icon={faMoneyBill} href="/data-barang">
         Nota Penjualan
       </SidebarNavItem>
       <SidebarNavItem icon={faPencil} href="/data-karyawan">
