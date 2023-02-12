@@ -8,8 +8,8 @@ import {
 import axios from 'axios'
 import { MarFashionContext } from 'src/context/MarFashionProvider'
 import 'bootstrap-icons/font/bootstrap-icons.css'
-import AddModal from '../Modal/AddModal'
-import EditModal from '../Modal/EditModal'
+import AddModalKaryawan from '../Modal/AddModalKaryawan'
+import EditModalKaryawan from '../Modal/EditModalKaryawan'
 import { useCookies } from 'react-cookie'
 import DataTable from 'react-data-table-component'
 
@@ -73,8 +73,8 @@ const TableKaryawan = (props: handleShowType) => {
   return (
     <div className="card">
       <div className="card-header">
-        <AddModal showAdd={showAdd} handleCloseAdd={handleCloseAdd} />
-        <EditModal
+        <AddModalKaryawan showAdd={showAdd} handleCloseAdd={handleCloseAdd} />
+        <EditModalKaryawan
           showEdit={showEdit}
           editId={editId}
           handleCloseEdit={handleCloseEdit}

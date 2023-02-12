@@ -2,9 +2,7 @@ import Head from 'next/head'
 import { useRouter } from 'next/router'
 import { PropsWithChildren, useContext, useEffect } from 'react'
 import { useCookies } from 'react-cookie'
-import MarFashionProvider, {
-  MarFashionContext,
-} from 'src/context/MarFashionProvider'
+import MarFashionProvider from 'src/context/MarFashionProvider'
 
 export default function BaseLayout({ children }: PropsWithChildren) {
   const router = useRouter()
@@ -13,14 +11,12 @@ export default function BaseLayout({ children }: PropsWithChildren) {
   useEffect(() => {
     if (cookies.user?.role === 'ADMIN') {
       router.push('/admin', undefined, { shallow: true })
-      console.log('ini ke admin')
     }
     if (cookies.user?.role === 'KARYAWAN') {
       router.push('/karyawan', undefined, { shallow: true })
-      console.log('ini ke karyawan')
     }
 
-    router.push('/guess', undefined, { shallow: true })
+    router.push('/login', undefined, { shallow: true })
   }, [])
 
   return (

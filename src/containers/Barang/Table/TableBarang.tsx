@@ -8,8 +8,8 @@ import {
 import axios from 'axios'
 import { MarFashionContext } from 'src/context/MarFashionProvider'
 import 'bootstrap-icons/font/bootstrap-icons.css'
-import AddModal from '../Modal/AddModal'
-import EditModal from '../Modal/EditModal'
+import AddModalBarang from '../Modal/AddModalBarang'
+import EditModalBarang from '../Modal/EditModalBarang'
 import { useCookies } from 'react-cookie'
 import DataTable from 'react-data-table-component'
 
@@ -50,7 +50,7 @@ const TableBarang = (props: handleShowType) => {
   }
 
   useEffect(() => {
-    axios.get('http://localhost:4000/barang').then((response) => {
+    axios.get('http://localhost:4000/barang', config).then((response) => {
       setData(response.data)
     })
   }, [])
@@ -75,8 +75,8 @@ const TableBarang = (props: handleShowType) => {
   return (
     <div className="card">
       <div className="card-header">
-        <AddModal showAdd={showAdd} handleCloseAdd={handleCloseAdd} />
-        <EditModal
+        <AddModalBarang showAdd={showAdd} handleCloseAdd={handleCloseAdd} />
+        <EditModalBarang
           showEdit={showEdit}
           editId={editId}
           handleCloseEdit={handleCloseEdit}
