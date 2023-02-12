@@ -42,6 +42,16 @@ const TablePenjualan = (props: handleShowType) => {
     },
   }
 
+  const handleDelete = (id: string) => {
+    axios
+      .delete('http://localhost:4000/nota-penjualan/' + id, config)
+      .then((response) => {
+        console.log('ini nilai respon', response)
+        alert(response.data.message)
+        window.location.reload()
+      })
+  }
+
   return (
     <div className="card">
       <div className="card-header">
@@ -81,6 +91,7 @@ const TablePenjualan = (props: handleShowType) => {
                           <i className="bi bi-pencil-square"></i>
                         </button>
                         <button
+                          onClick={() => handleDelete(d.id)}
                           className="btn btn-danger ms-3"
                         >
                           <i className="bi bi-trash3-fill"></i>
