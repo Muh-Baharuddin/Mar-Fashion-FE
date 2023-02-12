@@ -1,10 +1,10 @@
 import { AdminLayout } from '@layouts/AdminLayout'
 import { KaryawanLayout } from '@layouts/KaryawanLayout'
 import { useState } from 'react'
-import TableBarang from './Table/TableBarang'
+import TableKaryawan from './Table/TableKaryawan'
 import { useCookies } from 'react-cookie'
 
-export const Barang = () => {
+export const DataKaryawan = () => {
   const [cookies] = useCookies(['user'])
   const [showAdd, setShowAdd] = useState(false)
   const [showEdit, setShowEdit] = useState(false)
@@ -13,7 +13,7 @@ export const Barang = () => {
     { cookies.user?.role == "ADMIN" ? 
       <AdminLayout>
         <div className="container">
-          <TableBarang
+          <TableKaryawan
             showAdd={showAdd}
             showEdit={showEdit}
             setShowAdd={setShowAdd}
@@ -23,7 +23,7 @@ export const Barang = () => {
       </AdminLayout> :
       <KaryawanLayout>
         <div className="container">
-          <TableBarang
+          <TableKaryawan
             showAdd={showAdd}
             showEdit={showEdit}
             setShowAdd={setShowAdd}
