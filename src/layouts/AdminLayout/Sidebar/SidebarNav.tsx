@@ -136,7 +136,7 @@ export default function SidebarNav() {
         <SidebarNavItem href="/">Nota Pembelian</SidebarNavItem>
         <SidebarNavItem href="/">Nota Penjualan</SidebarNavItem>
       </SidebarNavGroup>
-      <SidebarNavItem icon={faPencil} href="typography.html">Karyawan</SidebarNavItem>
+      <SidebarNavItem icon={faPencil} href="/data-karyawan">Karyawan</SidebarNavItem>
       <SidebarNavItem icon={faChartPie} href="charts.html">Supplier</SidebarNavItem>
       <SidebarNavItem icon={faChartPie} href="charts.html">Retur</SidebarNavItem>
       <SidebarNavGroup toggleIcon={faStar} toggleText="User">

@@ -5,40 +5,24 @@
     "airbnb",
     "next/core-web-vitals"
   ],
-  "linebreak-style": [
-    "error", "windows"
-  ],
+  "linebreak-style": ["error", "windows"],
   "overrides": [
     {
-      "files": [
-        "*.ts",
-        "*.tsx"
-      ],
-      "extends": [
-        "plugin:@typescript-eslint/recommended",
-        "airbnb-typescript"
-      ],
-      "plugins": [
-        "@typescript-eslint"
-      ],
+      "files": ["*.ts", "*.tsx"],
+      "extends": ["plugin:@typescript-eslint/recommended", "airbnb-typescript"],
+      "plugins": ["@typescript-eslint"],
       "parser": "@typescript-eslint/parser",
       "parserOptions": {
         "project": "./tsconfig.json"
       },
       "rules": {
-        "@typescript-eslint/semi": [
-          2,
-          "never"
-        ],
+        "@typescript-eslint/semi": [2, "never"],
         // Use semicolon as member delimiter for interfaces and type
         "@typescript-eslint/member-delimiter-style": 2
       }
     }
   ],
-  "plugins": [
-    "react",
-    "react-hooks"
-  ],
+  "plugins": ["react", "react-hooks"],
   "rules": {
     // Checks rules of Hooks
     "react-hooks/rules-of-hooks": "error",
@@ -48,10 +32,7 @@
     "react/function-component-definition": [
       2,
       {
-        "namedComponents": [
-          "function-declaration",
-          "arrow-function"
-        ]
+        "namedComponents": ["function-declaration", "arrow-function"]
       }
     ],
     // https://github.com/jsx-eslint/eslint-plugin-jsx-a11y/blob/main/docs/rules/anchor-is-valid.md#case-i-use-nextjs-and-im-getting-this-error-inside-of-links
@@ -66,9 +47,6 @@
     ],
     // Since we do not use prop-types
     "react/require-default-props": 0,
-    "semi": [
-      2,
-      "never"
-    ]
+    "semi": [2, "never"]
   }
 }

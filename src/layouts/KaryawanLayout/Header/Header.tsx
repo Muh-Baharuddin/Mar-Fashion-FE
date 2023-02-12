@@ -4,8 +4,8 @@ import Link from 'next/link'
 import { Button, Container } from 'react-bootstrap'
 
 type HeaderProps = {
-  toggleSidebar: () => void;
-  toggleSidebarMd: () => void;
+  toggleSidebar: () => void
+  toggleSidebarMd: () => void
 }
 
 export default function Header(props: HeaderProps) {

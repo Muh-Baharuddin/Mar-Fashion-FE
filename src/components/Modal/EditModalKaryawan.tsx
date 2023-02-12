@@ -5,15 +5,19 @@ import Modal from 'react-bootstrap/Modal';
 import { useCookies } from 'react-cookie';
 import { useForm } from "react-hook-form";
 
+
 type handleShowType = {
-  showAdd: boolean;
-  handleCloseAdd: () => void;
+  showEdit: boolean;
+  editId: string;
+  handleCloseEdit: () => void;
 }
 
-function AddModal(props: handleShowType) {
+function EditModalKaryawan(props: handleShowType) {
+  const {showEdit, editId, handleCloseEdit} = props
   const { register, handleSubmit } = useForm();
-  const {showAdd, handleCloseAdd} = props
   const [ cookies ] = useCookies(["token"]);
+
+  console.log(editId);
 
   let token = cookies.token;
   let config = {
@@ -22,9 +26,9 @@ function AddModal(props: handleShowType) {
     }
   }
 
-  const handleAdd = (data: any) => {
-    axios.post('http://localhost:4000/barang', data, config).then(response => {
-      alert("Data berhasil ditambahkan")
+  const handleEdit = (data: any) => {
+    axios.patch('http://localhost:4000/barang/' + editId, data, config).then(response => {
+      alert("Data berhasil diperbarui")
       window.location.reload()
     })
   }
@@ -32,17 +36,17 @@ function AddModal(props: handleShowType) {
   return (
     <>
       <Modal
-        show={showAdd}
-        onHide={handleCloseAdd}
+        show={showEdit}
+        onHide={handleCloseEdit}
         backdrop="static"
         keyboard={false}
       >
         <Modal.Header closeButton>
-          <Modal.Title>Tambah Barang</Modal.Title>
+          <Modal.Title>Edit Barang</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <form onSubmit={handleSubmit(handleAdd)}>
-            <div className="mb-3">
+        <form onSubmit={handleSubmit(handleEdit)}>
+        <div className="mb-3">
               <label htmlFor="exampleFormControlInput1" className="form-label">Merek</label>
               <input type="text" className="form-control" id="exampleFormControlInput1" 
               {...register("merek", {required: true})}/>
@@ -67,12 +71,12 @@ function AddModal(props: handleShowType) {
               <input type="number" min="0" className="form-control" id="exampleFormControlInput1" 
               {...register("harga", {required: true})}/>
             </div>
-            <Button variant="primary" onClick={() => handleAdd} type="submit">
+            <Button variant="primary" onClick={() => handleEdit} type="submit">
               Submit
             </Button>
-            <Button className='mx-2' variant="secondary" onClick={handleCloseAdd}>
+            <Button className='mx-2' variant="secondary" onClick={handleCloseEdit}>
             Close
-          </Button>
+            </Button>
           </form>
         </Modal.Body>
       </Modal>
@@ -80,4 +84,4 @@ function AddModal(props: handleShowType) {
   );
 }
 
-export default AddModal
+export default EditModalKaryawan

@@ -13,33 +13,39 @@ import {
   faMoneyBill,
 } from '@fortawesome/free-solid-svg-icons'
 import React, {
-  PropsWithChildren, useContext, useEffect, useState,
+  PropsWithChildren,
+  useContext,
+  useEffect,
+  useState,
 } from 'react'
 import {
-  Accordion, AccordionContext, Button, Nav, useAccordionButton,
+  Accordion,
+  AccordionContext,
+  Button,
+  Nav,
+  useAccordionButton,
 } from 'react-bootstrap'
 import classNames from 'classnames'
 import Link from 'next/link'
 import { MarFashionContext } from 'src/context/MarFashionProvider'
 
 type SidebarNavItemProps = {
-  href: string;
-  icon?: IconDefinition;
+  href: string
+  icon?: IconDefinition
 } & PropsWithChildren
 
 const SidebarNavItem = (props: SidebarNavItemProps) => {
-  const {
-    icon,
-    children,
-    href,
-  } = props
+  const { icon, children, href } = props
 
   return (
     <Nav.Item>
       <Link href={href} passHref legacyBehavior>
         <Nav.Link className="px-3 py-2 d-flex align-items-center">
-          {icon ? <FontAwesomeIcon className="nav-icon ms-n3" icon={icon} />
-            : <span className="nav-icon ms-n3" />}
+          {icon ? (
+            <FontAwesomeIcon className="nav-icon ms-n3" icon={icon} />
+          ) : (
+            <span className="nav-icon ms-n3" />
+          )}
           {children}
         </Nav.Link>
       </Link>
@@ -51,14 +57,16 @@ const SidebarNavTitle = (props: PropsWithChildren) => {
   const { children } = props
 
   return (
-    <li className="nav-title px-3 py-2 mt-3 text-uppercase fw-bold">{children}</li>
+    <li className="nav-title px-3 py-2 mt-3 text-uppercase fw-bold">
+      {children}
+    </li>
   )
 }
 
 type SidebarNavGroupToggleProps = {
-  eventKey: string;
-  icon: IconDefinition;
-  setIsShow: (isShow: boolean) => void;
+  eventKey: string
+  icon: IconDefinition
+  setIsShow: (isShow: boolean) => void
 } & PropsWithChildren
 
 const SidebarNavGroupToggle = (props: SidebarNavGroupToggleProps) => {
@@ -78,9 +86,12 @@ const SidebarNavGroupToggle = (props: SidebarNavGroupToggleProps) => {
     <Button
       variant="link"
       type="button"
-      className={classNames('rounded-0 nav-link px-3 py-2 d-flex align-items-center flex-fill w-100 shadow-none', {
-        collapsed: !isCurrentEventKey,
-      })}
+      className={classNames(
+        'rounded-0 nav-link px-3 py-2 d-flex align-items-center flex-fill w-100 shadow-none',
+        {
+          collapsed: !isCurrentEventKey,
+        }
+      )}
       onClick={decoratedOnClick}
     >
       <FontAwesomeIcon className="nav-icon ms-n3" icon={icon} />
@@ -93,43 +104,57 @@ const SidebarNavGroupToggle = (props: SidebarNavGroupToggleProps) => {
 }
 
 type SidebarNavGroupProps = {
-  toggleIcon: IconDefinition;
-  toggleText: string;
+  toggleIcon: IconDefinition
+  toggleText: string
 } & PropsWithChildren
 
 const SidebarNavGroup = (props: SidebarNavGroupProps) => {
-  const {
-    toggleIcon,
-    toggleText,
-    children,
-  } = props
+  const { toggleIcon, toggleText, children } = props
 
   const [isShow, setIsShow] = useState(false)
 
   return (
-    <Accordion as="li" bsPrefix="nav-group" className={classNames({ show: isShow })}>
-      <SidebarNavGroupToggle icon={toggleIcon} eventKey="0" setIsShow={setIsShow}>{toggleText}</SidebarNavGroupToggle>
+    <Accordion
+      as="li"
+      bsPrefix="nav-group"
+      className={classNames({ show: isShow })}
+    >
+      <SidebarNavGroupToggle
+        icon={toggleIcon}
+        eventKey="0"
+        setIsShow={setIsShow}
+      >
+        {toggleText}
+      </SidebarNavGroupToggle>
       <Accordion.Collapse eventKey="0">
-        <ul className="nav-group-items list-unstyled">
-          {children}
-        </ul>
+        <ul className="nav-group-items list-unstyled">{children}</ul>
       </Accordion.Collapse>
     </Accordion>
   )
 }
 
 export default function SidebarNav() {
-  const {user, Logout} = useContext(MarFashionContext);
-  console.log('ini dari sideNav',user);
+  const { user, Logout } = useContext(MarFashionContext)
+  console.log('ini dari sideNav', user)
 
   return (
     <ul className="list-unstyled">
       <SidebarNavTitle>Dashboard</SidebarNavTitle>
-      <SidebarNavItem icon={faShirt} href="/barang">Barang</SidebarNavItem>
-      <SidebarNavItem icon={faMoneyBill} href="/barang">Nota Penjualan</SidebarNavItem>
-      <SidebarNavItem icon={faPencil} href="typography.html">Karyawan</SidebarNavItem>
-      <SidebarNavItem icon={faChartPie} href="charts.html">Retur</SidebarNavItem>
-      <SidebarNavItem icon={faRightToBracket} href="login">Log Out</SidebarNavItem>
+      <SidebarNavItem icon={faShirt} href="/barang">
+        Barang
+      </SidebarNavItem>
+      <SidebarNavItem icon={faMoneyBill} href="/barang">
+        Nota Penjualan
+      </SidebarNavItem>
+      <SidebarNavItem icon={faPencil} href="/data-karyawan">
+        Karyawan
+      </SidebarNavItem>
+      <SidebarNavItem icon={faChartPie} href="charts.html">
+        Retur
+      </SidebarNavItem>
+      <SidebarNavItem icon={faRightToBracket} href="login">
+        Log Out
+      </SidebarNavItem>
     </ul>
   )
 }
