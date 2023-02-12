@@ -12,7 +12,7 @@ type handleShowType = {
   handleCloseEdit: () => void;
 }
 
-function EditModalKaryawan(props: handleShowType) {
+function EditModalPenjualan(props: handleShowType) {
   const {showEdit, editId, handleCloseEdit} = props
   const { register, handleSubmit } = useForm();
   const [ cookies ] = useCookies(["token"]);
@@ -25,7 +25,7 @@ function EditModalKaryawan(props: handleShowType) {
   }
 
   const handleEdit = (data: any) => {
-    axios.patch('http://localhost:4000/karyawan/' + editId, data, config).then(response => {
+    axios.patch('http://localhost:4000/nota-penjualan/' + editId, data, config).then(response => {
       alert("Data berhasil diperbarui")
       window.location.reload()
     })
@@ -44,34 +44,46 @@ function EditModalKaryawan(props: handleShowType) {
         </Modal.Header>
         <Modal.Body>
           <form onSubmit={handleSubmit(handleEdit)}>
-            <div className="mb-3">
+          <div className="mb-3">
               <label className="form-label">
-                Nama
+                Tanggal
               </label>
               <input
-                type="text"
+                type="date"
                 className="form-control"
-                {...register('nama', { required: true })}
+                {...register('tanggal', { required: true })}
               />
             </div>
             <div className="mb-3">
               <label className="form-label">
-                Alamat
+                Barang
               </label>
               <input
                 type="text"
                 className="form-control"
-                {...register('alamat', { required: true })}
+                {...register('barang', { required: true })}
               />
             </div>
             <div className="mb-3">
               <label className="form-label">
-                Nomor Telepon
+                Jumlah
               </label>
               <input
-                type="text"
+                type="number"
+                min="0"
                 className="form-control"
-                {...register('nomor_telepon', { required: true })}
+                {...register('jumlah', { required: true })}
+              />
+            </div>
+            <div className="mb-3">
+              <label className="form-label">
+                Harga Barang
+              </label>
+              <input
+                type="number"
+                min="0"
+                className="form-control"
+                {...register('harga', { required: true })}
               />
             </div>
             <Button variant="primary" onClick={() => handleEdit} type="submit">
@@ -87,4 +99,4 @@ function EditModalKaryawan(props: handleShowType) {
   );
 }
 
-export default EditModalKaryawan
+export default EditModalPenjualan

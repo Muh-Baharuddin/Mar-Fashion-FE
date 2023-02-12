@@ -9,6 +9,7 @@ import 'bootstrap-icons/font/bootstrap-icons.css'
 import { useCookies } from 'react-cookie'
 import DataTable from 'react-data-table-component'
 import AddModalPenjualan from '../Modal/AddModalPenjualan'
+import EditModalPenjualan from '../Modal/EditModalPenjualan'
 
 interface Data {
   id: string
@@ -29,9 +30,20 @@ const TablePenjualan = (props: handleShowType) => {
   const { showAdd, showEdit, setShowAdd, setShowEdit } = props
   const [cookies] = useCookies(['token', 'user'])
   const [data, setData] = useState<Data[]>([])
+  const [editId, setEditId] = useState('')
 
   const handleShowAdd = () => setShowAdd(true)
   const handleCloseAdd = () => setShowAdd(false)
+
+  const handleShowEdit = (id: string) => {
+    setEditId(id)
+    setShowEdit(true)
+  }
+
+  const handleCloseEdit = () => {
+    setEditId('')
+    setShowEdit(false)
+  }
 
   useEffect(() => {
     axios.get('http://localhost:4000/nota-penjualan', config).then((response) => {
@@ -60,6 +72,11 @@ const TablePenjualan = (props: handleShowType) => {
     <div className="card">
       <div className="card-header">
       <AddModalPenjualan showAdd={showAdd} handleCloseAdd={handleCloseAdd} />
+      <EditModalPenjualan
+          showEdit={showEdit}
+          editId={editId}
+          handleCloseEdit={handleCloseEdit}
+        />
         {cookies.user && (
           <button onClick={handleShowAdd} className="btn btn-primary">
             <i className="bi bi-plus-square"></i>
@@ -91,6 +108,7 @@ const TablePenjualan = (props: handleShowType) => {
                     {cookies.user && (
                       <td>
                         <button
+                          onClick={() => handleShowEdit(d.id)}
                           className="btn btn-primary ms-3"
                         >
                           <i className="bi bi-pencil-square"></i>
