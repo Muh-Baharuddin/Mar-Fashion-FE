@@ -149,7 +149,7 @@ export default function SidebarNav() {
       <SidebarNavItem icon={faPencil} href="/data-karyawan">
         Karyawan
       </SidebarNavItem>
-      <SidebarNavItem icon={faChartPie} href="charts.html">
+      <SidebarNavItem icon={faChartPie} href="/retur">
         Retur
       </SidebarNavItem>
       <SidebarNavItem icon={faRightToBracket} href="login">
