@@ -143,8 +143,8 @@ export default function SidebarNav() {
       <SidebarNavItem icon={faShirt} href="/data-barang">
         Barang
       </SidebarNavItem>
-      <SidebarNavItem icon={faMoneyBill} href="/nota-penjualan">
-        Nota Penjualan
+      <SidebarNavItem icon={faMoneyBill} href="/penjualan">
+        Penjualan
       </SidebarNavItem>
       <SidebarNavItem icon={faPencil} href="/data-karyawan">
         Karyawan

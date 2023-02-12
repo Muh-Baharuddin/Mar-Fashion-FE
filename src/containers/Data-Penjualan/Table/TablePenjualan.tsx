@@ -8,6 +8,7 @@ import axios from 'axios'
 import 'bootstrap-icons/font/bootstrap-icons.css'
 import { useCookies } from 'react-cookie'
 import DataTable from 'react-data-table-component'
+import AddModalPenjualan from '../Modal/AddModalPenjualan'
 
 interface Data {
   id: string
@@ -28,6 +29,9 @@ const TablePenjualan = (props: handleShowType) => {
   const { showAdd, showEdit, setShowAdd, setShowEdit } = props
   const [cookies] = useCookies(['token', 'user'])
   const [data, setData] = useState<Data[]>([])
+
+  const handleShowAdd = () => setShowAdd(true)
+  const handleCloseAdd = () => setShowAdd(false)
 
   useEffect(() => {
     axios.get('http://localhost:4000/nota-penjualan', config).then((response) => {
@@ -55,8 +59,9 @@ const TablePenjualan = (props: handleShowType) => {
   return (
     <div className="card">
       <div className="card-header">
+      <AddModalPenjualan showAdd={showAdd} handleCloseAdd={handleCloseAdd} />
         {cookies.user && (
-          <button className="btn btn-primary">
+          <button onClick={handleShowAdd} className="btn btn-primary">
             <i className="bi bi-plus-square"></i>
           </button>
         )}
