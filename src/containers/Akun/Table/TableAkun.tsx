@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import axios from 'axios'
+import Link from 'next/link'
 import 'bootstrap-icons/font/bootstrap-icons.css'
 import { useCookies } from 'react-cookie'
 import DataTable from 'react-data-table-component'
@@ -31,9 +32,11 @@ const TableAkun = () => {
     <div className="card">
       <div className="card-header">
         {cookies.user && (
-          <button className="btn btn-primary">
-            <i className="bi bi-plus-square"></i>
-          </button>
+          <Link href={'/register'}>
+            <button className="btn btn-primary">
+              <i className="bi bi-plus-square"></i>
+            </button>
+          </Link>
         )}
       </div>
       <div className="card-body">

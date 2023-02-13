@@ -125,8 +125,6 @@ export default function SidebarNav() {
     event.preventDefault()
     Logout()
   }
-  console.log('ini dari sideNav',user);
-
   return (
     <ul className="list-unstyled">
       <SidebarNavTitle>Dashboard</SidebarNavTitle>

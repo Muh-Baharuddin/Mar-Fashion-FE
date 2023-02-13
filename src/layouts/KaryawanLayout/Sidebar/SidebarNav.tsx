@@ -17,6 +17,7 @@ import React, {
   useContext,
   useEffect,
   useState,
+  SyntheticEvent,
 } from 'react'
 import {
   Accordion,
@@ -135,7 +136,10 @@ const SidebarNavGroup = (props: SidebarNavGroupProps) => {
 
 export default function SidebarNav() {
   const { user, Logout } = useContext(MarFashionContext)
-  console.log('ini dari sideNav', user)
+  const handleLogout = async (event: SyntheticEvent) => {
+    event.preventDefault()
+    Logout()
+  }
 
   return (
     <ul className="list-unstyled">
@@ -152,9 +156,9 @@ export default function SidebarNav() {
       <SidebarNavItem icon={faChartPie} href="charts.html">
         Retur
       </SidebarNavItem>
-      <SidebarNavItem icon={faRightToBracket} href="login">
-        Log Out
-      </SidebarNavItem>
+      <div onClick={handleLogout}>
+        <SidebarNavItem icon={faRightToBracket} href="/login">Log Out</SidebarNavItem>
+      </div>
     </ul>
   )
 }
