@@ -8,6 +8,7 @@ import axios from 'axios'
 import 'bootstrap-icons/font/bootstrap-icons.css'
 import { useCookies } from 'react-cookie'
 import DataTable from 'react-data-table-component'
+import AddModalSupplier from '../Modal/AddModalSupplier'
 
 interface Data {
   id: string
@@ -27,6 +28,9 @@ const TableSupplier = (props: handleShowType) => {
   const { showAdd, showEdit, setShowAdd, setShowEdit } = props
   const [cookies] = useCookies(['token', 'user'])
   const [data, setData] = useState<Data[]>([])
+
+  const handleShowAdd = () => setShowAdd(true)
+  const handleCloseAdd = () => setShowAdd(false)
 
   let token = cookies.token
   let config = {
@@ -54,8 +58,9 @@ const TableSupplier = (props: handleShowType) => {
   return (
     <div className="card">
       <div className="card-header">
+      <AddModalSupplier showAdd={showAdd} handleCloseAdd={handleCloseAdd} />
         {cookies.user && (
-          <button className="btn btn-primary">
+          <button onClick={handleShowAdd} className="btn btn-primary">
             <i className="bi bi-plus-square"></i>
           </button>
         )}
