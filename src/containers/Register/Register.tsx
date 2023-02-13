@@ -9,8 +9,8 @@ export const Register = () => {
           <Col md={6}>
             <Card className="mb-4 rounded-0">
               <Card.Body className="p-4">
-                <h1>Register</h1>
-                <p className="text-black-50">Buat Akun</p>
+                <h1>Buat Akun</h1>
+                <p className="text-black-50">Silahkan masukkan data akun</p>
                 <RegisterForm />
               </Card.Body>
             </Card>
