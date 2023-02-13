@@ -140,6 +140,7 @@ export default function SidebarNav() {
       <SidebarNavItem icon={faChartPie} href="charts.html">Supplier</SidebarNavItem>
       <SidebarNavItem icon={faChartPie} href="charts.html">Retur</SidebarNavItem>
       <SidebarNavGroup toggleIcon={faStar} toggleText="User">
+        <SidebarNavItem icon={faAddressCard} href="akun">Daftar Akun</SidebarNavItem>
         <SidebarNavItem icon={faAddressCard} href="register">Buat Akun</SidebarNavItem>
         <div onClick={Logout}>
           <SidebarNavItem icon={faRightToBracket} href="/">Log Out</SidebarNavItem>
