@@ -1,24 +1,19 @@
 import { AdminLayout } from '@layouts/AdminLayout'
-import { KaryawanLayout } from '@layouts/KaryawanLayout'
-import { useCookies } from 'react-cookie'
+import { useState } from 'react'
 import TableAkun from './Table/TableAkun'
 
 export const DataAkun = () => {
-  const [cookies] = useCookies(['user'])
+  const [showEdit, setShowEdit] = useState(false)
   return (
     <div>
-    { cookies.user?.role == "ADMIN" ? 
       <AdminLayout>
         <div className="container">
-          <TableAkun />
+          <TableAkun
+            showEdit={showEdit}
+            setShowEdit={setShowEdit}
+          />
         </div>
-      </AdminLayout> :
-      <KaryawanLayout>
-        <div className="container">
-          <TableAkun />
-        </div>
-      </KaryawanLayout>
-    }
+      </AdminLayout>
     </div>
   )
 }
