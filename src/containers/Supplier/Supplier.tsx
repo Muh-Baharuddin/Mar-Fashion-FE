@@ -2,7 +2,7 @@ import { AdminLayout } from '@layouts/AdminLayout'
 import { KaryawanLayout } from '@layouts/KaryawanLayout'
 import { useState } from 'react'
 import { useCookies } from 'react-cookie'
-import TablePembelian from './Table/TablePembelian'
+import TableSupplier from './Table/TableSupplier'
 
 export const DataSupplier = () => {
   const [cookies] = useCookies(['user'])
@@ -13,7 +13,7 @@ export const DataSupplier = () => {
     { cookies.user?.role == "ADMIN" ? 
       <AdminLayout>
         <div className="container">
-          <TablePembelian
+          <TableSupplier
             showAdd={showAdd}
             showEdit={showEdit}
             setShowAdd={setShowAdd}
@@ -23,7 +23,7 @@ export const DataSupplier = () => {
       </AdminLayout> :
       <KaryawanLayout>
         <div className="container">
-          <TablePembelian
+          <TableSupplier
             showAdd={showAdd}
             showEdit={showEdit}
             setShowAdd={setShowAdd}

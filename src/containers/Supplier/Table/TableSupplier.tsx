@@ -41,6 +41,16 @@ const TableSupplier = (props: handleShowType) => {
     })
   }, [])
 
+  const handleDelete = (id: string) => {
+    axios
+      .delete('http://localhost:4000/supplier/' + id, config)
+      .then((response) => {
+        console.log('ini nilai respon', response)
+        alert(response.data.message)
+        window.location.reload()
+      })
+  }
+
   return (
     <div className="card">
       <div className="card-header">
@@ -78,6 +88,7 @@ const TableSupplier = (props: handleShowType) => {
                           <i className="bi bi-pencil-square"></i>
                         </button>
                         <button
+                          onClick={() => handleDelete(d.id)}
                           className="btn btn-danger ms-3"
                         >
                           <i className="bi bi-trash3-fill"></i>
