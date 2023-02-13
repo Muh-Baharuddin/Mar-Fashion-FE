@@ -125,8 +125,6 @@ export default function SidebarNav() {
     event.preventDefault()
     Logout()
   }
-  console.log('ini dari sideNav',user);
-
   return (
     <ul className="list-unstyled">
       <SidebarNavTitle>Dashboard</SidebarNavTitle>
@@ -140,9 +138,10 @@ export default function SidebarNav() {
       <SidebarNavItem icon={faChartPie} href="charts.html">Supplier</SidebarNavItem>
       <SidebarNavItem icon={faChartPie} href="charts.html">Retur</SidebarNavItem>
       <SidebarNavGroup toggleIcon={faStar} toggleText="User">
+        <SidebarNavItem icon={faAddressCard} href="akun">Daftar Akun</SidebarNavItem>
         <SidebarNavItem icon={faAddressCard} href="register">Buat Akun</SidebarNavItem>
-        <div onClick={Logout}>
-          <SidebarNavItem icon={faRightToBracket} href="/">Log Out</SidebarNavItem>
+        <div onClick={handleLogout}>
+          <SidebarNavItem icon={faRightToBracket} href="/login">Log Out</SidebarNavItem>
         </div>
       </SidebarNavGroup>
     </ul>
