@@ -1,4 +1,4 @@
-import { DataPembelian } from "../containers/Data-Pembelian"
+import { DataPembelian } from "../containers/Pembelian"
 
 const NotaPembelianPage = () => {
   return (

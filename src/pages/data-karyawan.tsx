@@ -1,4 +1,4 @@
-import { DataKaryawan } from '../containers/Data-Karyawan'
+import { DataKaryawan } from '../containers/Karyawan'
 
 const DataKaryawanPage = () => {
   return (

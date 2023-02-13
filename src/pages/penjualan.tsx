@@ -1,4 +1,4 @@
-import { DataPenjualan } from '../containers/Data-Penjualan'
+import { DataPenjualan } from '../containers/Penjualan'
 
 const NotaPenjualanPage = () => {
   return (
