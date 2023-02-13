@@ -2,8 +2,8 @@ import { AdminLayout } from '@layouts/AdminLayout'
 import { useEffect, useState } from 'react'
 import { useCookies } from 'react-cookie'
 import axios from 'axios'
-import AddModalPembelian from './AddModalPembelian'
-import EditModalPembelian from './EditModalPembelian'
+import AddModalPembelian from './Modal/AddModalPembelian'
+import EditModalPembelian from './Modal/EditModalPembelian'
 import Pagination from 'react-paginate'
 
 interface Data {
