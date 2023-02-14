@@ -56,16 +56,15 @@ const TablePenjualan = (props: handleShowType) => {
   }
 
   useEffect(() => {
-    axios.get('http://localhost:4000/nota-penjualan').then((response) => {
+    axios.get(`${process.env.API_ENDPOINT}nota-penjualan`).then((response) => {
       setData(response.data)
     })
   }, [])
 
   const handleDelete = (id: string) => {
     axios
-      .delete('http://localhost:4000/nota-penjualan/' + id)
+      .delete(`${process.env.API_ENDPOINT}nota-penjualan/` + id)
       .then((response) => {
-        console.log('ini nilai respon', response)
         alert(response.data.message)
         window.location.reload()
       })
