@@ -7,7 +7,6 @@ import {
 import axios from 'axios'
 import Pagination from 'react-paginate'
 import 'bootstrap-icons/font/bootstrap-icons.css'
-import { useCookies } from 'react-cookie'
 import AddModalPenjualan from '../Modal/AddModalPenjualan'
 import EditModalPenjualan from '../Modal/EditModalPenjualan'
 import { useMarContext } from 'src/context/MarFashionProvider'
@@ -30,7 +29,6 @@ type handleShowType = {
 const TablePenjualan = (props: handleShowType) => {
   const { showAdd, showEdit, setShowAdd, setShowEdit } = props
   const { user } = useMarContext()
-  const [cookies] = useCookies(['token'])
   const [data, setData] = useState<Data[]>([])
   const [editId, setEditId] = useState('')
 
@@ -57,22 +55,15 @@ const TablePenjualan = (props: handleShowType) => {
     setShowEdit(false)
   }
 
-  let token = cookies.token
-  let config = {
-    headers: {
-      Authorization: 'Bearer ' + token,
-    },
-  }
-
   useEffect(() => {
-    axios.get('http://localhost:4000/nota-penjualan', config).then((response) => {
+    axios.get('http://localhost:4000/nota-penjualan').then((response) => {
       setData(response.data)
     })
   }, [])
 
   const handleDelete = (id: string) => {
     axios
-      .delete('http://localhost:4000/nota-penjualan/' + id, config)
+      .delete('http://localhost:4000/nota-penjualan/' + id)
       .then((response) => {
         console.log('ini nilai respon', response)
         alert(response.data.message)
