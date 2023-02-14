@@ -13,14 +13,14 @@ import {
   faMoneyBill,
 } from '@fortawesome/free-solid-svg-icons'
 import React, {
-  PropsWithChildren, useContext, useEffect, useState, SyntheticEvent,
+  PropsWithChildren, useContext, useEffect, useState
 } from 'react'
 import {
   Accordion, AccordionContext, Button, Nav, useAccordionButton,
 } from 'react-bootstrap'
 import classNames from 'classnames'
 import Link from 'next/link'
-import { MarFashionContext } from 'src/context/MarFashionProvider'
+import { useMarContext } from 'src/context/MarFashionProvider'
 
 type SidebarNavItemProps = {
   href: string;
@@ -119,13 +119,7 @@ const SidebarNavGroup = (props: SidebarNavGroupProps) => {
 }
 
 export default function SidebarNav() {
-
-  const { user, Logout } = useContext(MarFashionContext);
-  const handleLogout = async (event: SyntheticEvent) => {
-    event.preventDefault()
-    Logout()
-  }
-  console.log('ini dari sideNav',user);
+  const { logout } = useMarContext()
 
   return (
     <ul className="list-unstyled">
@@ -141,7 +135,7 @@ export default function SidebarNav() {
       <SidebarNavItem icon={faChartPie} href="charts.html">Retur</SidebarNavItem>
       <SidebarNavGroup toggleIcon={faStar} toggleText="User">
         <SidebarNavItem icon={faAddressCard} href="register">Buat Akun</SidebarNavItem>
-        <div onClick={Logout}>
+        <div onClick={logout}>
           <SidebarNavItem icon={faRightToBracket} href="/">Log Out</SidebarNavItem>
         </div>
       </SidebarNavGroup>
