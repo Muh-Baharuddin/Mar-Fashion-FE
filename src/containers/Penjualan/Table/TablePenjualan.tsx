@@ -5,6 +5,7 @@ import {
   useState,
 } from 'react'
 import axios from 'axios'
+import Pagination from 'react-paginate'
 import 'bootstrap-icons/font/bootstrap-icons.css'
 import { useCookies } from 'react-cookie'
 import AddModalPenjualan from '../Modal/AddModalPenjualan'
@@ -32,6 +33,16 @@ const TablePenjualan = (props: handleShowType) => {
   const [cookies] = useCookies(['token'])
   const [data, setData] = useState<Data[]>([])
   const [editId, setEditId] = useState('')
+
+  const [currentPage, setCurrentPage] = useState(0);
+  const [perPage, setPerPage] = useState(5);
+  const [offset, setOffset] = useState(0);
+
+  const handlePageClick = (e: { selected: number }) => {
+    const selectedPage = e.selected;
+    setCurrentPage(selectedPage);
+    setOffset(selectedPage * perPage);
+  }
 
   const handleShowAdd = () => setShowAdd(true)
   const handleCloseAdd = () => setShowAdd(false)
@@ -97,10 +108,12 @@ const TablePenjualan = (props: handleShowType) => {
           </thead>
         <tbody>
             {data &&
-              Object.values(data).map((d, index) => {
+              Object.values(data)
+              .slice(offset, offset + perPage)
+              .map((d, index) => {
                 return (
                   <tr key={d.id}>
-                    <td>{++index}</td>
+                    <td>{index + 1 + offset}</td>
                     <td>{d.tanggal}</td>
                     <td>{d.barang}</td>
                     <td>{d.jumlah}</td>
@@ -127,6 +140,18 @@ const TablePenjualan = (props: handleShowType) => {
           </tbody>
         </table>
       </div>
+      <Pagination
+        previousLabel={'previous'}
+        nextLabel={'next'}
+        pageCount={Math.ceil(data.length / perPage)}
+        marginPagesDisplayed={0}
+        pageRangeDisplayed={3}
+        onPageChange={handlePageClick}
+        containerClassName="pagination-container" 
+        activeClassName="selected"
+        disabledClassName="disabled"
+        pageLinkClassName={'pagination-item'}
+      />
     </div>
   )
 }
