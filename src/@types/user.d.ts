@@ -11,6 +11,6 @@ export interface IUser {
 export type UserContextType = {
   user: IUser;
   setUser: Dispatch<SetStateAction<IUser>>;
-  Login: (userName: string, password: string) => void;
-  Logout: () => void;
+  login: (userName: string, password: string) => void;
+  logout: () => void;
 };

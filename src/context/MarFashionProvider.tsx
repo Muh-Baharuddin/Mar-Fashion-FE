@@ -38,7 +38,7 @@ const MarFashionProvider: FC<Props> = ({ children }) => {
     setUser(cookies.user) 
   }, [])
 
-  const Login = (userName: string, password: string) => {
+  const login = (userName: string, password: string) => {
     axios({
       method: 'post',
       url: `${process.env.API_ENDPOINT}auth/login`,
@@ -62,14 +62,14 @@ const MarFashionProvider: FC<Props> = ({ children }) => {
     })
   }
 
-  const Logout = () => {
+  const logout = () => {
     removeCookie("user")
     removeCookie("token")
     router.push('/', undefined, { shallow: true })
   }
 
   return (
-    <MarFashionContext.Provider value={{ user, setUser, Login, Logout }}>
+    <MarFashionContext.Provider value={{ user, setUser, login, logout }}>
       {children}
     </MarFashionContext.Provider>
   )
