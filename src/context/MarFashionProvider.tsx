@@ -1,7 +1,7 @@
 import axios from "axios";
 import jwtDecode from "jwt-decode";
 import { useRouter } from "next/router";
-import { createContext, FC, useEffect, useState } from "react";
+import { createContext, FC, useContext, useEffect, useState } from "react";
 import { useCookies } from "react-cookie";
 import { IUser, UserContextType } from "../@types/user";
 
@@ -20,7 +20,11 @@ const defaultState = {
   setUser: (user: IUser) => {}
 } as UserContextType
 
-export const MarFashionContext = createContext(defaultState)
+const MarFashionContext = createContext(defaultState)
+
+export const useMarContext = () => {
+  return useContext(MarFashionContext)
+} 
 
 const MarFashionProvider: FC<Props> = ({ children }) => {
   const router = useRouter()

@@ -2,21 +2,17 @@ import { Button, Form, InputGroup, Row } from 'react-bootstrap'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faUser } from '@fortawesome/free-regular-svg-icons'
 import { faLock } from '@fortawesome/free-solid-svg-icons'
-import { SyntheticEvent, useContext, useEffect, useState } from 'react'
-import { MarFashionContext } from 'src/context/MarFashionProvider'
+import { SyntheticEvent, useContext, useState } from 'react'
+import { useMarContext } from 'src/context/MarFashionProvider'
 
 export const LoginForm = () => {
-  const { user, Login } = useContext(MarFashionContext);
+  const { login } = useMarContext()
   const [userName, setUserName] = useState('')
   const [password, setPassword] = useState('')
 
-  useEffect(() => {
-    console.log('login form', user)
-  },[user])
-  
   const handleSubmit = async (event: SyntheticEvent) => {
     event.preventDefault()
-    Login(userName, password)
+    login(userName, password)
     setUserName('')
     setPassword('')
   }

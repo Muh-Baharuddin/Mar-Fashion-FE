@@ -20,7 +20,7 @@ import {
 } from 'react-bootstrap'
 import classNames from 'classnames'
 import Link from 'next/link'
-import { MarFashionContext } from 'src/context/MarFashionProvider'
+import { useMarContext } from 'src/context/MarFashionProvider'
 
 type SidebarNavItemProps = {
   href: string;
@@ -120,12 +120,11 @@ const SidebarNavGroup = (props: SidebarNavGroupProps) => {
 
 export default function SidebarNav() {
 
-  const { user, Logout } = useContext(MarFashionContext);
+  const { logout } = useMarContext()
   const handleLogout = async (event: SyntheticEvent) => {
     event.preventDefault()
-    Logout()
+    logout()
   }
-  console.log('ini dari sideNav',user);
 
   return (
     <ul className="list-unstyled">
@@ -141,7 +140,7 @@ export default function SidebarNav() {
       <SidebarNavItem icon={faChartPie} href="charts.html">Retur</SidebarNavItem>
       <SidebarNavGroup toggleIcon={faStar} toggleText="User">
         <SidebarNavItem icon={faAddressCard} href="register">Buat Akun</SidebarNavItem>
-        <div onClick={Logout}>
+        <div onClick={handleLogout}>
           <SidebarNavItem icon={faRightToBracket} href="/">Log Out</SidebarNavItem>
         </div>
       </SidebarNavGroup>
