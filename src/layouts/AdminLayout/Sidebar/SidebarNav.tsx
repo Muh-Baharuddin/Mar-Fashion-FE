@@ -13,7 +13,7 @@ import {
   faMoneyBill,
 } from '@fortawesome/free-solid-svg-icons'
 import React, {
-  PropsWithChildren, useContext, useEffect, useState, SyntheticEvent,
+  PropsWithChildren, useContext, useEffect, useState
 } from 'react'
 import {
   Accordion, AccordionContext, Button, Nav, useAccordionButton,
@@ -119,12 +119,7 @@ const SidebarNavGroup = (props: SidebarNavGroupProps) => {
 }
 
 export default function SidebarNav() {
-
   const { logout } = useMarContext()
-  const handleLogout = async (event: SyntheticEvent) => {
-    event.preventDefault()
-    logout()
-  }
 
   return (
     <ul className="list-unstyled">
@@ -140,7 +135,7 @@ export default function SidebarNav() {
       <SidebarNavItem icon={faChartPie} href="charts.html">Retur</SidebarNavItem>
       <SidebarNavGroup toggleIcon={faStar} toggleText="User">
         <SidebarNavItem icon={faAddressCard} href="register">Buat Akun</SidebarNavItem>
-        <div onClick={handleLogout}>
+        <div onClick={logout}>
           <SidebarNavItem icon={faRightToBracket} href="/">Log Out</SidebarNavItem>
         </div>
       </SidebarNavGroup>

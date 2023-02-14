@@ -1,11 +1,11 @@
 import { AdminLayout } from '@layouts/AdminLayout'
-import { useContext, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useCookies } from 'react-cookie'
 import axios from 'axios'
 import AddModalPembelian from './Modal/AddModalPembelian'
 import EditModalPembelian from './Modal/EditModalPembelian'
 import Pagination from 'react-paginate'
-import { MarFashionContext } from 'src/context/MarFashionProvider'
+import { useMarContext } from 'src/context/MarFashionProvider'
 
 interface Data {
   id: string
@@ -16,8 +16,8 @@ interface Data {
 }
 
 export const DataPembelian = () => {
-  const { user } = useContext(MarFashionContext)
-  const [cookies] = useCookies(['token', 'user'])
+  const { user } = useMarContext()
+  const [cookies] = useCookies(['token'])
   const [data, setData] = useState<Data[]>([])
   const [showAdd, setShowAdd] = useState(false)
   const [showEdit, setShowEdit] = useState(false)

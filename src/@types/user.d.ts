@@ -9,8 +9,8 @@ export interface IUser {
 };
 
 export type UserContextType = {
-  user: IUser;
-  setUser: Dispatch<SetStateAction<IUser>>;
+  user: IUser | undefined;
+  setUser: Dispatch<SetStateAction<IUser | undefined>>;
   login: (userName: string, password: string) => void;
   logout: () => void;
 };

@@ -10,14 +10,8 @@ interface Props {
 }
 
 const defaultState = {
-  user: {
-    id: '',
-    userName: '',
-    role: '',
-    exp: 0,
-    iat: 0,
-  },
-  setUser: (user: IUser) => {}
+  user: undefined,
+  setUser: (user: IUser) => {},
 } as UserContextType
 
 const MarFashionContext = createContext(defaultState)
@@ -34,13 +28,7 @@ const MarFashionProvider: FC<Props> = ({ children }) => {
     setCookie('token', null)
   }
 
-  const [user, setUser] = useState<IUser>({
-    id: '',
-    userName: '',
-    role: '',
-    exp: 0,
-    iat: 0,
-  });
+  const [user, setUser] = useState<IUser | undefined>(undefined);
 
   useEffect(() => {
     setUser(cookies.user) 
