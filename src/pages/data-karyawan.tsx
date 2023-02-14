@@ -1,21 +1,11 @@
-import { AdminLayout } from '@layouts/AdminLayout'
-import { KaryawanLayout } from '@layouts/KaryawanLayout'
+import { UserRoleCondition } from 'src/components/Condition/UserRoleCondition'
 import { DataKaryawan } from '../containers/Karyawan'
-import { useMarContext } from 'src/context/MarFashionProvider'
 
 const DataKaryawanPage = () => {
-  const { user } = useMarContext()
   return (
-    <div>
-      { user?.role == "ADMIN" ? 
-        <AdminLayout>
-          <DataKaryawan />
-        </AdminLayout> :
-        <KaryawanLayout>
-          <DataKaryawan />
-        </KaryawanLayout>
-      }
-    </div>
+    <UserRoleCondition>
+      <DataKaryawan />
+    </UserRoleCondition>
   )
 }
 
