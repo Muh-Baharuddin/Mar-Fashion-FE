@@ -1,10 +1,11 @@
 import { AdminLayout } from '@layouts/AdminLayout'
-import { useEffect, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { useCookies } from 'react-cookie'
 import axios from 'axios'
 import AddModalPembelian from './Modal/AddModalPembelian'
 import EditModalPembelian from './Modal/EditModalPembelian'
 import Pagination from 'react-paginate'
+import { MarFashionContext } from 'src/context/MarFashionProvider'
 
 interface Data {
   id: string
@@ -15,6 +16,7 @@ interface Data {
 }
 
 export const DataPembelian = () => {
+  const { user } = useContext(MarFashionContext)
   const [cookies] = useCookies(['token', 'user'])
   const [data, setData] = useState<Data[]>([])
   const [showAdd, setShowAdd] = useState(false)
@@ -78,7 +80,7 @@ export const DataPembelian = () => {
               editId={editId}
               handleCloseEdit={handleCloseEdit}
             />
-            {cookies.user && (
+            { user && (
               <button onClick={handleShowAdd} className="btn btn-primary">
                 <i className="bi bi-plus-square"></i>
               </button>
@@ -93,7 +95,7 @@ export const DataPembelian = () => {
                   <th>Barang</th>
                   <th>Supplier</th>
                   <th>Total Biaya</th>
-                  {cookies.user && <th>Action</th>}
+                  { user && <th>Action</th>}
                 </tr>
               </thead>
               <tbody>
@@ -108,7 +110,7 @@ export const DataPembelian = () => {
                         <td>{d.supplier}</td>
                         <td>{d.barang}</td>
                         <td>{d.biaya}</td>
-                        {cookies.user && (
+                        { user && (
                         <td>
                           <button
                             onClick={() => handleShowEdit(d.id)}

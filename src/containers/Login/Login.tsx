@@ -6,9 +6,6 @@ import { useContext, useState } from 'react'
 import { GuessLayout } from '@layouts/GuessLayout'
 
 export const Login = () => {
-  const { user } = useContext(MarFashionContext);
-  console.log('Login ', user.userName)
-
   return (
     <GuessLayout>
       <div className="bg-light min-vh-100 d-flex flex-row align-items-center dark:bg-transparent">
@@ -19,7 +16,7 @@ export const Login = () => {
                 <Col md={7} className="bg-white border p-5">
                   <div className="">
                     <h1>Login</h1>
-                    <p className="text-black-50">Silahkan masukkan akun anda {user.userName}</p>
+                    <p className="text-black-50">Silahkan masukkan akun anda</p>
                       <LoginForm />
                   </div>
                 </Col>

@@ -13,6 +13,4 @@ export type UserContextType = {
   setUser: Dispatch<SetStateAction<IUser>>;
   Login: (userName: string, password: string) => void;
   Logout: () => void;
-  login: () => void;
-  isLogin: boolean;
 };
