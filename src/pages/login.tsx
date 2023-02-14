@@ -1,8 +1,12 @@
+import { GuessLayout } from '@layouts/GuessLayout'
 import { Login } from '../containers/Login'
+
 
 const LoginPage = () => {
   return (
-    <Login />
+    <GuessLayout>
+      <Login />
+    </GuessLayout>
   )
 }
 
