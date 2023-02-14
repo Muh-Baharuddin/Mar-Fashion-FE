@@ -23,6 +23,7 @@ export const useMarContext = () => {
 const MarFashionProvider: FC<Props> = ({ children }) => {
   const router = useRouter()
   const [cookies, setCookie, removeCookie] = useCookies(["user", "token"]);
+  const [myToken, setMyToken] = useState()
 
   if(!cookies.token) {
     setCookie('token', null)
@@ -31,7 +32,8 @@ const MarFashionProvider: FC<Props> = ({ children }) => {
   const [user, setUser] = useState<IUser | undefined>(undefined);
 
   useEffect(() => {
-    setUser(cookies.user) 
+    setUser(cookies.user)
+    setMyToken(cookies.token) 
   }, [])
 
   const login = (userName: string, password: string) => {
@@ -45,6 +47,7 @@ const MarFashionProvider: FC<Props> = ({ children }) => {
     }).then((response) => {
       const token = response.data.accessToken;
       const userData = jwtDecode<IUser>(token);
+      setMyToken(token);
       setCookie('token', token, {
         path: '/'
       });
@@ -65,7 +68,7 @@ const MarFashionProvider: FC<Props> = ({ children }) => {
   }
 
   return (
-    <MarFashionContext.Provider value={{ user, setUser, login, logout }}>
+    <MarFashionContext.Provider value={{ user, setUser, login, logout, myToken }}>
       {children}
     </MarFashionContext.Provider>
   )

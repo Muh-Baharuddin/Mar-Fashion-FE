@@ -13,4 +13,5 @@ export type UserContextType = {
   setUser: Dispatch<SetStateAction<IUser | undefined>>;
   login: (userName: string, password: string) => void;
   logout: () => void;
+  myToken: string | undefined;
 };
