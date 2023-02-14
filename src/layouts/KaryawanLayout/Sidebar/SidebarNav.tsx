@@ -27,7 +27,7 @@ import {
 } from 'react-bootstrap'
 import classNames from 'classnames'
 import Link from 'next/link'
-import { MarFashionContext } from 'src/context/MarFashionProvider'
+import { useMarContext } from 'src/context/MarFashionProvider'
 
 type SidebarNavItemProps = {
   href: string
@@ -134,8 +134,7 @@ const SidebarNavGroup = (props: SidebarNavGroupProps) => {
 }
 
 export default function SidebarNav() {
-  const { user, Logout } = useContext(MarFashionContext)
-  console.log('ini dari sideNav', user)
+  const { logout } = useMarContext()
 
   return (
     <ul className="list-unstyled">
@@ -152,9 +151,11 @@ export default function SidebarNav() {
       <SidebarNavItem icon={faChartPie} href="charts.html">
         Retur
       </SidebarNavItem>
-      <SidebarNavItem icon={faRightToBracket} href="login">
-        Log Out
-      </SidebarNavItem>
+      <div onClick={logout}>
+        <SidebarNavItem icon={faRightToBracket} href="login">
+          Log Out
+        </SidebarNavItem>
+      </div>
     </ul>
   )
 }

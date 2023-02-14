@@ -1,7 +1,7 @@
 import axios from "axios";
 import jwtDecode from "jwt-decode";
 import { useRouter } from "next/router";
-import { createContext, FC, useState } from "react";
+import { createContext, FC, useContext, useEffect, useState } from "react";
 import { useCookies } from "react-cookie";
 import { IUser, UserContextType } from "../@types/user";
 
@@ -10,32 +10,31 @@ interface Props {
 }
 
 const defaultState = {
-  user: {
-    id: '',
-    userName: '',
-    role: '',
-    exp: 0,
-    iat: 0,
-  },
-  setUser: (user: IUser) => {}
+  user: undefined,
+  setUser: (user: IUser) => {},
 } as UserContextType
 
-export const MarFashionContext = createContext(defaultState)
+const MarFashionContext = createContext(defaultState)
+
+export const useMarContext = () => {
+  return useContext(MarFashionContext)
+} 
 
 const MarFashionProvider: FC<Props> = ({ children }) => {
   const router = useRouter()
   const [cookies, setCookie, removeCookie] = useCookies(["user", "token"]);
-  const [isLogin, setIsLogin] = useState(false);
 
-  const [user, setUser] = useState<IUser>({
-    id: '',
-    userName: '',
-    role: '',
-    exp: 0,
-    iat: 0,
-  });
+  if(!cookies.token) {
+    setCookie('token', null)
+  }
 
-  const Login = (userName: string, password: string) => {
+  const [user, setUser] = useState<IUser | undefined>(undefined);
+
+  useEffect(() => {
+    setUser(cookies.user) 
+  }, [])
+
+  const login = (userName: string, password: string) => {
     axios({
       method: 'post',
       url: `${process.env.API_ENDPOINT}auth/login`,
@@ -44,12 +43,8 @@ const MarFashionProvider: FC<Props> = ({ children }) => {
         password,
       },
     }).then((response) => {
-      console.log(response.data)
-      console.log(response.status)
       const token = response.data.accessToken;
       const userData = jwtDecode<IUser>(token);
-      setUser(userData);
-      setIsLogin(true);
       setCookie('token', token, {
         path: '/'
       });
@@ -63,19 +58,14 @@ const MarFashionProvider: FC<Props> = ({ children }) => {
     })
   }
 
-  const Logout = () => {
+  const logout = () => {
     removeCookie("user")
     removeCookie("token")
-    setIsLogin(false);
     router.push('/', undefined, { shallow: true })
   }
 
-  const login = () => {
-    setIsLogin(true);
-  }
-
   return (
-    <MarFashionContext.Provider value={{ user, setUser, Login, Logout, login, isLogin }}>
+    <MarFashionContext.Provider value={{ user, setUser, login, logout }}>
       {children}
     </MarFashionContext.Provider>
   )
