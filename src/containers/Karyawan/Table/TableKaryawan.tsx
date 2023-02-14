@@ -5,11 +5,12 @@ import {
   useState,
 } from 'react'
 import { useCookies } from 'react-cookie'
-import 'bootstrap-icons/font/bootstrap-icons.css'
+import { useMarContext } from 'src/context/MarFashionProvider'
 import axios from 'axios'
+import Pagination from 'react-paginate'
+import 'bootstrap-icons/font/bootstrap-icons.css'
 import AddModalKaryawan from '../Modal/AddModalKaryawan'
 import EditModalKaryawan from '../Modal/EditModalKaryawan'
-import { useMarContext } from 'src/context/MarFashionProvider'
 
 interface Data {
   id: string
@@ -27,10 +28,20 @@ type handleShowType = {
 
 export const TableKaryawan = (props: handleShowType) => {
   const { showAdd, showEdit, setShowAdd, setShowEdit } = props
-  const [cookies] = useCookies(['token', 'user'])
+  const [cookies] = useCookies(['token'])
   const { user } = useMarContext()
   const [data, setData] = useState<Data[]>([])
   const [editId, setEditId] = useState('')
+
+  const [currentPage, setCurrentPage] = useState(0);
+  const [perPage, setPerPage] = useState(5);
+  const [offset, setOffset] = useState(0);
+
+  const handlePageClick = (e: { selected: number }) => {
+    const selectedPage = e.selected;
+    setCurrentPage(selectedPage);
+    setOffset(selectedPage * perPage);
+  }
 
   const handleShowAdd = () => setShowAdd(true)
   const handleCloseAdd = () => setShowAdd(false)
@@ -95,10 +106,12 @@ export const TableKaryawan = (props: handleShowType) => {
           </thead>
           <tbody>
             {data &&
-              Object.values(data).map((d, index) => {
+              Object.values(data)
+              .slice(offset, offset + perPage)
+              .map((d, index) => {
                 return (
                   <tr key={d.id}>
-                    <td>{++index}</td>
+                    <td>{index + 1 + offset}</td>
                     <td>{d.nama}</td>
                     <td>{d.alamat}</td>
                     <td>{d.nomor_telepon}</td>
@@ -123,6 +136,18 @@ export const TableKaryawan = (props: handleShowType) => {
               })}
           </tbody>
         </table>
+        <Pagination
+          previousLabel={'previous'}
+          nextLabel={'next'}
+          pageCount={Math.ceil(data.length / perPage)}
+          marginPagesDisplayed={0}
+          pageRangeDisplayed={3}
+          onPageChange={handlePageClick}
+          containerClassName="pagination-container" 
+          activeClassName="selected"
+          disabledClassName="disabled"
+          pageLinkClassName={'pagination-item'}
+        />
       </div>
     </div>
   )
