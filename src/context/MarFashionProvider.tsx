@@ -23,7 +23,6 @@ export const useMarContext = () => {
 const MarFashionProvider: FC<Props> = ({ children }) => {
   const router = useRouter()
   const [cookies, setCookie, removeCookie] = useCookies(["user", "token"]);
-  const [myToken, setMyToken] = useState()
 
   if(!cookies.token) {
     setCookie('token', null)
@@ -33,7 +32,6 @@ const MarFashionProvider: FC<Props> = ({ children }) => {
 
   useEffect(() => {
     setUser(cookies.user)
-    setMyToken(cookies.token)
     axios.defaults.headers.common['Authorization'] = "Bearer " + cookies.token; 
   }, [])
 
@@ -48,7 +46,6 @@ const MarFashionProvider: FC<Props> = ({ children }) => {
     }).then((response) => {
       const token = response.data.accessToken;
       const userData = jwtDecode<IUser>(token);
-      setMyToken(token);
       setCookie('token', token, {
         path: '/'
       });
@@ -69,7 +66,7 @@ const MarFashionProvider: FC<Props> = ({ children }) => {
   }
 
   return (
-    <MarFashionContext.Provider value={{ user, setUser, login, logout, myToken }}>
+    <MarFashionContext.Provider value={{ user, setUser, login, logout }}>
       {children}
     </MarFashionContext.Provider>
   )
