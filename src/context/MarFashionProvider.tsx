@@ -30,6 +30,10 @@ const MarFashionProvider: FC<Props> = ({ children }) => {
   const router = useRouter()
   const [cookies, setCookie, removeCookie] = useCookies(["user", "token"]);
 
+  if(!cookies.token) {
+    setCookie('token', null)
+  }
+
   const [user, setUser] = useState<IUser>({
     id: '',
     userName: '',
