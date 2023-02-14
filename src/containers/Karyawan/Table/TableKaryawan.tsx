@@ -4,7 +4,6 @@ import {
   useEffect,
   useState,
 } from 'react'
-import { useCookies } from 'react-cookie'
 import { useMarContext } from 'src/context/MarFashionProvider'
 import axios from 'axios'
 import Pagination from 'react-paginate'
@@ -28,7 +27,6 @@ type handleShowType = {
 
 export const TableKaryawan = (props: handleShowType) => {
   const { showAdd, showEdit, setShowAdd, setShowEdit } = props
-  const [cookies] = useCookies(['token'])
   const { user } = useMarContext()
   const [data, setData] = useState<Data[]>([])
   const [editId, setEditId] = useState('')
@@ -56,24 +54,16 @@ export const TableKaryawan = (props: handleShowType) => {
     setShowEdit(false)
   }
 
-  let token = cookies.token
-  let config = {
-    headers: {
-      Authorization: 'Bearer ' + token,
-    },
-  }
-
   useEffect(() => {
-    axios.get('http://localhost:4000/karyawan', config).then((response) => {
+    axios.get(`${process.env.API_ENDPOINT}karyawan`).then((response) => {
       setData(response.data)
     })
   }, [])
 
   const handleDelete = (id: string) => {
     axios
-      .delete('http://localhost:4000/karyawan/' + id, config)
+      .delete(`${process.env.API_ENDPOINT}karyawan/` + id)
       .then((response) => {
-        console.log('ini nilai respon', response)
         alert(response.data.message)
         window.location.reload()
       })
