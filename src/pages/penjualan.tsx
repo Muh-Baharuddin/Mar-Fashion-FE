@@ -1,11 +1,12 @@
-import { UserLayout } from "@layouts/UserLayout/UserLayout"
+import { DashboardLayout } from "@layouts/DashboardLayout"
 import { DataPenjualan } from "../containers/Penjualan"
+
 
 const NotaPenjualanPage = () => {
   return (
-    <UserLayout>
+    <DashboardLayout>
       <DataPenjualan />
-    </UserLayout>
+    </DashboardLayout>
   )
 }
 

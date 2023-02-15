@@ -1,8 +1,12 @@
-import React from 'react'
-import { KaryawanLayout } from '@layouts/KaryawanLayout/index'
+import { DashboardLayout } from '@layouts/DashboardLayout'
+import { DataKaryawan } from '../containers/Karyawan'
 
-const KaryawanPage = () => {
-  return <KaryawanLayout />
+const DataKaryawanPage = () => {
+  return (
+    <DashboardLayout>
+      <DataKaryawan />
+    </DashboardLayout>
+  )
 }
 
-export default KaryawanPage
+export default DataKaryawanPage

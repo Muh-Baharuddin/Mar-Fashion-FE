@@ -1,8 +1,11 @@
+import { DashboardLayout } from "@layouts/DashboardLayout"
 import { DataPembelian } from "../containers/Pembelian"
 
 const NotaPembelianPage = () => {
   return (
-    <DataPembelian />
+    <DashboardLayout>
+      <DataPembelian />
+    </DashboardLayout>
   )
 }
 
