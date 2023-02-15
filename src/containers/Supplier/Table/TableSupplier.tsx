@@ -45,14 +45,14 @@ const TableSupplier = (props: handleShowType) => {
 
 
   useEffect(() => {
-    axios.get('http://localhost:4000/supplier').then((response) => {
+    axios.get(`${process.env.API_ENDPOINT}supplier`).then((response) => {
       setData(response.data)
     })
   }, [])
 
   const handleDelete = (id: string) => {
     axios
-      .delete('http://localhost:4000/supplier/' + id)
+      .delete(`${process.env.API_ENDPOINT}supplier/` + id)
       .then((response) => {
         alert(response.data.message)
         window.location.reload()
