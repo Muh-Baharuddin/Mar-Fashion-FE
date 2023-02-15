@@ -3,7 +3,7 @@ import { AdminLayout } from '@layouts/AdminLayout'
 import { KaryawanLayout } from '@layouts/KaryawanLayout'
 import { useMarContext } from 'src/context/MarFashionProvider'
 
-export const UserRoleCondition = ({ children }: PropsWithChildren) => {
+export const UserLayout = ({ children }: PropsWithChildren) => {
   const { user } = useMarContext()
   return (
     <div>

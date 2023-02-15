@@ -1,8 +1,11 @@
-import { DataPenjualan } from '../containers/Penjualan'
+import { UserLayout } from "@layouts/UserLayout/UserLayout"
+import { DataPenjualan } from "../containers/Penjualan"
 
 const NotaPenjualanPage = () => {
   return (
-    <DataPenjualan />
+    <UserLayout>
+      <DataPenjualan />
+    </UserLayout>
   )
 }
 
