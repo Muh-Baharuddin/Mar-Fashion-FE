@@ -2,7 +2,6 @@ import axios from 'axios'
 import React from 'react'
 import Button from 'react-bootstrap/Button'
 import Modal from 'react-bootstrap/Modal'
-import { useCookies } from 'react-cookie'
 import { useForm } from 'react-hook-form'
 
 type handleShowType = {
@@ -13,18 +12,10 @@ type handleShowType = {
 function AddModalKaryawan(props: handleShowType) {
   const { register, handleSubmit } = useForm()
   const { showAdd, handleCloseAdd } = props
-  const [cookies] = useCookies(['token'])
-
-  let token = cookies.token
-  let config = {
-    headers: {
-      Authorization: 'Bearer ' + token,
-    },
-  }
 
   const handleAdd = (data: any) => {
     axios
-      .post('http://localhost:4000/karyawan', data, config)
+      .post(`${process.env.API_ENDPOINT}karyawan`, data)
       .then((response) => {
         alert('Data berhasil ditambahkan')
         window.location.reload()

@@ -1,8 +1,11 @@
+import { UserLayout } from '@layouts/UserLayout/UserLayout'
 import { DataKaryawan } from '../containers/Karyawan'
 
 const DataKaryawanPage = () => {
   return (
-    <DataKaryawan />
+    <UserLayout>
+      <DataKaryawan />
+    </UserLayout>
   )
 }
 

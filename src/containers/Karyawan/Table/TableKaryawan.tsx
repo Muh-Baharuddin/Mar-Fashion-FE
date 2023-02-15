@@ -4,12 +4,12 @@ import {
   useEffect,
   useState,
 } from 'react'
+import { useMarContext } from 'src/context/MarFashionProvider'
 import axios from 'axios'
+import Pagination from 'react-paginate'
 import 'bootstrap-icons/font/bootstrap-icons.css'
 import AddModalKaryawan from '../Modal/AddModalKaryawan'
 import EditModalKaryawan from '../Modal/EditModalKaryawan'
-import { useCookies } from 'react-cookie'
-import DataTable from 'react-data-table-component'
 
 interface Data {
   id: string
@@ -25,11 +25,21 @@ type handleShowType = {
   setShowEdit: Dispatch<SetStateAction<boolean>>
 }
 
-const TableKaryawan = (props: handleShowType) => {
+export const TableKaryawan = (props: handleShowType) => {
   const { showAdd, showEdit, setShowAdd, setShowEdit } = props
-  const [cookies] = useCookies(['token', 'user'])
+  const { user } = useMarContext()
   const [data, setData] = useState<Data[]>([])
   const [editId, setEditId] = useState('')
+
+  const [currentPage, setCurrentPage] = useState(0);
+  const [perPage, setPerPage] = useState(5);
+  const [offset, setOffset] = useState(0);
+
+  const handlePageClick = (e: { selected: number }) => {
+    const selectedPage = e.selected;
+    setCurrentPage(selectedPage);
+    setOffset(selectedPage * perPage);
+  }
 
   const handleShowAdd = () => setShowAdd(true)
   const handleCloseAdd = () => setShowAdd(false)
@@ -45,28 +55,19 @@ const TableKaryawan = (props: handleShowType) => {
   }
 
   useEffect(() => {
-    axios.get('http://localhost:4000/karyawan', config).then((response) => {
+    axios.get(`${process.env.API_ENDPOINT}karyawan`).then((response) => {
       setData(response.data)
     })
   }, [])
 
-  let token = cookies.token
-  let config = {
-    headers: {
-      Authorization: 'Bearer ' + token,
-    },
-  }
-
   const handleDelete = (id: string) => {
     axios
-      .delete('http://localhost:4000/karyawan/' + id, config)
+      .delete(`${process.env.API_ENDPOINT}karyawan/` + id)
       .then((response) => {
-        console.log('ini nilai respon', response)
         alert(response.data.message)
         window.location.reload()
       })
   }
-
   return (
     <div className="card">
       <div className="card-header">
@@ -76,8 +77,7 @@ const TableKaryawan = (props: handleShowType) => {
           editId={editId}
           handleCloseEdit={handleCloseEdit}
         />
-
-        {cookies.user && (
+        { user && (
           <button onClick={handleShowAdd} className="btn btn-primary">
             <i className="bi bi-plus-square"></i>
           </button>
@@ -91,19 +91,21 @@ const TableKaryawan = (props: handleShowType) => {
               <th>Nama</th>
               <th>Alamat</th>
               <th>Nomor Telepon</th>
-              {cookies.user && <th>Action</th>}
+              { user && <th>Action</th>}
             </tr>
           </thead>
           <tbody>
             {data &&
-              Object.values(data).map((d, index) => {
+              Object.values(data)
+              .slice(offset, offset + perPage)
+              .map((d, index) => {
                 return (
                   <tr key={d.id}>
-                    <td>{++index}</td>
+                    <td>{index + 1 + offset}</td>
                     <td>{d.nama}</td>
                     <td>{d.alamat}</td>
                     <td>{d.nomor_telepon}</td>
-                    {cookies.user && (
+                    { user && (
                       <td>
                         <button
                           onClick={() => handleShowEdit(d.id)}
@@ -124,9 +126,19 @@ const TableKaryawan = (props: handleShowType) => {
               })}
           </tbody>
         </table>
+        <Pagination
+          previousLabel={'previous'}
+          nextLabel={'next'}
+          pageCount={Math.ceil(data.length / perPage)}
+          marginPagesDisplayed={0}
+          pageRangeDisplayed={3}
+          onPageChange={handlePageClick}
+          containerClassName="pagination-container" 
+          activeClassName="selected"
+          disabledClassName="disabled"
+          pageLinkClassName={'pagination-item'}
+        />
       </div>
     </div>
   )
 }
-
-export default TableKaryawan

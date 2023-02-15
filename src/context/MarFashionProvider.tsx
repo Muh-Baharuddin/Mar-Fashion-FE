@@ -32,7 +32,7 @@ const MarFashionProvider: FC<Props> = ({ children }) => {
 
   useEffect(() => {
     setUser(cookies.user)
-    axios.defaults.headers.common['Authorization'] = "Bearer " + cookies.token; 
+    axios.defaults.headers.common['Authorization'] = "Bearer " + cookies.token;  
   }, [])
 
   const login = (userName: string, password: string) => {
