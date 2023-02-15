@@ -2,12 +2,12 @@ import React, {
   PropsWithChildren, useCallback, useEffect, useState,
 } from 'react'
 import { useResizeDetector } from 'react-resize-detector'
-import Sidebar, { SidebarOverlay } from '@layouts/AdminLayout/Sidebar/Sidebar'
-import Header from '@layouts/AdminLayout/Header/Header'
-import Footer from '@layouts/AdminLayout/Footer/Footer'
+import Sidebar, { SidebarOverlay } from '@layouts/DashboardLayout/Sidebar/Sidebar'
+import Header from '@layouts/DashboardLayout/Header/Header'
+import Footer from '@layouts/DashboardLayout/Footer/Footer'
 import { Container } from 'react-bootstrap'
 
-export default function AdminLayout({ children }: PropsWithChildren) {
+export default function DashboardLayout({ children }: PropsWithChildren) {
   // Show status for xs screen
   const [isShowSidebar, setIsShowSidebar] = useState(false)
 
