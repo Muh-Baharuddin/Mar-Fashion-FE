@@ -119,26 +119,37 @@ const SidebarNavGroup = (props: SidebarNavGroupProps) => {
 }
 
 export default function SidebarNav() {
-  const { logout } = useMarContext()
+  const { user, logout } = useMarContext()
 
   return (
     <ul className="list-unstyled">
       <SidebarNavTitle>Dashboard</SidebarNavTitle>
       <SidebarNavItem icon={faShirt} href="/data-barang">Barang</SidebarNavItem>
-      <SidebarNavGroup toggleIcon={faMoneyBill} toggleText="Keuanga">
-        <SidebarNavItem href="/">Keuangan</SidebarNavItem>
-        <SidebarNavItem href="/pembelian">Pembelian</SidebarNavItem>
-        <SidebarNavItem href="/penjualan">Penjualan</SidebarNavItem>
-      </SidebarNavGroup>
+      { user?.role === "ADMIN" ? 
+        <SidebarNavGroup toggleIcon={faMoneyBill} toggleText="Keuanga"> 
+          <SidebarNavItem href="/">Keuangan</SidebarNavItem>
+          <SidebarNavItem href="/pembelian">Pembelian</SidebarNavItem>
+          <SidebarNavItem href="/penjualan">Penjualan</SidebarNavItem>
+        </SidebarNavGroup> :
+        <SidebarNavItem icon={faMoneyBill} href="/penjualan">Penjualan</SidebarNavItem>
+      }
       <SidebarNavItem icon={faPencil} href="/data-karyawan">Karyawan</SidebarNavItem>
-      <SidebarNavItem icon={faChartPie} href="/supplier">Supplier</SidebarNavItem>
-      <SidebarNavItem icon={faChartPie} href="charts.html">Retur</SidebarNavItem>
-      <SidebarNavGroup toggleIcon={faStar} toggleText="User">
+      { user?.role === "ADMIN" ?
+        <SidebarNavItem icon={faChartPie} href="/supplier">Supplier</SidebarNavItem> 
+        : ""
+      }
+      { user?.role === "ADMIN" ?
+        <SidebarNavGroup toggleIcon={faStar} toggleText="User">
         <SidebarNavItem icon={faAddressCard} href="register">Buat Akun</SidebarNavItem>
+          <div onClick={logout}>
+            <SidebarNavItem icon={faRightToBracket} href="/login">Log Out</SidebarNavItem>
+          </div>
+        </SidebarNavGroup> :
         <div onClick={logout}>
-          <SidebarNavItem icon={faRightToBracket} href="/">Log Out</SidebarNavItem>
+          <SidebarNavItem icon={faRightToBracket} href="/login">Log Out</SidebarNavItem>
         </div>
-      </SidebarNavGroup>
+      }
+      
     </ul>
   )
 }

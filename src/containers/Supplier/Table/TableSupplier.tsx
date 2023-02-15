@@ -73,18 +73,15 @@ const TableSupplier = (props: handleShowType) => {
   return (
     <div className="card">
       <div className="card-header">
-      <AddModalSupplier showAdd={showAdd} handleCloseAdd={handleCloseAdd} />
-      <EditModalSupplier
-          showEdit={showEdit}
-          editId={editId}
-          handleCloseEdit={handleCloseEdit}
+        <AddModalSupplier showAdd={showAdd} handleCloseAdd={handleCloseAdd} />
+        <EditModalSupplier
+            showEdit={showEdit}
+            editId={editId}
+            handleCloseEdit={handleCloseEdit}
         />
-
-        { user && (
-          <button onClick={handleShowAdd} className="btn btn-primary">
-            <i className="bi bi-plus-square"></i>
-          </button>
-        )}
+        <button onClick={handleShowAdd} className="btn btn-primary">
+          <i className="bi bi-plus-square"></i>
+        </button>
       </div>
       <div className="card-body">
         <table className="table table-bordered">
@@ -94,7 +91,7 @@ const TableSupplier = (props: handleShowType) => {
               <th>Nama</th>
               <th>Alamat</th>
               <th>Nomor Telepon</th>
-              { user && <th>Action</th>}
+              <th>Action</th>
             </tr>
           </thead>
           <tbody>
@@ -108,22 +105,20 @@ const TableSupplier = (props: handleShowType) => {
                     <td>{d.nama}</td>
                     <td>{d.alamat}</td>
                     <td>{d.nomor_telepon}</td>
-                    { user && (
-                      <td>
-                        <button
-                          onClick={() => handleShowEdit(d.id)}
-                          className="btn btn-primary ms-3"
-                        >
-                          <i className="bi bi-pencil-square"></i>
-                        </button>
-                        <button
-                          onClick={() => handleDelete(d.id)}
-                          className="btn btn-danger ms-3"
-                        >
-                          <i className="bi bi-trash3-fill"></i>
-                        </button>
-                      </td>
-                    )}
+                    <td>
+                      <button
+                        onClick={() => handleShowEdit(d.id)}
+                        className="btn btn-primary ms-3"
+                      >
+                        <i className="bi bi-pencil-square"></i>
+                      </button>
+                      <button
+                        onClick={() => handleDelete(d.id)}
+                        className="btn btn-danger ms-3"
+                      >
+                        <i className="bi bi-trash3-fill"></i>
+                      </button>
+                    </td>
                   </tr>
                 )
               })}
