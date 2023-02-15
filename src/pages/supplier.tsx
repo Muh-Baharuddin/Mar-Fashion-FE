@@ -1,11 +1,11 @@
-import { UserLayout } from "@layouts/UserLayout/UserLayout"
+import { DashboardLayout } from "@layouts/DashboardLayout"
 import { DataSupplier } from "../containers/Supplier"
 
 const Supplier = () => {
   return (
-    <UserLayout>
+    <DashboardLayout>
       <DataSupplier />
-    </UserLayout>
+    </DashboardLayout>
   )
 }
 

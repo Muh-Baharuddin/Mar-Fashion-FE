@@ -8,16 +8,14 @@ export default function BaseLayout({ children }: PropsWithChildren) {
   const router = useRouter()
   const [cookies] = useCookies(['user'])
 
-  // useEffect(() => {
-  //   if (cookies.user?.role === 'ADMIN') {
-  //     router.push('/admin', undefined, { shallow: true })
-  //   }
-  //   if (cookies.user?.role === 'KARYAWAN') {
-  //     router.push('/karyawan', undefined, { shallow: true })
-  //   }
-
-  //   router.push('/login', undefined, { shallow: true })
-  // }, [])
+  useEffect(() => {
+    if (cookies.user === undefined) {
+      router.push('/login', undefined, { shallow: true })
+    }
+    if (cookies.user !== undefined) {
+      router.push('/dashboard', undefined, { shallow: true })
+    }
+  }, [])
 
   return (
     <>
