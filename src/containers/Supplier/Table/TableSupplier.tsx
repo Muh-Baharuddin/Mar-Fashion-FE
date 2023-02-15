@@ -6,10 +6,9 @@ import {
 } from 'react'
 import axios from 'axios'
 import 'bootstrap-icons/font/bootstrap-icons.css'
-import { useCookies } from 'react-cookie'
-import DataTable from 'react-data-table-component'
 import AddModalSupplier from '../Modal/AddModalSupplier'
 import EditModalSupplier from '../Modal/EditModalSupplier'
+import { useMarContext } from 'src/context/MarFashionProvider'
 
 interface Data {
   id: string
@@ -27,7 +26,7 @@ type handleShowType = {
 
 const TableSupplier = (props: handleShowType) => {
   const { showAdd, showEdit, setShowAdd, setShowEdit } = props
-  const [cookies] = useCookies(['token', 'user'])
+  const { user } = useMarContext()
   const [data, setData] = useState<Data[]>([])
   const [editId, setEditId] = useState('')
 
@@ -44,24 +43,17 @@ const TableSupplier = (props: handleShowType) => {
     setShowEdit(false)
   }
 
-  let token = cookies.token
-  let config = {
-    headers: {
-      Authorization: 'Bearer ' + token,
-    },
-  }
 
   useEffect(() => {
-    axios.get('http://localhost:4000/supplier', config).then((response) => {
+    axios.get('http://localhost:4000/supplier').then((response) => {
       setData(response.data)
     })
   }, [])
 
   const handleDelete = (id: string) => {
     axios
-      .delete('http://localhost:4000/supplier/' + id, config)
+      .delete('http://localhost:4000/supplier/' + id)
       .then((response) => {
-        console.log('ini nilai respon', response)
         alert(response.data.message)
         window.location.reload()
       })
@@ -77,7 +69,7 @@ const TableSupplier = (props: handleShowType) => {
           handleCloseEdit={handleCloseEdit}
         />
 
-        {cookies.user && (
+        { user && (
           <button onClick={handleShowAdd} className="btn btn-primary">
             <i className="bi bi-plus-square"></i>
           </button>
@@ -91,7 +83,7 @@ const TableSupplier = (props: handleShowType) => {
               <th>Nama</th>
               <th>Alamat</th>
               <th>Nomor Telepon</th>
-              {cookies.user && <th>Action</th>}
+              { user && <th>Action</th>}
             </tr>
           </thead>
           <tbody>
@@ -103,7 +95,7 @@ const TableSupplier = (props: handleShowType) => {
                     <td>{d.nama}</td>
                     <td>{d.alamat}</td>
                     <td>{d.nomor_telepon}</td>
-                    {cookies.user && (
+                    { user && (
                       <td>
                         <button
                           onClick={() => handleShowEdit(d.id)}
