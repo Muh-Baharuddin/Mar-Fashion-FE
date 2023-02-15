@@ -2,9 +2,7 @@ import axios from 'axios';
 import React from 'react';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
-import { useCookies } from 'react-cookie';
 import { useForm } from "react-hook-form";
-
 
 type handleShowType = {
   showEdit: boolean;
@@ -15,18 +13,10 @@ type handleShowType = {
 function EditModalPenjualan(props: handleShowType) {
   const {showEdit, editId, handleCloseEdit} = props
   const { register, handleSubmit } = useForm();
-  const [ cookies ] = useCookies(["token"]);
-
-  let token = cookies.token;
-  let config = {
-    headers: {
-      Authorization: "Bearer " + token,
-    }
-  }
 
   const handleEdit = (data: any) => {
-    axios.patch('http://localhost:4000/nota-penjualan/' + editId, data, config).then(response => {
-      alert("Data berhasil diperbarui")
+    axios.patch(`${process.env.API_ENDPOINT}nota-penjualan/` + editId, data).then(response => {
+      alert(response.data.message)
       window.location.reload()
     })
   }
