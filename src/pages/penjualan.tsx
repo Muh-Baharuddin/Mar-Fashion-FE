@@ -1,11 +1,11 @@
-import { UserRoleCondition } from "src/components/Condition/UserRoleCondition"
+import { UserLayout } from "@layouts/UserLayout/UserLayout"
 import { DataPenjualan } from "../containers/Penjualan"
 
 const NotaPenjualanPage = () => {
   return (
-    <UserRoleCondition>
+    <UserLayout>
       <DataPenjualan />
-    </UserRoleCondition>
+    </UserLayout>
   )
 }
 
