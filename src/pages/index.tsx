@@ -1,10 +1,10 @@
-import { BaseLayout } from '@layouts/BaseLayout'
+import { AdminLayout } from '@layouts/AdminLayout'
 
-const Base = () => {
+const App = () => {
 
   return (
-    <BaseLayout />
+    <AdminLayout />
   )
 }
 
-export default Base
+export default App

@@ -1,8 +1,8 @@
-import { DashboardLayout } from '@layouts/DashboardLayout'
+import { AdminLayout } from '@layouts/AdminLayout'
 import React from 'react'
 
 const DashboardPage = () => {
-  return <DashboardLayout />
+  return <AdminLayout />
 }
 
 export default DashboardPage

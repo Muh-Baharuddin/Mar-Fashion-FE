@@ -1,5 +1,5 @@
 import { PropsWithChildren, useEffect } from 'react'
-import { DashboardLayout } from '@layouts/DashboardLayout'
+import { AdminLayout } from '@layouts/AdminLayout'
 import { useMarContext } from 'src/context/MarFashionProvider'
 import { useRouter } from 'next/router'
 
@@ -13,8 +13,8 @@ export const UserLayout = ({ children }: PropsWithChildren) => {
     }
   }, [])
   return (
-    <DashboardLayout>
+    <AdminLayout>
       {children}
-    </DashboardLayout>
+    </AdminLayout>
   )
 }
