@@ -38,9 +38,17 @@ const TableSupplier = (props: handleShowType) => {
     setCurrentPage(selectedPage);
   }
   const [keywords, setKeywords] = useState("");
+  const [orderBy, setOrderBy] = useState("nama");
+  const [orderType, setOrderType] = useState("");
 
   const handleSearch = (event: any) => {
     setKeywords(event.target.value);
+  };
+
+  const handleSortBy = (event: any) => {
+    const value = event.target.value.split("-");
+    setOrderBy(value[0]);
+    setOrderType(value[1]);
   };
 
   const handleShowAdd = () => setShowAdd(true)
@@ -58,13 +66,13 @@ const TableSupplier = (props: handleShowType) => {
 
   useEffect(() => {
     axios.get(`${process.env.API_ENDPOINT}supplier?page=${currentPage + 1}
-      &limit=${perPage}&keywords=${keywords}`)
+      &limit=${perPage}&orderBy=${orderBy}&orderType=${orderType}&keywords=${keywords}`)
       .then((response) => {
       console.log(response)
       setData(response.data.data)
       setTotal(response.data.total)
     })
-  }, [currentPage, perPage, keywords])
+  }, [currentPage, perPage, orderBy, orderType, keywords])
 
   const handleDelete = (id: string) => {
     axios
@@ -92,6 +100,20 @@ const TableSupplier = (props: handleShowType) => {
         </div>
         <div className="card-body">
           <div className="row mb-2">
+            <div className="col-12 col-md-8">
+              <select onChange={handleSortBy}>
+                <option value="nama-ASC">Sort By Nama (ASC)</option>
+                <option value="nama-DESC">Sort By Nama (DESC)</option>
+                <option value="alamat-ASC">Sort By Alamat (ASC)</option>
+                <option value="alamat-DESC">Sort By Alamat (DESC)</option>
+                <option value="nomor_telepon-ASC">
+                  Sort By Nomor Telepon (ASC)
+                </option>
+                <option value="nomor_telepon-DESC">
+                  Sort By Nomor Telepon (DESC)
+                </option>
+              </select>
+            </div>
             <div className="col-12 col-md-4">
               <div className="search-bar">
                 <input className='form-control' type="text" placeholder="Search" onChange={handleSearch} />
