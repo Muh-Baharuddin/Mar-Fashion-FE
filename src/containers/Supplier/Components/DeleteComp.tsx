@@ -1,4 +1,5 @@
 import axios from "axios"
+import 'bootstrap-icons/font/bootstrap-icons.css'
 
 type Props = {
   id: string;

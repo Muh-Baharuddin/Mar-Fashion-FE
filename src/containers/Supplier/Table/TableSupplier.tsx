@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import axios, { AxiosResponse } from 'axios'
+import axios from 'axios'
 import Pagination from 'react-paginate'
 import 'bootstrap-icons/font/bootstrap-icons.css'
 import AddModalSupplier from '../Modal/AddModalSupplier'
@@ -78,15 +78,6 @@ const TableSupplier = (props: handleShowType) => {
     })
     // TODO: when error api
   }, [queryParams])
-
-  const handleDelete = (id: string) => {
-    axios
-      .delete(`${process.env.API_ENDPOINT}supplier/` + id)
-      .then((response) => {
-        alert(response.data.message)
-        window.location.reload()
-      })
-  }
 
   return (
     <>
