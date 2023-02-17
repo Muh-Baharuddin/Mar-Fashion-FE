@@ -1,10 +1,11 @@
 import { useEffect, useState } from 'react'
-import axios, { AxiosResponse } from 'axios'
+import axios from 'axios'
 import Pagination from 'react-paginate'
 import 'bootstrap-icons/font/bootstrap-icons.css'
 import AddModalSupplier from '../Modal/AddModalSupplier'
 import EditModalSupplier from '../Modal/EditModalSupplier'
 import { handleShowType, QueryParamsType } from 'src/@types/user'
+import DeleteComp from '../Components/DeleteComp'
 
 interface Supplier {
   id: string
@@ -77,15 +78,6 @@ const TableSupplier = (props: handleShowType) => {
     })
     // TODO: when error api
   }, [queryParams])
-
-  const handleDelete = (id: string) => {
-    axios
-      .delete(`${process.env.API_ENDPOINT}supplier/` + id)
-      .then((response) => {
-        alert(response.data.message)
-        window.location.reload()
-      })
-  }
 
   return (
     <>
@@ -163,14 +155,7 @@ const TableSupplier = (props: handleShowType) => {
                         >
                           <i className="bi bi-pencil-square"></i>
                         </button>
-
-                        {/* TODO: create new component for delete button */}
-                        <button
-                          onClick={() => handleDelete(d.id)}
-                          className="btn btn-danger ms-3"
-                        >
-                          <i className="bi bi-trash3-fill"></i>
-                        </button>
+                        <DeleteComp id={d.id} />
                       </td>
                     </tr>
                   )
