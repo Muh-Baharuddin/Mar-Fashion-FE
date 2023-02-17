@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import AddModalSupplier from '../Modal/AddModalSupplier'
 
 const AddComp = () => {
   const [showAdd, setShowAdd] = useState(false)
@@ -7,7 +8,12 @@ const AddComp = () => {
   const handleCloseAdd = () => setShowAdd(false)
 
   return (
-    <div>AddComp</div>
+    <div>
+      <AddModalSupplier showAdd={showAdd} handleCloseAdd={handleCloseAdd} />
+      <button onClick={handleShowAdd} className="btn btn-primary">
+        <i className="bi bi-plus-square"></i>
+      </button>
+    </div>
   )
 }
 
