@@ -6,12 +6,18 @@ export const DataSupplier = () => {
   const [showEdit, setShowEdit] = useState(false)
   return (
     <div className="container">
-      <TableSupplier
-        showAdd={showAdd}
-        showEdit={showEdit}
-        setShowAdd={setShowAdd}
-        setShowEdit={setShowEdit}
-      />
+      <div>
+          {/* TODO: component add */}
+      </div>
+      <div>
+        <TableSupplier
+          showAdd={showAdd}
+          showEdit={showEdit}
+          setShowAdd={setShowAdd}
+          setShowEdit={setShowEdit}
+        />
+      </div>
+      
     </div>
   )
 }

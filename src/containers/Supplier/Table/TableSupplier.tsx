@@ -1,62 +1,59 @@
-import {
-  Dispatch,
-  SetStateAction,
-  useEffect,
-  useState,
-} from 'react'
-import axios from 'axios'
+import { useEffect, useState } from 'react'
+import axios, { AxiosResponse } from 'axios'
 import Pagination from 'react-paginate'
 import 'bootstrap-icons/font/bootstrap-icons.css'
 import AddModalSupplier from '../Modal/AddModalSupplier'
 import EditModalSupplier from '../Modal/EditModalSupplier'
+import { handleShowType, QueryParamsType } from 'src/@types/user'
 
-interface Data {
+interface Supplier {
   id: string
   nama: string
   alamat: string
   nomor_telepon: string
 }
 
-type handleShowType = {
-  showAdd: boolean
-  showEdit: boolean
-  setShowAdd: Dispatch<SetStateAction<boolean>>
-  setShowEdit: Dispatch<SetStateAction<boolean>>
+interface Data {
+  data: Supplier[],
+  total: number;
 }
 
 const TableSupplier = (props: handleShowType) => {
   const { showAdd, showEdit, setShowAdd, setShowEdit } = props
-  const [data, setData] = useState<Data[]>([])
-  const [editId, setEditId] = useState('')
+  const [data, setData] = useState<Data>({
+    data: [],
+    total: 0,
+  });
+  const [editId, setEditId] = useState('');
+  const [queryParams, setQueryParams] = useState<QueryParamsType>({
+    keywords: '',
+    orderBy: 'nama',
+    orderType: '',
+    page: 1,
+    limit: 10,
+  })
 
-  const [currentPage, setCurrentPage] = useState(0);
-  const [perPage, setPerPage] = useState(5);
-  const [total, setTotal] = useState(0);
-  
   const handlePageClick = (e: { selected: number }) => {
     const selectedPage = e.selected;
-    setCurrentPage(selectedPage);
+    setQueryParams((prev) => {
+      return { ...prev, page: selectedPage+1};
+    });
   }
-  
-  const [filter, setFilter] = useState({
-    keywords: "",
-    orderBy: "nama",
-    orderType: ""
-  });
 
   const handleSearch = (event: any) => {
-    setFilter({...filter, keywords: event.target.value});
-  };
+    setQueryParams({ ...queryParams, keywords: event.target.value })
+  }
 
   const handleSortBy = (event: any) => {
-    const value = event.target.value.split("-");
-    setFilter({
-      ...filter, 
-      orderBy: value[0], 
-      orderType: value[1]
+    const value = event.target.value.split('-')
+    setQueryParams({
+      ...queryParams,
+      orderBy: value[0],
+      orderType: value[1],
     })
-  };
+  }
 
+  // TODO: remove from this component
   const handleShowAdd = () => setShowAdd(true)
   const handleCloseAdd = () => setShowAdd(false)
 
@@ -71,14 +68,15 @@ const TableSupplier = (props: handleShowType) => {
   }
 
   useEffect(() => {
-    axios.get(`${process.env.API_ENDPOINT}supplier?page=${currentPage + 1}
-      &limit=${perPage}&orderBy=${filter.orderBy}&orderType=${filter.orderType}&keywords=${filter.keywords}`)
-      .then((response) => {
-      console.log(response)
-      setData(response.data.data)
-      setTotal(response.data.total)
+    const url = `${process.env.API_ENDPOINT}supplier`;
+    axios.get<Data>(url, {
+      params: queryParams
+    }).then((response) => {
+      console.log(response.data)
+      setData(response.data)
     })
-  }, [currentPage, perPage, filter.orderBy, filter.orderType, filter.keywords])
+    // TODO: when error api
+  }, [queryParams])
 
   const handleDelete = (id: string) => {
     axios
@@ -91,15 +89,18 @@ const TableSupplier = (props: handleShowType) => {
 
   return (
     <>
+      {/* TODO: move to supplier container  */}
       <h3>Data Supplier</h3>
       <div className="card">
         <div className="card-header">
-          <AddModalSupplier showAdd={showAdd} handleCloseAdd={handleCloseAdd} />
           <EditModalSupplier
-              showEdit={showEdit}
-              editId={editId}
-              handleCloseEdit={handleCloseEdit}
+            showEdit={showEdit}
+            editId={editId}
+            handleCloseEdit={handleCloseEdit}
           />
+
+          {/* TODO: create button component */}
+          <AddModalSupplier showAdd={showAdd} handleCloseAdd={handleCloseAdd} />
           <button onClick={handleShowAdd} className="btn btn-primary">
             <i className="bi bi-plus-square"></i>
           </button>
@@ -122,11 +123,16 @@ const TableSupplier = (props: handleShowType) => {
             </div>
             <div className="col-12 col-md-4">
               <div className="search-bar">
-                <input className='form-control' type="text" placeholder="Search" onChange={handleSearch} />
+                <input
+                  className="form-control"
+                  type="text"
+                  placeholder="Search"
+                  onChange={handleSearch}
+                />
               </div>
             </div>
           </div>
-        
+
           <table className="table table-bordered">
             <thead>
               <tr>
@@ -139,21 +145,26 @@ const TableSupplier = (props: handleShowType) => {
             </thead>
             <tbody>
               {data &&
-                Object.values(data)
-                .map((d, index) => {
+                Object.values(data.data).map((d, index) => {
                   return (
                     <tr key={d.id}>
-                      <td>{index + 1 + currentPage * perPage}</td>
+                      <td>
+                        {(queryParams.page-1) * queryParams.limit + index + 1}
+                      </td>
                       <td>{d.nama}</td>
                       <td>{d.alamat}</td>
                       <td>{d.nomor_telepon}</td>
                       <td>
+
+                        {/* TODO: create new component for edit button */}
                         <button
                           onClick={() => handleShowEdit(d.id)}
                           className="btn btn-primary ms-3"
                         >
                           <i className="bi bi-pencil-square"></i>
                         </button>
+
+                        {/* TODO: create new component for delete button */}
                         <button
                           onClick={() => handleDelete(d.id)}
                           className="btn btn-danger ms-3"
@@ -170,11 +181,11 @@ const TableSupplier = (props: handleShowType) => {
         <Pagination
           previousLabel={'previous'}
           nextLabel={'next'}
-          pageCount={Math.ceil(total / perPage)}
+          pageCount={Math.ceil(data.total / queryParams.limit)}
           marginPagesDisplayed={0}
           pageRangeDisplayed={3}
           onPageChange={handlePageClick}
-          containerClassName="pagination-container" 
+          containerClassName="pagination-container"
           activeClassName="selected"
           disabledClassName="disabled"
           pageLinkClassName={'pagination-item'}
