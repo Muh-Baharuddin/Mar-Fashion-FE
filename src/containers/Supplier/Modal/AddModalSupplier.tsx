@@ -31,7 +31,7 @@ function AddModalSupplier(props: handleShowType) {
         keyboard={false}
       >
         <Modal.Header closeButton>
-          <Modal.Title>Tambah Karyawan</Modal.Title>
+          <Modal.Title>Tambah Supplier</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <form onSubmit={handleSubmit(handleAdd)}>
