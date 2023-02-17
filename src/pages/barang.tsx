@@ -1,8 +1,11 @@
+import { DashboardLayout } from '@layouts/DashboardLayout'
 import { DataBarang } from '../containers/Barang'
 
 const DataBarangPage = () => {
   return (
-    <DataBarang />
+    <DashboardLayout>
+      <DataBarang />
+    </DashboardLayout>
   )
 }
 
