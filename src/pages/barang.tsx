@@ -1,11 +1,11 @@
-import { DashboardLayout } from '@layouts/DashboardLayout'
+import { AdminLayout } from '@layouts/AdminLayout'
 import { DataBarang } from '../containers/Barang'
 
 const DataBarangPage = () => {
   return (
-    <DashboardLayout>
+    <AdminLayout>
       <DataBarang />
-    </DashboardLayout>
+    </AdminLayout>
   )
 }
 
