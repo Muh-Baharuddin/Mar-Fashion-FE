@@ -1,5 +1,4 @@
 import axios from "axios"
-import 'bootstrap-icons/font/bootstrap-icons.css'
 
 type Props = {
   id: string;
@@ -7,12 +6,15 @@ type Props = {
 
 const DeleteComp = ({ id }: Props) => {
   const handleDelete = () => {
-    axios
-      .delete(`${process.env.API_ENDPOINT}supplier/` + id)
-      .then((response) => {
-        alert(response.data.message)
-        window.location.reload()
-      })
+    const confirmDelete = window.confirm('Apakah Anda yakin ingin menghapus data ini?');
+    if (confirmDelete) {
+      axios
+        .delete(`${process.env.API_ENDPOINT}supplier/` + id)
+        .then((response) => {
+          alert(response.data.message)
+          window.location.reload()
+        })
+    }
   }
   return (
     <div>
