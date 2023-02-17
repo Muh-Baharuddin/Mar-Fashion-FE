@@ -3,8 +3,8 @@ import axios, { AxiosResponse } from 'axios'
 import Pagination from 'react-paginate'
 import 'bootstrap-icons/font/bootstrap-icons.css'
 import AddModalSupplier from '../Modal/AddModalSupplier'
-import EditModalSupplier from '../Modal/EditModalSupplier'
 import { handleShowType, QueryParamsType } from 'src/@types/user'
+import { EditComp } from '../components/EditComp'
 
 interface Supplier {
   id: string
@@ -24,7 +24,6 @@ const TableSupplier = (props: handleShowType) => {
     data: [],
     total: 0,
   });
-  const [editId, setEditId] = useState('');
   const [queryParams, setQueryParams] = useState<QueryParamsType>({
     keywords: '',
     orderBy: 'nama',
@@ -57,16 +56,6 @@ const TableSupplier = (props: handleShowType) => {
   const handleShowAdd = () => setShowAdd(true)
   const handleCloseAdd = () => setShowAdd(false)
 
-  const handleShowEdit = (id: string) => {
-    setEditId(id)
-    setShowEdit(true)
-  }
-
-  const handleCloseEdit = () => {
-    setEditId('')
-    setShowEdit(false)
-  }
-
   useEffect(() => {
     const url = `${process.env.API_ENDPOINT}supplier`;
     axios.get<Data>(url, {
@@ -93,12 +82,6 @@ const TableSupplier = (props: handleShowType) => {
       <h3>Data Supplier</h3>
       <div className="card">
         <div className="card-header">
-          <EditModalSupplier
-            showEdit={showEdit}
-            editId={editId}
-            handleCloseEdit={handleCloseEdit}
-          />
-
           {/* TODO: create button component */}
           <AddModalSupplier showAdd={showAdd} handleCloseAdd={handleCloseAdd} />
           <button onClick={handleShowAdd} className="btn btn-primary">
@@ -155,15 +138,7 @@ const TableSupplier = (props: handleShowType) => {
                       <td>{d.alamat}</td>
                       <td>{d.nomor_telepon}</td>
                       <td>
-
-                        {/* TODO: create new component for edit button */}
-                        <button
-                          onClick={() => handleShowEdit(d.id)}
-                          className="btn btn-primary ms-3"
-                        >
-                          <i className="bi bi-pencil-square"></i>
-                        </button>
-
+                        <EditComp id={d.id}/>
                         {/* TODO: create new component for delete button */}
                         <button
                           onClick={() => handleDelete(d.id)}
