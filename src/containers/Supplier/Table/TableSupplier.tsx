@@ -19,7 +19,7 @@ interface Data {
 }
 
 const TableSupplier = (props: handleShowType) => {
-  const { showAdd, showEdit, setShowAdd, setShowEdit } = props
+  const { showAdd, setShowAdd} = props
   const [data, setData] = useState<Data>({
     data: [],
     total: 0,

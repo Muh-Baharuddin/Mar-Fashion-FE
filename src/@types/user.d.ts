@@ -17,9 +17,7 @@ export type UserContextType = {
 
 export type handleShowType = {
   showAdd: boolean
-  showEdit: boolean
   setShowAdd: Dispatch<SetStateAction<boolean>>
-  setShowEdit: Dispatch<SetStateAction<boolean>>
 }
 
 export type QueryParamsType = {
