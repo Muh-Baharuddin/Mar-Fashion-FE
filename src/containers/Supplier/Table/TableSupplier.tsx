@@ -73,8 +73,9 @@ const TableSupplier = (props: handleShowType) => {
     axios.get<Data>(url, {
       params: queryParams
     }).then((response) => {
-      console.log(response.data)
-      setData(response.data)
+      setData(response.data);
+    }).catch((error) => {
+      alert('Terjadi kesalahan pada panggilan API: ' + error);
     })
     // TODO: when error api
   }, [queryParams])
