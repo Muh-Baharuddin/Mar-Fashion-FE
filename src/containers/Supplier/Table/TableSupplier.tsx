@@ -37,18 +37,24 @@ const TableSupplier = (props: handleShowType) => {
     const selectedPage = e.selected;
     setCurrentPage(selectedPage);
   }
-  const [keywords, setKeywords] = useState("");
-  const [orderBy, setOrderBy] = useState("nama");
-  const [orderType, setOrderType] = useState("");
+  
+  const [filter, setFilter] = useState({
+    keywords: "",
+    orderBy: "nama",
+    orderType: ""
+  });
 
   const handleSearch = (event: any) => {
-    setKeywords(event.target.value);
+    setFilter({...filter, keywords: event.target.value});
   };
 
   const handleSortBy = (event: any) => {
     const value = event.target.value.split("-");
-    setOrderBy(value[0]);
-    setOrderType(value[1]);
+    setFilter({
+      ...filter, 
+      orderBy: value[0], 
+      orderType: value[1]
+    })
   };
 
   const handleShowAdd = () => setShowAdd(true)
@@ -66,13 +72,13 @@ const TableSupplier = (props: handleShowType) => {
 
   useEffect(() => {
     axios.get(`${process.env.API_ENDPOINT}supplier?page=${currentPage + 1}
-      &limit=${perPage}&orderBy=${orderBy}&orderType=${orderType}&keywords=${keywords}`)
+      &limit=${perPage}&orderBy=${filter.orderBy}&orderType=${filter.orderType}&keywords=${filter.keywords}`)
       .then((response) => {
       console.log(response)
       setData(response.data.data)
       setTotal(response.data.total)
     })
-  }, [currentPage, perPage, orderBy, orderType, keywords])
+  }, [currentPage, perPage, filter.orderBy, filter.orderType, filter.keywords])
 
   const handleDelete = (id: string) => {
     axios
