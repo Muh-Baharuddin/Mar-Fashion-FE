@@ -16,7 +16,6 @@ export const DataSupplier = () => {
           setShowEdit={setShowEdit}
         />
       </div>
-      
     </div>
   )
 }
