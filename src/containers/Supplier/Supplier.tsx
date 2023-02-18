@@ -1,19 +1,18 @@
 import { useState } from 'react'
+import AddComp from './Table/Components/AddComp'
 import TableSupplier from './Table/TableSupplier'
 
 export const DataSupplier = () => {
-  const [showAdd, setShowAdd] = useState(false)
   const [showEdit, setShowEdit] = useState(false)
   return (
     <div className="container">
-      <div>
-          {/* TODO: component add */}
-      </div>
-      <div>
+      <h3>Data Supplier</h3>
+      <div className="card">
+        <div className="card-header">
+          <AddComp />
+        </div>
         <TableSupplier
-          showAdd={showAdd}
           showEdit={showEdit}
-          setShowAdd={setShowAdd}
           setShowEdit={setShowEdit}
         />
       </div>
