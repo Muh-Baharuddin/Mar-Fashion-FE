@@ -76,7 +76,7 @@ const TableSupplier = (props: handleShowType) => {
       params: queryParams
     }).then((response) => {
       setData(response.data);
-    }).catch((error) => {
+    }).catch(() => {
       toast.error("Maaf sepertinya terjadi kesalahan pada server. Mohon coba kembali dalam beberapa saat.");
     })
   }, [queryParams])
