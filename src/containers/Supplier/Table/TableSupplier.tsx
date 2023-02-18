@@ -4,6 +4,8 @@ import Pagination from 'react-paginate'
 import 'bootstrap-icons/font/bootstrap-icons.css'
 import { handleShowType, QueryParamsType } from 'src/@types/user'
 import DeleteComp from './Components/DeleteComp'
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export interface Supplier {
   id: string
@@ -69,13 +71,12 @@ const TableSupplier = (props: handleShowType) => {
     }).then((response) => {
       setData(response.data);
     }).catch(() => {
-      toast.error("Maaf sepertinya terjadi kesalahan pada server. Mohon coba kembali dalam beberapa saat.");
+      toast.error("Maaf terjadi kesalahan pada server. Mohon coba kembali dalam beberapa saat.");
     })
   };
 
   useEffect(() => {
     refreshSupplier();
-    // TODO: when error api
   }, [queryParams])
 
   return (
@@ -144,6 +145,7 @@ const TableSupplier = (props: handleShowType) => {
               })}
           </tbody>
         </table>
+        <ToastContainer />
       </div>
       <Pagination
         previousLabel={'previous'}
