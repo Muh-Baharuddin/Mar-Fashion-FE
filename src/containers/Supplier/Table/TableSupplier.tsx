@@ -3,9 +3,9 @@ import axios from 'axios'
 import Pagination from 'react-paginate'
 import 'bootstrap-icons/font/bootstrap-icons.css'
 import { handleShowType, QueryParamsType } from 'src/@types/user'
-import DeleteComp from '../Components/DeleteComp'
+import DeleteComp from './Components/DeleteComp'
 
-interface Supplier {
+export interface Supplier {
   id: string
   nama: string
   alamat: string
@@ -62,7 +62,7 @@ const TableSupplier = (props: handleShowType) => {
     setShowEdit(false)
   }
 
-  useEffect(() => {
+  const refreshSupplier = () => {
     const url = `${process.env.API_ENDPOINT}supplier`;
     axios.get<Data>(url, {
       params: queryParams
@@ -70,6 +70,10 @@ const TableSupplier = (props: handleShowType) => {
       console.log(response.data)
       setData(response.data)
     })
+  };
+
+  useEffect(() => {
+    refreshSupplier();
     // TODO: when error api
   }, [queryParams])
 
@@ -132,7 +136,7 @@ const TableSupplier = (props: handleShowType) => {
                       >
                         <i className="bi bi-pencil-square"></i>
                       </button>
-                      <DeleteComp id={d.id} />
+                      <DeleteComp supplier={d} refreshSupplier={refreshSupplier}/>
                     </td>
                   </tr>
                 )
