@@ -31,7 +31,7 @@ function EditModalSupplier(props: handleShowType) {
         keyboard={false}
       >
         <Modal.Header closeButton>
-          <Modal.Title>Edit Barang</Modal.Title>
+          <Modal.Title>Edit Supplier</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <form onSubmit={handleSubmit(handleEdit)}>
