@@ -1,9 +1,7 @@
-import { useState } from 'react'
 import AddComp from './Table/Components/AddComp'
 import TableSupplier from './Table/TableSupplier'
 
 export const DataSupplier = () => {
-  const [showEdit, setShowEdit] = useState(false)
   return (
     <div className="container">
       <h3>Data Supplier</h3>
@@ -11,10 +9,7 @@ export const DataSupplier = () => {
         <div className="card-header">
           <AddComp />
         </div>
-        <TableSupplier
-          showEdit={showEdit}
-          setShowEdit={setShowEdit}
-        />
+        <TableSupplier />
       </div>
     </div>
   )

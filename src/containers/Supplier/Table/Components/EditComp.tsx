@@ -1,16 +1,18 @@
 import { useState } from "react";
-import EditModalSupplier from "../Modal/EditModalSupplier";
+import EditModalSupplier from "../../Modal/EditModalSupplier";
+import { Supplier } from "../TableSupplier";
 
 type Props = {
-  id: string;
+  supplier: Supplier;
+  refreshSupplier: () => void;
 };
 
-export const EditComp = ({ id }: Props) => {
+const EditComp = ({ supplier, refreshSupplier }: Props) => {
   const [editId, setEditId] = useState('');
   const [showEdit, setShowEdit] = useState(false);
 
-  const handleShowEdit = (id: string) => {
-    setEditId(id)
+  const handleShowEdit = () => {
+    setEditId(supplier.id)
     setShowEdit(true)
   }
 
@@ -25,9 +27,10 @@ export const EditComp = ({ id }: Props) => {
         showEdit={showEdit}
         editId={editId}
         handleCloseEdit={handleCloseEdit}
+        refreshSupplier={refreshSupplier}
       />
       <button
-        onClick={() => handleShowEdit(id)}
+        onClick={() => handleShowEdit()}
         className="btn btn-primary ms-3"
       >
         <i className="bi bi-pencil-square"></i>
@@ -35,3 +38,5 @@ export const EditComp = ({ id }: Props) => {
     </div>
   )
 }
+
+export default EditComp;
