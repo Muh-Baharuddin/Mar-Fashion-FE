@@ -3,6 +3,8 @@ import React from 'react'
 import Button from 'react-bootstrap/Button'
 import Modal from 'react-bootstrap/Modal'
 import { useForm } from 'react-hook-form'
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 type handleShowType = {
   showAdd: boolean
@@ -17,7 +19,7 @@ function AddModalSupplier(props: handleShowType) {
     axios
       .post(`${process.env.API_ENDPOINT}supplier`, data)
       .then(() => {
-        alert('Data berhasil ditambahkan')
+        toast.success('Data berhasil ditambahkan')
         window.location.reload()
       })
   }
@@ -30,8 +32,9 @@ function AddModalSupplier(props: handleShowType) {
         backdrop="static"
         keyboard={false}
       >
+        <ToastContainer />
         <Modal.Header closeButton>
-          <Modal.Title>Tambah Karyawan</Modal.Title>
+          <Modal.Title>Tambah Supplier</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <form onSubmit={handleSubmit(handleAdd)}>
