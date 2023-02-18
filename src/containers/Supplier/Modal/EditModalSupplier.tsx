@@ -7,14 +7,14 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 
-type handleShowType = {
+type Props = {
   showEdit: boolean;
   editId: string;
   handleCloseEdit: () => void;
   refreshSupplier: () => void;
 }
 
-function EditModalSupplier(props: handleShowType) {
+function EditModalSupplier(props: Props) {
   const {showEdit, editId, handleCloseEdit, refreshSupplier} = props
   const { register, handleSubmit } = useForm();
 
