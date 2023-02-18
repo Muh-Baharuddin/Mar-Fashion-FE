@@ -7,9 +7,10 @@ import { Supplier } from "../TableSupplier";
 
 type Props = {
   supplier: Supplier;
+  loadData: () => void;
 };
 
-const DeleteComp = ({ supplier }: Props) => {
+const DeleteComp = ({ supplier, loadData }: Props) => {
   const handleDelete = () => {
     confirmAlert({
       title: 'Konfirmasi',
@@ -21,10 +22,8 @@ const DeleteComp = ({ supplier }: Props) => {
             axios
             .delete(`${process.env.API_ENDPOINT}supplier/` + supplier.id)
             .then((response) => {
-              toast.success(response.data.message, { autoClose: 1500 });
-              setTimeout(() => {
-                window.location.reload();
-              }, 2000);
+              toast.success(response.data.message);
+              loadData();
             })
             .catch(() => {
               toast.error("Maaf terjadi kesalahan pada server. Mohon coba kembali dalam beberapa saat.");
