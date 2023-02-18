@@ -6,6 +6,8 @@ import AddModalSupplier from '../Modal/AddModalSupplier'
 import EditModalSupplier from '../Modal/EditModalSupplier'
 import { handleShowType, QueryParamsType } from 'src/@types/user'
 import DeleteComp from '../Components/DeleteComp'
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 interface Supplier {
   id: string
@@ -75,9 +77,8 @@ const TableSupplier = (props: handleShowType) => {
     }).then((response) => {
       setData(response.data);
     }).catch((error) => {
-      alert('Terjadi kesalahan pada panggilan API: ' + error);
+      toast.error("Maaf sepertinya terjadi kesalahan pada server. Mohon coba kembali dalam beberapa saat.");
     })
-    // TODO: when error api
   }, [queryParams])
 
   return (
@@ -125,7 +126,6 @@ const TableSupplier = (props: handleShowType) => {
               </div>
             </div>
           </div>
-
           <table className="table table-bordered">
             <thead>
               <tr>
@@ -163,6 +163,7 @@ const TableSupplier = (props: handleShowType) => {
                 })}
             </tbody>
           </table>
+          <ToastContainer />
         </div>
         <Pagination
           previousLabel={'previous'}
