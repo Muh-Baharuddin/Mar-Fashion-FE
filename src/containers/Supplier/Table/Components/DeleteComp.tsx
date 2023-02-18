@@ -11,6 +11,19 @@ type Props = {
 };
 
 const DeleteComp = ({ supplier, loadData }: Props) => {
+
+  const DeleteConfirm = () => {
+    axios
+    .delete(`${process.env.API_ENDPOINT}supplier/` + supplier.id)
+    .then((response) => {
+      toast.success(response.data.message);
+      loadData();
+    })
+    .catch(() => {
+      toast.error("Maaf terjadi kesalahan pada server. Mohon coba kembali dalam beberapa saat.");
+    });
+  }
+
   const handleDelete = () => {
     confirmAlert({
       title: 'Konfirmasi',
@@ -18,17 +31,7 @@ const DeleteComp = ({ supplier, loadData }: Props) => {
       buttons: [
         {
           label: 'Ya',
-          onClick: () => {
-            axios
-            .delete(`${process.env.API_ENDPOINT}supplier/` + supplier.id)
-            .then((response) => {
-              toast.success(response.data.message);
-              loadData();
-            })
-            .catch(() => {
-              toast.error("Maaf terjadi kesalahan pada server. Mohon coba kembali dalam beberapa saat.");
-            });
-          },
+          onClick: DeleteConfirm,
         },
         {
           label: 'Tidak',
