@@ -62,7 +62,7 @@ const TableSupplier = (props: handleShowType) => {
     setShowEdit(false)
   }
 
-  const loadData = () => {
+  const refreshSupplier = () => {
     const url = `${process.env.API_ENDPOINT}supplier`;
     axios.get<Data>(url, {
       params: queryParams
@@ -73,7 +73,7 @@ const TableSupplier = (props: handleShowType) => {
   };
 
   useEffect(() => {
-    loadData();
+    refreshSupplier();
     // TODO: when error api
   }, [queryParams])
 
@@ -136,7 +136,7 @@ const TableSupplier = (props: handleShowType) => {
                       >
                         <i className="bi bi-pencil-square"></i>
                       </button>
-                      <DeleteComp supplier={d} loadData={loadData}/>
+                      <DeleteComp supplier={d} refreshSupplier={refreshSupplier}/>
                     </td>
                   </tr>
                 )
