@@ -15,11 +15,6 @@ export type UserContextType = {
   logout: () => void;
 };
 
-export type handleShowType = {
-  showEdit: boolean
-  setShowEdit: Dispatch<SetStateAction<boolean>>
-}
-
 export type QueryParamsType = {
   keywords: string,
   orderBy: string,

@@ -2,8 +2,9 @@ import { useEffect, useState } from 'react'
 import axios from 'axios'
 import Pagination from 'react-paginate'
 import 'bootstrap-icons/font/bootstrap-icons.css'
-import { handleShowType, QueryParamsType } from 'src/@types/user'
+import { QueryParamsType } from 'src/@types/user'
 import DeleteComp from './Components/DeleteComp'
+import EditComp from './Components/EditComp'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -19,13 +20,11 @@ interface Data {
   total: number;
 }
 
-const TableSupplier = (props: handleShowType) => {
-  const { showEdit, setShowEdit } = props
+const TableSupplier = () => {
   const [data, setData] = useState<Data>({
     data: [],
     total: 0,
   });
-  const [editId, setEditId] = useState('');
   const [queryParams, setQueryParams] = useState<QueryParamsType>({
     keywords: '',
     orderBy: 'nama',
@@ -52,16 +51,6 @@ const TableSupplier = (props: handleShowType) => {
       orderBy: value[0],
       orderType: value[1],
     })
-  }
-
-  const handleShowEdit = (id: string) => {
-    setEditId(id)
-    setShowEdit(true)
-  }
-
-  const handleCloseEdit = () => {
-    setEditId('')
-    setShowEdit(false)
   }
 
   const refreshSupplier = () => {
@@ -130,14 +119,7 @@ const TableSupplier = (props: handleShowType) => {
                     <td>{d.alamat}</td>
                     <td>{d.nomor_telepon}</td>
                     <td>
-
-                      {/* TODO: create new component for edit button */}
-                      <button
-                        onClick={() => handleShowEdit(d.id)}
-                        className="btn btn-primary ms-3"
-                      >
-                        <i className="bi bi-pencil-square"></i>
-                      </button>
+                      <EditComp supplier={d} refreshSupplier={refreshSupplier}/>
                       <DeleteComp supplier={d} refreshSupplier={refreshSupplier}/>
                     </td>
                   </tr>

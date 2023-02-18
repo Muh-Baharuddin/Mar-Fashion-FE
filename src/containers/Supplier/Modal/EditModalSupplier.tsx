@@ -3,22 +3,26 @@ import React from 'react';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import { useForm } from "react-hook-form";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 
-type handleShowType = {
+type Props = {
   showEdit: boolean;
   editId: string;
   handleCloseEdit: () => void;
+  refreshSupplier: () => void;
 }
 
-function EditModalSupplier(props: handleShowType) {
-  const {showEdit, editId, handleCloseEdit} = props
+function EditModalSupplier(props: Props) {
+  const {showEdit, editId, handleCloseEdit, refreshSupplier} = props
   const { register, handleSubmit } = useForm();
 
   const handleEdit = (data: any) => {
     axios.patch(`${process.env.API_ENDPOINT}supplier/` + editId, data).then(response => {
-      alert(response.data.message)
-      window.location.reload()
+      toast.success(response.data.message);
+      handleCloseEdit();
+      refreshSupplier();
     })
   }
 
@@ -69,11 +73,12 @@ function EditModalSupplier(props: handleShowType) {
               Submit
             </Button>
             <Button className='mx-2' variant="secondary" onClick={handleCloseEdit}>
-            Close
+              Close
             </Button>
           </form>
         </Modal.Body>
       </Modal>
+      <ToastContainer />
     </>
   );
 }
