@@ -20,7 +20,7 @@ const DeleteComp = ({ id }: Props) => {
             axios
             .delete(`${process.env.API_ENDPOINT}supplier/` + id)
             .then((response) => {
-              toast.success(response.data.message);
+              toast.success(response.data.message, { autoClose: 1500 });
               setTimeout(() => {
                 window.location.reload();
               }, 2000);
