@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import AddModalSupplier from '../Modal/AddModalSupplier'
+import AddModalSupplier from '../../Modal/AddModalSupplier'
 
 const AddComp = () => {
   const [showAdd, setShowAdd] = useState(false)

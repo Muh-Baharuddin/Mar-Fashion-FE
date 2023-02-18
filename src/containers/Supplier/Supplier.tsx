@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import AddComp from './Components/AddComp'
+import AddComp from './Table/Components/AddComp'
 import TableSupplier from './Table/TableSupplier'
 
 export const DataSupplier = () => {

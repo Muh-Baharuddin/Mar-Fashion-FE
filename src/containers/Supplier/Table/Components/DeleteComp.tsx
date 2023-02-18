@@ -3,22 +3,23 @@ import { confirmAlert } from 'react-confirm-alert';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-confirm-alert/src/react-confirm-alert.css';
 import 'react-toastify/dist/ReactToastify.css';
+import { Supplier } from "../TableSupplier";
 
 type Props = {
-  id: string;
+  supplier: Supplier;
 };
 
-const DeleteComp = ({ id }: Props) => {
+const DeleteComp = ({ supplier }: Props) => {
   const handleDelete = () => {
     confirmAlert({
       title: 'Konfirmasi',
-      message: 'Apakah Anda yakin ingin menghapus data ini?',
+      message: 'Apakah Anda yakin ingin menghapus data dari ' + `${supplier.nama} ?`,
       buttons: [
         {
           label: 'Ya',
           onClick: () => {
             axios
-            .delete(`${process.env.API_ENDPOINT}supplier/` + id)
+            .delete(`${process.env.API_ENDPOINT}supplier/` + supplier.id)
             .then((response) => {
               toast.success(response.data.message, { autoClose: 1500 });
               setTimeout(() => {
@@ -26,7 +27,7 @@ const DeleteComp = ({ id }: Props) => {
               }, 2000);
             })
             .catch(() => {
-              toast.error("Maaf sepertinya terjadi kesalahan pada server. Mohon coba kembali dalam beberapa saat.");
+              toast.error("Maaf terjadi kesalahan pada server. Mohon coba kembali dalam beberapa saat.");
             });
           },
         },
