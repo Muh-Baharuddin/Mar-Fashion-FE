@@ -32,17 +32,6 @@ const TableSupplier = () => {
     });
   };
 
-  const refreshSupplier = () => {
-    const url = `${process.env.API_ENDPOINT}supplier`;
-    axios.get<Data>(url, {
-      params: queryParams
-    }).then((response) => {
-      setData(response.data);
-    }).catch(() => {
-      toast.error("Maaf terjadi kesalahan pada server. Mohon coba kembali dalam beberapa saat.");
-    })
-  };
-
   useEffect(() => {
     refreshSupplier();
   }, [queryParams])
