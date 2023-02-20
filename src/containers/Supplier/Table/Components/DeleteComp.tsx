@@ -3,14 +3,14 @@ import { confirmAlert } from 'react-confirm-alert';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-confirm-alert/src/react-confirm-alert.css';
 import 'react-toastify/dist/ReactToastify.css';
-import { Supplier } from "../TableSupplier";
+import { Supplier, useSupplierContext } from "../../Supplier";
 
 type Props = {
   supplier: Supplier;
-  refreshSupplier: () => void;
 };
 
-const DeleteComp = ({ supplier, refreshSupplier }: Props) => {
+const DeleteComp = ({ supplier }: Props) => {
+  const { refreshSupplier } = useSupplierContext();
 
   const DeleteConfirm = () => {
     axios

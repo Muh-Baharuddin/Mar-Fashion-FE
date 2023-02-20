@@ -5,22 +5,25 @@ import Modal from 'react-bootstrap/Modal'
 import { useForm } from 'react-hook-form'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { useSupplierContext } from '../Supplier'
 
 type handleShowType = {
-  showAdd: boolean
-  handleCloseAdd: () => void
+  showAdd: boolean;
+  handleCloseAdd: () => void;
 }
 
 function AddModalSupplier(props: handleShowType) {
   const { register, handleSubmit } = useForm()
   const { showAdd, handleCloseAdd } = props
+  const { refreshSupplier } = useSupplierContext();
 
   const handleAdd = (data: any) => {
     axios
       .post(`${process.env.API_ENDPOINT}supplier`, data)
       .then(() => {
-        toast.success('Data berhasil ditambahkan')
-        window.location.reload()
+        toast.success('Data berhasil ditambahkan');
+        refreshSupplier();
+        handleCloseAdd();
       })
   }
 

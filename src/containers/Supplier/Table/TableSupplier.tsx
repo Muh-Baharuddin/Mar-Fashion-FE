@@ -1,37 +1,13 @@
-import { useEffect, useState } from 'react'
-import axios from 'axios'
+import { useEffect } from 'react'
+import { ToastContainer } from 'react-toastify';
+import { useSupplierContext } from '../Supplier'
 import Pagination from 'react-paginate'
-import 'bootstrap-icons/font/bootstrap-icons.css'
-import { QueryParamsType } from 'src/@types/user'
 import DeleteComp from './Components/DeleteComp'
 import EditComp from './Components/EditComp'
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-
-export interface Supplier {
-  id: string
-  nama: string
-  alamat: string
-  nomor_telepon: string
-}
-
-interface Data {
-  data: Supplier[],
-  total: number;
-}
+import 'bootstrap-icons/font/bootstrap-icons.css'
 
 const TableSupplier = () => {
-  const [data, setData] = useState<Data>({
-    data: [],
-    total: 0,
-  });
-  const [queryParams, setQueryParams] = useState<QueryParamsType>({
-    keywords: '',
-    orderBy: 'nama',
-    orderType: 'ASC',
-    page: 1,
-    limit: 10,
-  })
+  const { data, queryParams, setQueryParams, refreshSupplier } = useSupplierContext()
 
   const handlePageClick = (e: { selected: number }) => {
     const selectedPage = e.selected;
@@ -133,8 +109,8 @@ const TableSupplier = () => {
                     <td>{d.alamat}</td>
                     <td>{d.nomor_telepon}</td>
                     <td>
-                      <EditComp supplier={d} refreshSupplier={refreshSupplier}/>
-                      <DeleteComp supplier={d} refreshSupplier={refreshSupplier}/>
+                      <EditComp supplier={d} />
+                      <DeleteComp supplier={d} />
                     </td>
                   </tr>
                 )
