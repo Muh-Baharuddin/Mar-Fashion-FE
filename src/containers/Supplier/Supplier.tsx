@@ -47,18 +47,11 @@ export const useSupplierContext = () => {
 } 
 
 export const DataSupplier = () => {
+  const [queryParams, setQueryParams] = useState<QueryParamsType>(defaultState.queryParams)
   const [data, setData] = useState<Data>({
     data: [],
     total: 0,
   });
-
-  const [queryParams, setQueryParams] = useState<QueryParamsType>({
-    keywords: '',
-    orderBy: 'nama',
-    orderType: '',
-    page: 1,
-    limit: 10,
-  })
 
   const refreshSupplier = () => {
     const url = `${process.env.API_ENDPOINT}supplier`;
