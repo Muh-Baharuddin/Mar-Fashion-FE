@@ -92,9 +92,9 @@ const TableSupplier = () => {
                 Nama{' '}
                 {queryParams.orderBy === 'nama' && (
                   <i
-                    className={`bi bi-arrow-${
+                    className={`bi bi-caret-${
                       queryParams.orderType === 'ASC' ? 'down' : 'up'
-                    }-square`}
+                    }-fill`}
                   ></i>
                 )}
               </th>
@@ -102,9 +102,9 @@ const TableSupplier = () => {
                 Alamat{' '}
                 {queryParams.orderBy === 'alamat' && (
                   <i
-                    className={`bi bi-arrow-${
+                    className={`bi bi-caret-${
                       queryParams.orderType === 'ASC' ? 'down' : 'up'
-                    }-square`}
+                    }-fill`}
                   ></i>
                 )}
               </th>
@@ -112,9 +112,9 @@ const TableSupplier = () => {
                 Nomor Telepon{' '}
                 {queryParams.orderBy === 'nomor_telepon' && (
                   <i
-                    className={`bi bi-arrow-${
+                    className={`bi bi-caret-${
                       queryParams.orderType === 'ASC' ? 'down' : 'up'
-                    }-square`}
+                    }-fill`}
                   ></i>
                 )}
               </th>
