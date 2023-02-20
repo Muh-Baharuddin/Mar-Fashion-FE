@@ -16,18 +16,21 @@ const TableSupplier = () => {
     });
   }
 
-  const handleSearch = (event: any) => {
+  const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
     setQueryParams({ ...queryParams, keywords: event.target.value })
   }
 
-  const handleSortBy = (event: any) => {
-    const value = event.target.value.split('-')
+  const handleSortBy = (column: string) => {
+    let newOrderType = 'ASC';
+    if (column === queryParams.orderBy && queryParams.orderType === 'ASC') {
+      newOrderType = 'DESC';
+    }
     setQueryParams({
       ...queryParams,
-      orderBy: value[0],
-      orderType: value[1],
-    })
-  }
+      orderBy: column,
+      orderType: newOrderType,
+    });
+  };
 
   useEffect(() => {
     refreshSupplier();
@@ -37,38 +40,49 @@ const TableSupplier = () => {
     <>
       <div className="card-body">
         <div className="row mb-2">
-          <div className="col-12 col-md-8">
-            <select onChange={handleSortBy}>
-              <option value="nama-ASC">Sort By Nama (ASC)</option>
-              <option value="nama-DESC">Sort By Nama (DESC)</option>
-              <option value="alamat-ASC">Sort By Alamat (ASC)</option>
-              <option value="alamat-DESC">Sort By Alamat (DESC)</option>
-              <option value="nomor_telepon-ASC">
-                Sort By Nomor Telepon (ASC)
-              </option>
-              <option value="nomor_telepon-DESC">
-                Sort By Nomor Telepon (DESC)
-              </option>
-            </select>
-          </div>
-          <div className="col-12 col-md-4">
-            <div className="search-bar">
-              <input
-                className="form-control"
-                type="text"
-                placeholder="Search"
-                onChange={handleSearch}
-              />
-            </div>
+          <div className="search-bar col-12 col-md-4">
+            <input
+              className="form-control"
+              type="text"
+              placeholder="Search"
+              onChange={handleSearch}
+            />
           </div>
         </div>
         <table className="table table-bordered">
           <thead>
             <tr>
-              <th>Id</th>
-              <th>Nama</th>
-              <th>Alamat</th>
-              <th>Nomor Telepon</th>
+            <th>Id</th>
+              <th onClick={() => handleSortBy('nama')}>
+                Nama{' '}
+                {queryParams.orderBy === 'nama' && (
+                  <i
+                    className={`bi bi-caret-${
+                      queryParams.orderType === 'ASC' ? 'down' : 'up'
+                    }-fill`}
+                  ></i>
+                )}
+              </th>
+              <th onClick={() => handleSortBy('alamat')}>
+                Alamat{' '}
+                {queryParams.orderBy === 'alamat' && (
+                  <i
+                    className={`bi bi-caret-${
+                      queryParams.orderType === 'ASC' ? 'down' : 'up'
+                    }-fill`}
+                  ></i>
+                )}
+              </th>
+              <th onClick={() => handleSortBy('nomor_telepon')}>
+                Nomor Telepon{' '}
+                {queryParams.orderBy === 'nomor_telepon' && (
+                  <i
+                    className={`bi bi-caret-${
+                      queryParams.orderType === 'ASC' ? 'down' : 'up'
+                    }-fill`}
+                  ></i>
+                )}
+              </th>
               <th>Action</th>
             </tr>
           </thead>
