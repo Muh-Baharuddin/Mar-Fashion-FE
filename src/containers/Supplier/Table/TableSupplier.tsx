@@ -87,30 +87,36 @@ const TableSupplier = () => {
         <table className="table table-bordered">
           <thead>
             <tr>
-              <th>Id</th>
-              <th>
+            <th>Id</th>
+              <th onClick={() => handleSortBy('nama')}>
                 Nama{' '}
-                <span onClick={() => handleSortBy('nama')}
-                  style={{ cursor: 'pointer' }}
-                >
-                  <i className="bi bi-arrow-down-up"></i>
-                </span>
+                {queryParams.orderBy === 'nama' && (
+                  <i
+                    className={`bi bi-arrow-${
+                      queryParams.orderType === 'ASC' ? 'down' : 'up'
+                    }-square`}
+                  ></i>
+                )}
               </th>
-              <th>
+              <th onClick={() => handleSortBy('alamat')}>
                 Alamat{' '}
-                <span onClick={() => handleSortBy('alamat')}
-                  style={{ cursor: 'pointer' }}
-                >
-                  <i className="bi bi-arrow-down-up"></i>
-                </span>
+                {queryParams.orderBy === 'alamat' && (
+                  <i
+                    className={`bi bi-arrow-${
+                      queryParams.orderType === 'ASC' ? 'down' : 'up'
+                    }-square`}
+                  ></i>
+                )}
               </th>
-              <th>
+              <th onClick={() => handleSortBy('nomor_telepon')}>
                 Nomor Telepon{' '}
-                <span onClick={() => handleSortBy('nomor_telepon')}
-                  style={{ cursor: 'pointer' }}
-                >
-                  <i className="bi bi-arrow-down-up"></i>
-                </span>
+                {queryParams.orderBy === 'nomor_telepon' && (
+                  <i
+                    className={`bi bi-arrow-${
+                      queryParams.orderType === 'ASC' ? 'down' : 'up'
+                    }-square`}
+                  ></i>
+                )}
               </th>
               <th>Action</th>
             </tr>
