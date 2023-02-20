@@ -1,13 +1,12 @@
 import { useState } from "react";
 import EditModalSupplier from "../../Modal/EditModalSupplier";
-import { Supplier } from "../../Supplier";
+import { Supplier, useSupplierContext } from "../../Supplier";
 
 type Props = {
   supplier: Supplier;
-  refreshSupplier: () => void;
 };
 
-const EditComp = ({ supplier, refreshSupplier }: Props) => {
+const EditComp = ({ supplier }: Props) => {
   const [editId, setEditId] = useState('');
   const [showEdit, setShowEdit] = useState(false);
 
@@ -27,7 +26,6 @@ const EditComp = ({ supplier, refreshSupplier }: Props) => {
         showEdit={showEdit}
         editId={editId}
         handleCloseEdit={handleCloseEdit}
-        refreshSupplier={refreshSupplier}
       />
       <button
         onClick={() => handleShowEdit()}

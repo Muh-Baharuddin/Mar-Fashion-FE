@@ -5,16 +5,17 @@ import Modal from 'react-bootstrap/Modal'
 import { useForm } from 'react-hook-form'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { useSupplierContext } from '../Supplier'
 
 type handleShowType = {
   showAdd: boolean;
   handleCloseAdd: () => void;
-  refreshSupplier: () => void;
 }
 
 function AddModalSupplier(props: handleShowType) {
   const { register, handleSubmit } = useForm()
-  const { showAdd, handleCloseAdd, refreshSupplier } = props
+  const { showAdd, handleCloseAdd } = props
+  const { refreshSupplier } = useSupplierContext();
 
   const handleAdd = (data: any) => {
     axios

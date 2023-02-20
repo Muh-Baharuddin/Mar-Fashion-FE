@@ -1,21 +1,13 @@
-import { Dispatch, useEffect, SetStateAction} from 'react'
-import { QueryParamsType } from 'src/@types/user'
+import { useEffect } from 'react'
 import { ToastContainer } from 'react-toastify';
-import { Data } from '../Supplier'
+import { useSupplierContext } from '../Supplier'
 import Pagination from 'react-paginate'
 import DeleteComp from './Components/DeleteComp'
 import EditComp from './Components/EditComp'
 import 'bootstrap-icons/font/bootstrap-icons.css'
 
-type Props = {
-  data: Data;
-  queryParams: QueryParamsType;
-  setQueryParams: Dispatch<SetStateAction<QueryParamsType>>;
-  refreshSupplier: () => void;
-}
-
-const TableSupplier = (props: Props) => {
-  const { data, queryParams, setQueryParams, refreshSupplier } = props;
+const TableSupplier = () => {
+  const { data, queryParams, setQueryParams, refreshSupplier } = useSupplierContext()
 
   const handlePageClick = (e: { selected: number }) => {
     const selectedPage = e.selected;
@@ -92,8 +84,8 @@ const TableSupplier = (props: Props) => {
                     <td>{d.alamat}</td>
                     <td>{d.nomor_telepon}</td>
                     <td>
-                      <EditComp supplier={d} refreshSupplier={refreshSupplier}/>
-                      <DeleteComp supplier={d} refreshSupplier={refreshSupplier}/>
+                      <EditComp supplier={d} />
+                      <DeleteComp supplier={d} />
                     </td>
                   </tr>
                 )

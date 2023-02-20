@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { useState } from 'react'
+import { createContext, useContext, useState } from 'react'
 import { QueryParamsType } from 'src/@types/user'
 import AddComp from './Table/Components/AddComp'
 import TableSupplier from './Table/TableSupplier'
@@ -13,10 +13,38 @@ export interface Supplier {
   nomor_telepon: string
 }
 
-export interface Data {
+interface Data {
   data: Supplier[],
   total: number;
 }
+
+interface supplierContext {
+  data: Data;
+  setData: React.Dispatch<React.SetStateAction<Data>>;
+  queryParams: QueryParamsType;
+  setQueryParams: React.Dispatch<React.SetStateAction<QueryParamsType>>;
+  refreshSupplier: () => void;
+}
+
+const defaultState = {
+  data: { data: [], total: 0 },
+  setData: () => {},
+  queryParams: {
+    keywords: '',
+    orderBy: 'nama',
+    orderType: 'ASC',
+    page: 1,
+    limit: 10,
+  },
+  setQueryParams: () => {},
+  refreshSupplier: () => {},
+}
+
+const supplierContext = createContext<supplierContext>(defaultState)
+
+export const useSupplierContext = () => {
+  return useContext(supplierContext)
+} 
 
 export const DataSupplier = () => {
   const [data, setData] = useState<Data>({
@@ -44,19 +72,22 @@ export const DataSupplier = () => {
   };
 
   return (
-    <div className="container">
-      <h3>Data Supplier</h3>
-      <div className="card">
-        <div className="card-header">
-          <AddComp refreshSupplier={refreshSupplier}/>
+    <supplierContext.Provider value={{
+      data,
+      setData,
+      queryParams,
+      setQueryParams,
+      refreshSupplier,
+    }}>
+      <div className="container">
+        <h3>Data Supplier</h3>
+        <div className="card">
+          <div className="card-header">
+            <AddComp />
+          </div>
+          <TableSupplier />
         </div>
-        <TableSupplier 
-          data={data}
-          queryParams={queryParams}
-          setQueryParams={setQueryParams}
-          refreshSupplier={refreshSupplier}
-        />
       </div>
-    </div>
+    </supplierContext.Provider>
   )
 }

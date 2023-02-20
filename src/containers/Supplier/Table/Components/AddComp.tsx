@@ -1,11 +1,7 @@
 import { useState } from 'react'
 import AddModalSupplier from '../../Modal/AddModalSupplier'
 
-type Props = {
-  refreshSupplier: () => void;
-};
-
-const AddComp = ({refreshSupplier}: Props) => {
+const AddComp = () => {
   const [showAdd, setShowAdd] = useState(false)
 
   const handleShowAdd = () => setShowAdd(true)
@@ -13,7 +9,7 @@ const AddComp = ({refreshSupplier}: Props) => {
 
   return (
     <div>
-      <AddModalSupplier showAdd={showAdd} handleCloseAdd={handleCloseAdd} refreshSupplier={refreshSupplier}/>
+      <AddModalSupplier showAdd={showAdd} handleCloseAdd={handleCloseAdd} />
       <button onClick={handleShowAdd} className="btn btn-primary">
         <i className="bi bi-plus-square"></i>
       </button>
