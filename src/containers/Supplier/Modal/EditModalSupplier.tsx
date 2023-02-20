@@ -4,6 +4,7 @@ import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import { useForm } from "react-hook-form";
 import { ToastContainer, toast } from 'react-toastify';
+import { useSupplierContext } from '../Supplier';
 import 'react-toastify/dist/ReactToastify.css';
 
 
@@ -11,11 +12,11 @@ type Props = {
   showEdit: boolean;
   editId: string;
   handleCloseEdit: () => void;
-  refreshSupplier: () => void;
 }
 
 function EditModalSupplier(props: Props) {
-  const {showEdit, editId, handleCloseEdit, refreshSupplier} = props
+  const {showEdit, editId, handleCloseEdit } = props
+  const { refreshSupplier } = useSupplierContext();
   const { register, handleSubmit } = useForm();
 
   const handleEdit = (data: any) => {
