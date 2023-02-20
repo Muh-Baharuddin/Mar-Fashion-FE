@@ -1,6 +1,6 @@
 import { useState } from "react";
 import EditModalSupplier from "../../Modal/EditModalSupplier";
-import { Supplier } from "../TableSupplier";
+import { Supplier } from "../../Supplier";
 
 type Props = {
   supplier: Supplier;

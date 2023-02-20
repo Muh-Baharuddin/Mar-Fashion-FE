@@ -1,37 +1,21 @@
-import { useEffect, useState } from 'react'
-import axios from 'axios'
-import Pagination from 'react-paginate'
-import 'bootstrap-icons/font/bootstrap-icons.css'
+import { Dispatch, useEffect, SetStateAction} from 'react'
 import { QueryParamsType } from 'src/@types/user'
+import { ToastContainer } from 'react-toastify';
+import { Data } from '../Supplier'
+import Pagination from 'react-paginate'
 import DeleteComp from './Components/DeleteComp'
 import EditComp from './Components/EditComp'
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import 'bootstrap-icons/font/bootstrap-icons.css'
 
-export interface Supplier {
-  id: string
-  nama: string
-  alamat: string
-  nomor_telepon: string
+type Props = {
+  data: Data;
+  queryParams: QueryParamsType;
+  setQueryParams: Dispatch<SetStateAction<QueryParamsType>>;
+  refreshSupplier: () => void;
 }
 
-interface Data {
-  data: Supplier[],
-  total: number;
-}
-
-const TableSupplier = () => {
-  const [data, setData] = useState<Data>({
-    data: [],
-    total: 0,
-  });
-  const [queryParams, setQueryParams] = useState<QueryParamsType>({
-    keywords: '',
-    orderBy: 'nama',
-    orderType: '',
-    page: 1,
-    limit: 10,
-  })
+const TableSupplier = (props: Props) => {
+  const { data, queryParams, setQueryParams, refreshSupplier } = props;
 
   const handlePageClick = (e: { selected: number }) => {
     const selectedPage = e.selected;
@@ -52,17 +36,6 @@ const TableSupplier = () => {
       orderType: value[1],
     })
   }
-
-  const refreshSupplier = () => {
-    const url = `${process.env.API_ENDPOINT}supplier`;
-    axios.get<Data>(url, {
-      params: queryParams
-    }).then((response) => {
-      setData(response.data);
-    }).catch(() => {
-      toast.error("Maaf terjadi kesalahan pada server. Mohon coba kembali dalam beberapa saat.");
-    })
-  };
 
   useEffect(() => {
     refreshSupplier();
