@@ -7,20 +7,22 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 type handleShowType = {
-  showAdd: boolean
-  handleCloseAdd: () => void
+  showAdd: boolean;
+  handleCloseAdd: () => void;
+  refreshSupplier: () => void;
 }
 
 function AddModalSupplier(props: handleShowType) {
   const { register, handleSubmit } = useForm()
-  const { showAdd, handleCloseAdd } = props
+  const { showAdd, handleCloseAdd, refreshSupplier } = props
 
   const handleAdd = (data: any) => {
     axios
       .post(`${process.env.API_ENDPOINT}supplier`, data)
       .then(() => {
-        toast.success('Data berhasil ditambahkan')
-        window.location.reload()
+        toast.success('Data berhasil ditambahkan');
+        refreshSupplier();
+        handleCloseAdd();
       })
   }
 
