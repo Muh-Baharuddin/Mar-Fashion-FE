@@ -1,6 +1,6 @@
 export interface Data <T>{
   data: T[],
-  total: number;
+  total: number,
 }
 
 export type QueryParamsType = {
@@ -9,4 +9,8 @@ export type QueryParamsType = {
   orderType: string,
   page: number,
   limit: number,
+}
+
+export type ParamsType = {
+  [key: string]: number | string | Date,
 }
