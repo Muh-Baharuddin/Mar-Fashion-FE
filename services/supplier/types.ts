@@ -1,3 +1,5 @@
+import { Data } from "services/types"
+
 export interface Supplier {
   id: string
   nama: string
@@ -5,7 +7,4 @@ export interface Supplier {
   nomor_telepon: string
 }
 
-export interface Data {
-  data: Supplier[],
-  total: number;
-}
+export type SupplierData = Data<Supplier>

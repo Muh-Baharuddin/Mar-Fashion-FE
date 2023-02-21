@@ -14,11 +14,3 @@ export type UserContextType = {
   login: (userName: string, password: string) => void;
   logout: () => void;
 };
-
-export type QueryParamsType = {
-  keywords: string,
-  orderBy: string,
-  orderType: string,
-  page: number,
-  limit: number,
-}

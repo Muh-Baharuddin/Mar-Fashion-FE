@@ -1,7 +1,7 @@
 import * as api from "services/api";
-import { QueryParamsType } from "src/@types/user";
-import { Data } from "./types";
+import { QueryParamsType } from 'services/types';
+import { SupplierData } from "./types";
 
-export const getAll = (params: QueryParamsType) => {
-  return api.get<Data>(`${process.env.API_ENDPOINT}supplier`, params);
+export const getSuppliers = (params: QueryParamsType) => {
+  return api.get<SupplierData>(`${process.env.API_ENDPOINT}supplier`, params);
 }

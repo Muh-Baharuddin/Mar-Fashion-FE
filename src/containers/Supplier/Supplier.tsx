@@ -1,15 +1,16 @@
 import { createContext, useContext, useState } from 'react'
-import { QueryParamsType } from 'src/@types/user'
+import { QueryParamsType } from 'services/types';
 import AddComp from './Table/Components/AddComp'
 import TableSupplier from './Table/TableSupplier'
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { getAll } from 'services/supplier'
-import { Data } from 'services/supplier/types';
+import { getSuppliers } from 'services/supplier'
+import { Data } from 'services/types';
+import { Supplier, SupplierData } from 'services/supplier/types';
 
 interface supplierContext {
-  data: Data;
-  setData: React.Dispatch<React.SetStateAction<Data>>;
+  data: SupplierData;
+  setData: React.Dispatch<React.SetStateAction<SupplierData>>;
   queryParams: QueryParamsType;
   setQueryParams: React.Dispatch<React.SetStateAction<QueryParamsType>>;
   refreshSupplier: () => void;
@@ -37,35 +38,18 @@ export const useSupplierContext = () => {
 
 export const DataSupplier = () => {
   const [queryParams, setQueryParams] = useState<QueryParamsType>(defaultState.queryParams)
-  const [data, setData] = useState<Data>({
+  const [data, setData] = useState<Data<Supplier>>({
     data: [],
     total: 0,
   });
 
   const refreshSupplier = () => {
-    getAll(queryParams)
+    getSuppliers(queryParams)
     .then((response) => {
       setData(response.data);
     }).catch(() => {
       toast.error("Maaf terjadi kesalahan pada server. Mohon coba kembali dalam beberapa saat.");
     })
-
-    // api.get<Data>('supplier', {
-    //   params: queryParams
-    // }).then((response) => {
-    //   setData(response.data);
-    // }).catch(() => {
-    //   toast.error("Maaf terjadi kesalahan pada server. Mohon coba kembali dalam beberapa saat.");
-    // })
-    
-    // const url = `${process.env.API_ENDPOINT}supplier`;
-    // axios.get<Data>(url, {
-    //   params: queryParams
-    // }).then((response) => {
-    //   setData(response.data);
-    // }).catch(() => {
-    //   toast.error("Maaf terjadi kesalahan pada server. Mohon coba kembali dalam beberapa saat.");
-    // })
   };
 
   return (
