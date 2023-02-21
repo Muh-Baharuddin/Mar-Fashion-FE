@@ -7,7 +7,6 @@ import 'react-toastify/dist/ReactToastify.css';
 import { getAll } from 'services/supplier'
 import { Data } from 'services/supplier/types';
 
-
 interface supplierContext {
   data: Data;
   setData: React.Dispatch<React.SetStateAction<Data>>;
