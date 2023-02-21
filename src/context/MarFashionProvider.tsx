@@ -29,10 +29,12 @@ const MarFashionProvider: FC<Props> = ({ children }) => {
   }
 
   const [user, setUser] = useState<IUser | undefined>(undefined);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
 
   useEffect(() => {
-    setUser(cookies.user)
-    axios.defaults.headers.common['Authorization'] = "Bearer " + cookies.token;  
+    setUser(cookies.user);
+    axios.defaults.headers.common["Authorization"] = "Bearer " + cookies.token;
+    setIsLoading(false);  
   }, [])
 
   const login = (userName: string, password: string) => {
@@ -63,6 +65,10 @@ const MarFashionProvider: FC<Props> = ({ children }) => {
     removeCookie("user")
     removeCookie("token")
     router.push('/', undefined, { shallow: true })
+  }
+
+  if (isLoading) {
+    return <div>Loading...</div>;
   }
 
   return (
