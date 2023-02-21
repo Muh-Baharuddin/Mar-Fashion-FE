@@ -1,22 +1,12 @@
-import axios from 'axios'
 import { createContext, useContext, useState } from 'react'
 import { QueryParamsType } from 'src/@types/user'
 import AddComp from './Table/Components/AddComp'
 import TableSupplier from './Table/TableSupplier'
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { getAll } from 'services/supplier'
+import { Data } from 'services/supplier/types';
 
-export interface Supplier {
-  id: string
-  nama: string
-  alamat: string
-  nomor_telepon: string
-}
-
-interface Data {
-  data: Supplier[],
-  total: number;
-}
 
 interface supplierContext {
   data: Data;
@@ -54,14 +44,29 @@ export const DataSupplier = () => {
   });
 
   const refreshSupplier = () => {
-    const url = `${process.env.API_ENDPOINT}supplier`;
-    axios.get<Data>(url, {
-      params: queryParams
-    }).then((response) => {
+    getAll(queryParams)
+    .then((response) => {
       setData(response.data);
     }).catch(() => {
       toast.error("Maaf terjadi kesalahan pada server. Mohon coba kembali dalam beberapa saat.");
     })
+
+    // api.get<Data>('supplier', {
+    //   params: queryParams
+    // }).then((response) => {
+    //   setData(response.data);
+    // }).catch(() => {
+    //   toast.error("Maaf terjadi kesalahan pada server. Mohon coba kembali dalam beberapa saat.");
+    // })
+    
+    // const url = `${process.env.API_ENDPOINT}supplier`;
+    // axios.get<Data>(url, {
+    //   params: queryParams
+    // }).then((response) => {
+    //   setData(response.data);
+    // }).catch(() => {
+    //   toast.error("Maaf terjadi kesalahan pada server. Mohon coba kembali dalam beberapa saat.");
+    // })
   };
 
   return (
