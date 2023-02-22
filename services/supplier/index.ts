@@ -13,3 +13,7 @@ export const postSupplier = (data: SupplierData) => {
 export const updateSupplier = (id: string, data: SupplierData) => {
   return api.patch<SupplierData>(`${process.env.API_ENDPOINT}supplier`, id, data);
 }
+
+export const deleteSupplier = (id: string) => {
+  return api.remove(`${process.env.API_ENDPOINT}supplier`, id);
+}

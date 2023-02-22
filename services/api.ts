@@ -41,3 +41,16 @@ export const patch = async <T>(url: string, id: string, data: T): Promise<{
     message: response.data.message,
   };
 }
+
+export const remove = async (url: string, id: string): Promise<{
+  statusCode: number,
+  message: string
+}> => {
+  const deleteUrl = `${url}/${id}`;
+  const response = await axios.delete(deleteUrl);
+
+  return {
+    statusCode: response.status,
+    message: response.data.message,
+  };
+}
