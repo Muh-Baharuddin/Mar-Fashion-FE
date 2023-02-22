@@ -26,3 +26,18 @@ export const post = async <T>(url: string, data: T): Promise<{
     statusCode: response.status,
   };
 }
+
+export const patch = async <T>(url: string, id: string, data: T): Promise<{
+  data: T,
+  statusCode: number,
+  message: string
+}> => {
+  const patchedUrl = `${url}/${id}`;
+  const response = await axios.patch(patchedUrl, data);
+
+  return {
+    data: response.data,
+    statusCode: response.status,
+    message: response.data.message,
+  };
+}

@@ -27,13 +27,6 @@ function AddModalSupplier(props: handleShowType) {
       toast.error("Maaf terjadi kesalahan pada server. Mohon coba kembali dalam beberapa saat.");
       handleCloseAdd();
     })
-    // axios
-    //   .post(`${process.env.API_ENDPOINT}supplier`, data)
-    //   .then(() => {
-    //     toast.success('Data berhasil ditambahkan');
-    //     refreshSupplier();
-    //     handleCloseAdd();
-    //   })
   }
 
   return (

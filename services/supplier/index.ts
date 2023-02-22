@@ -9,3 +9,7 @@ export const getSuppliers = (params: QueryParamsType) => {
 export const postSupplier = (data: SupplierData) => {
   return api.post<SupplierData>(`${process.env.API_ENDPOINT}supplier`, data);
 }
+
+export const updateSupplier = (id: string, data: SupplierData) => {
+  return api.patch<SupplierData>(`${process.env.API_ENDPOINT}supplier`, id, data);
+}
