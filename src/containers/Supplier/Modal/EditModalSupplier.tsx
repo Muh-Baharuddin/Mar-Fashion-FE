@@ -21,7 +21,7 @@ function EditModalSupplier(props: Props) {
 
   const handleEdit = (data: any) => {
     updateSupplier(editId, data).then(response => {
-      toast.success(response.message);
+      toast.success(response.data.message);
       handleCloseEdit();
       refreshSupplier();
     })
