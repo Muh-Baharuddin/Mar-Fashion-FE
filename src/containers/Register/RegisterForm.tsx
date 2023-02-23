@@ -4,7 +4,9 @@ import { faLock } from '@fortawesome/free-solid-svg-icons'
 import { Button, Form, InputGroup } from 'react-bootstrap'
 import { useRouter } from 'next/router'
 import { SyntheticEvent, useState } from 'react'
-import axios from 'axios'
+import { postRegister } from 'services/register'
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export const RegisterForm = () => {
   const router = useRouter()
@@ -14,20 +16,16 @@ export const RegisterForm = () => {
 
   const handleSubmit = async (event: SyntheticEvent) => {
     event.preventDefault()
-    axios({
-      method: 'post',
-      url: `${process.env.API_ENDPOINT}auth/register`,
-      data: {
-        userName,
-        password,
-        confirmPass,
-      },
-    }).then((response) => {
-      console.log(response.data)
-      console.log(response.status)
-      router.push('/')
-    }).catch((error) => {
-      console.error(error)
+    postRegister({
+      userName,
+      password,
+      confirmPass,
+    }).then(() => {
+      toast.success('Akun berhasil dibuat', { autoClose: 1000 });
+      setTimeout(() => router.push('/'), 2000);
+    }).catch(() => {
+      toast.error("Maaf terjadi kesalahan pada server. Mohon coba kembali dalam beberapa saat.", { autoClose: 1000 });
+      setTimeout(() => router.push('/'), 2000);
     })
   }
   return (
