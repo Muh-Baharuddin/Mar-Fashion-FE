@@ -3,6 +3,8 @@ import jwtDecode from "jwt-decode";
 import { useRouter } from "next/router";
 import { createContext, FC, useContext, useEffect, useState } from "react";
 import { useCookies } from "react-cookie";
+import { toast } from "react-toastify";
+import { postLogin } from "services/login";
 import { IUser, UserContextType } from "../@types/user";
 
 interface Props {
@@ -38,16 +40,12 @@ const MarFashionProvider: FC<Props> = ({ children }) => {
   }, [])
 
   const login = (userName: string, password: string) => {
-    axios({
-      method: 'post',
-      url: `${process.env.API_ENDPOINT}auth/login`,
-      data: {
-        userName,
-        password,
-      },
+    postLogin({
+      userName, password
     }).then((response) => {
       const token = response.data.accessToken;
-      const userData = jwtDecode<IUser>(token);
+      const tokenString = JSON.stringify(token);
+      const userData = jwtDecode<IUser>(tokenString);
       setCookie('token', token, {
         path: '/'
       });
@@ -55,9 +53,8 @@ const MarFashionProvider: FC<Props> = ({ children }) => {
         path: '/'
       });
       router.push('/', undefined, { shallow: true })
-    }).catch((error) => {
-      alert(error)
-      console.error(error)
+    }).catch(() => {
+      toast.error("Maaf terjadi kesalahan pada server. Mohon coba kembali dalam beberapa saat.");
     })
   }
 
