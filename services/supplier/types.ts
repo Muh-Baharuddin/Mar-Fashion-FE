@@ -7,8 +7,10 @@ export interface Supplier {
   nomor_telepon: string
 }
 
+export type AddSupplier = Omit<Supplier, "id">;
+
 export type SupplierData = Data<Supplier>
 
-export type SupplierDeleteData = {
+export type SupplierMessage = {
   message: string,
 }

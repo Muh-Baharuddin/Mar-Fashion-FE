@@ -1,8 +1,8 @@
-export interface Login {
+export interface LoginData {
   userName: string,
   password: string,
 }
 
-export interface LoginResponse extends Login{
-  accessToken?: string;
+export interface LoginResponse {
+  accessToken: string;
 }

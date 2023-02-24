@@ -1,9 +1,9 @@
-import axios from "axios";
 import jwtDecode from "jwt-decode";
 import { useRouter } from "next/router";
 import { createContext, FC, useContext, useEffect, useState } from "react";
 import { useCookies } from "react-cookie";
 import { toast } from "react-toastify";
+import { setDefaultToken } from "services/api";
 import { postLogin } from "services/login";
 import { IUser, UserContextType } from "../@types/user";
 
@@ -32,10 +32,10 @@ const MarFashionProvider: FC<Props> = ({ children }) => {
 
   const [user, setUser] = useState<IUser | undefined>(undefined);
   const [isLoading, setIsLoading] = useState<boolean>(true);
-
+  
   useEffect(() => {
     setUser(cookies.user);
-    axios.defaults.headers.common["Authorization"] = "Bearer " + cookies.token;
+    setDefaultToken(cookies.token);
     setIsLoading(false);  
   }, [])
 
@@ -44,14 +44,14 @@ const MarFashionProvider: FC<Props> = ({ children }) => {
       userName, password
     }).then((response) => {
       const token = response.data.accessToken;
-      const tokenString = JSON.stringify(token);
-      const userData = jwtDecode<IUser>(tokenString);
+      const userData = jwtDecode<IUser>(token);
       setCookie('token', token, {
         path: '/'
       });
       setCookie('user', userData, {
         path: '/'
       });
+      setDefaultToken(token);
       router.push('/', undefined, { shallow: true })
     }).catch(() => {
       toast.error("Maaf terjadi kesalahan pada server. Mohon coba kembali dalam beberapa saat.");
