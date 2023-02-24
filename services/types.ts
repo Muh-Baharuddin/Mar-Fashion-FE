@@ -1,6 +1,7 @@
-export interface Data <T>{
+export interface Data<T> {
   data: T[],
   total: number,
+  message?: string,
 }
 
 export type QueryParamsType = {
@@ -13,4 +14,10 @@ export type QueryParamsType = {
 
 export type ParamsType = {
   [key: string]: number | string | Date,
+}
+
+
+export type ResponseType<T> = {
+  data: T,
+  statusCode: number,
 }
