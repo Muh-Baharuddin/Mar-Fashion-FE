@@ -5,6 +5,7 @@ import Modal from 'react-bootstrap/Modal'
 import { useForm } from 'react-hook-form'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { postSupplier } from 'services/supplier'
 import { useSupplierContext } from '../Supplier'
 
 type handleShowType = {
@@ -18,13 +19,14 @@ function AddModalSupplier(props: handleShowType) {
   const { refreshSupplier } = useSupplierContext();
 
   const handleAdd = (data: any) => {
-    axios
-      .post(`${process.env.API_ENDPOINT}supplier`, data)
-      .then(() => {
-        toast.success('Data berhasil ditambahkan');
-        refreshSupplier();
-        handleCloseAdd();
-      })
+    postSupplier(data).then(() => {
+      toast.success('Data berhasil ditambahkan');
+      refreshSupplier();
+      handleCloseAdd();
+    }).catch(() => {
+      toast.error("Maaf terjadi kesalahan pada server. Mohon coba kembali dalam beberapa saat.");
+      handleCloseAdd();
+    })
   }
 
   return (

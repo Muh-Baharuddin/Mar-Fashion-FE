@@ -1,9 +1,10 @@
-import axios from "axios"
 import { confirmAlert } from 'react-confirm-alert';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-confirm-alert/src/react-confirm-alert.css';
 import 'react-toastify/dist/ReactToastify.css';
-import { Supplier, useSupplierContext } from "../../Supplier";
+import { useSupplierContext } from "../../Supplier";
+import { deleteSupplier } from "services/supplier";
+import { Supplier } from "services/supplier/types";
 
 type Props = {
   supplier: Supplier;
@@ -13,9 +14,7 @@ const DeleteComp = ({ supplier }: Props) => {
   const { refreshSupplier } = useSupplierContext();
 
   const DeleteConfirm = () => {
-    axios
-    .delete(`${process.env.API_ENDPOINT}supplier/` + supplier.id)
-    .then((response) => {
+    deleteSupplier(supplier.id).then((response) => {
       toast.success(response.data.message);
       refreshSupplier();
     })

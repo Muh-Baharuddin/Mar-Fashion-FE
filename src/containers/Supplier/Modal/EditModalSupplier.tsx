@@ -1,4 +1,3 @@
-import axios from 'axios';
 import React from 'react';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
@@ -6,6 +5,7 @@ import { useForm } from "react-hook-form";
 import { ToastContainer, toast } from 'react-toastify';
 import { useSupplierContext } from '../Supplier';
 import 'react-toastify/dist/ReactToastify.css';
+import { updateSupplier } from 'services/supplier';
 
 
 type Props = {
@@ -20,7 +20,7 @@ function EditModalSupplier(props: Props) {
   const { register, handleSubmit } = useForm();
 
   const handleEdit = (data: any) => {
-    axios.patch(`${process.env.API_ENDPOINT}supplier/` + editId, data).then(response => {
+    updateSupplier(editId, data).then(response => {
       toast.success(response.data.message);
       handleCloseEdit();
       refreshSupplier();
