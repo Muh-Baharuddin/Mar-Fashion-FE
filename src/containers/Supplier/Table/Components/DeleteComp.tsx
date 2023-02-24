@@ -15,7 +15,7 @@ const DeleteComp = ({ supplier }: Props) => {
 
   const DeleteConfirm = () => {
     deleteSupplier(supplier.id).then((response) => {
-      toast.success(response.message);
+      toast.success(response.data.message);
       refreshSupplier();
     })
     .catch(() => {

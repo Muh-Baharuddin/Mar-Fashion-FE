@@ -17,12 +17,7 @@ export type ParamsType = {
 }
 
 
-export type ResponseType = {
-  statusCode: number,
-  message?: string,
-}
-
-export interface ResponseDataType<T> extends ResponseType {
+export type ResponseType<T> = {
   data: T,
+  statusCode: number,
 }
-

@@ -8,3 +8,7 @@ export interface Supplier {
 }
 
 export type SupplierData = Data<Supplier>
+
+export type SupplierDeleteData = {
+  message: string,
+}
