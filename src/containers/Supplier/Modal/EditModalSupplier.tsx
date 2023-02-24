@@ -6,6 +6,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import { useSupplierContext } from '../Supplier';
 import 'react-toastify/dist/ReactToastify.css';
 import { updateSupplier } from 'services/supplier';
+import { AddSupplier } from 'services/supplier/types';
 
 
 type Props = {
@@ -17,9 +18,9 @@ type Props = {
 function EditModalSupplier(props: Props) {
   const {showEdit, editId, handleCloseEdit } = props
   const { refreshSupplier } = useSupplierContext();
-  const { register, handleSubmit } = useForm();
+  const { register, handleSubmit } = useForm<AddSupplier>();
 
-  const handleEdit = (data: any) => {
+  const handleEdit = (data: AddSupplier) => {
     updateSupplier(editId, data).then(response => {
       toast.success(response.data.message);
       handleCloseEdit();

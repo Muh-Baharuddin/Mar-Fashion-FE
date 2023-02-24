@@ -12,9 +12,11 @@ export type QueryParamsType = {
   limit: number,
 }
 
-export type ParamsType = {
-  [key: string]: number | string | Date,
-}
+// export type ParamsType = {
+//   [key: string]: number | string | Date,
+// }
+
+export type ParamsType = Record<string, number | string | Date>;
 
 
 export type ResponseType<T> = {

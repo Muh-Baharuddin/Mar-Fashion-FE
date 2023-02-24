@@ -1,8 +1,10 @@
-import axios from "axios";
 import jwtDecode from "jwt-decode";
 import { useRouter } from "next/router";
 import { createContext, FC, useContext, useEffect, useState } from "react";
 import { useCookies } from "react-cookie";
+import { toast } from "react-toastify";
+import { setDefaultToken } from "services/api";
+import { postLogin } from "services/login";
 import { IUser, UserContextType } from "../@types/user";
 
 interface Props {
@@ -30,21 +32,16 @@ const MarFashionProvider: FC<Props> = ({ children }) => {
 
   const [user, setUser] = useState<IUser | undefined>(undefined);
   const [isLoading, setIsLoading] = useState<boolean>(true);
-
+  
   useEffect(() => {
     setUser(cookies.user);
-    axios.defaults.headers.common["Authorization"] = "Bearer " + cookies.token;
+    setDefaultToken(cookies.token);
     setIsLoading(false);  
   }, [])
 
   const login = (userName: string, password: string) => {
-    axios({
-      method: 'post',
-      url: `${process.env.API_ENDPOINT}auth/login`,
-      data: {
-        userName,
-        password,
-      },
+    postLogin({
+      userName, password
     }).then((response) => {
       const token = response.data.accessToken;
       const userData = jwtDecode<IUser>(token);
@@ -54,10 +51,10 @@ const MarFashionProvider: FC<Props> = ({ children }) => {
       setCookie('user', userData, {
         path: '/'
       });
+      setDefaultToken(token);
       router.push('/', undefined, { shallow: true })
-    }).catch((error) => {
-      alert(error)
-      console.error(error)
+    }).catch(() => {
+      toast.error("Maaf terjadi kesalahan pada server. Mohon coba kembali dalam beberapa saat.");
     })
   }
 

@@ -1,7 +1,11 @@
 import axios from 'axios';
-import { ParamsType, ResponseType } from './types';
+import { ResponseType } from './types';
 
-export const get = async <T>(url: string, params: ParamsType): Promise<ResponseType<T>> => {
+export const setDefaultToken = (token: string) => {
+  axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+}
+
+export const get = async <T>(url: string, params: any): Promise<ResponseType<T>> => {
   const response = await axios.get<T>(url, {
     params,
   })
@@ -11,7 +15,7 @@ export const get = async <T>(url: string, params: ParamsType): Promise<ResponseT
   };
 }
 
-export const post = async <T>(url: string, data: T): Promise<ResponseType<T>> => {
+export const post = async <T>(url: string, data: any): Promise<ResponseType<T>> => {
   const response = await axios.post<T>(url, data);
   return {
     data: response.data,
@@ -19,7 +23,7 @@ export const post = async <T>(url: string, data: T): Promise<ResponseType<T>> =>
   };
 }
 
-export const patch = async <T>(url: string, data: T): Promise<ResponseType<T>> => {
+export const patch = async <T>(url: string, data: any): Promise<ResponseType<T>> => {
   const response = await axios.patch<T>(url, data);
   return {
     data: response.data,

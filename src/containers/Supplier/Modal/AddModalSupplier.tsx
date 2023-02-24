@@ -2,10 +2,11 @@ import axios from 'axios'
 import React from 'react'
 import Button from 'react-bootstrap/Button'
 import Modal from 'react-bootstrap/Modal'
-import { useForm } from 'react-hook-form'
+import { FieldValues, SubmitHandler, useForm } from 'react-hook-form'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { postSupplier } from 'services/supplier'
+import { AddSupplier } from 'services/supplier/types'
 import { useSupplierContext } from '../Supplier'
 
 type handleShowType = {
@@ -14,11 +15,11 @@ type handleShowType = {
 }
 
 function AddModalSupplier(props: handleShowType) {
-  const { register, handleSubmit } = useForm()
+  const { register, handleSubmit } = useForm<AddSupplier>();
   const { showAdd, handleCloseAdd } = props
   const { refreshSupplier } = useSupplierContext();
 
-  const handleAdd = (data: any) => {
+  const handleAdd = (data: AddSupplier) => {
     postSupplier(data).then(() => {
       toast.success('Data berhasil ditambahkan');
       refreshSupplier();
