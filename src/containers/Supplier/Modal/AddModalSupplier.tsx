@@ -1,8 +1,7 @@
-import axios from 'axios'
 import React from 'react'
 import Button from 'react-bootstrap/Button'
 import Modal from 'react-bootstrap/Modal'
-import { FieldValues, SubmitHandler, useForm } from 'react-hook-form'
+import { useForm } from 'react-hook-form'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { postSupplier } from 'services/supplier'
