@@ -7,18 +7,14 @@ import 'react-toastify/dist/ReactToastify.css';
 import { getSuppliers } from 'services/supplier'
 import { Data } from 'services/types';
 import { Supplier, SupplierData } from 'services/supplier/types';
+import useSWR from 'swr'
 
 interface supplierContext {
-  data: SupplierData;
-  setData: React.Dispatch<React.SetStateAction<SupplierData>>;
   queryParams: QueryParamsType;
   setQueryParams: React.Dispatch<React.SetStateAction<QueryParamsType>>;
-  refreshSupplier: () => void;
 }
 
 const defaultState = {
-  data: { data: [], total: 0 },
-  setData: () => {},
   queryParams: {
     keywords: '',
     orderBy: 'nama',
@@ -27,7 +23,6 @@ const defaultState = {
     limit: 10,
   },
   setQueryParams: () => {},
-  refreshSupplier: () => {},
 }
 
 const supplierContext = createContext<supplierContext>(defaultState)
@@ -38,27 +33,11 @@ export const useSupplierContext = () => {
 
 export const DataSupplier = () => {
   const [queryParams, setQueryParams] = useState<QueryParamsType>(defaultState.queryParams)
-  const [data, setData] = useState<Data<Supplier>>({
-    data: [],
-    total: 0,
-  });
-
-  const refreshSupplier = () => {
-    getSuppliers(queryParams)
-    .then((response) => {
-      setData(response.data);
-    }).catch(() => {
-      toast.error("Maaf terjadi kesalahan pada server. Mohon coba kembali dalam beberapa saat.");
-    })
-  };
 
   return (
     <supplierContext.Provider value={{
-      data,
-      setData,
       queryParams,
       setQueryParams,
-      refreshSupplier,
     }}>
       <div className="container">
         <h3>Data Supplier</h3>

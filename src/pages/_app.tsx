@@ -3,9 +3,9 @@ import type { AppProps } from 'next/app'
 import { config } from '@fortawesome/fontawesome-svg-core'
 import '@fortawesome/fontawesome-svg-core/styles.css'
 import { SSRProvider } from 'react-bootstrap'
-import MarFashionProvider from 'src/context/MarFashionProvider'
 import { CookiesProvider } from "react-cookie";
 import { BaseLayout } from '@layouts/BaseLayout'
+import { ToastContainer } from 'react-toastify'
 
 config.autoAddCss = false
 

@@ -1,13 +1,13 @@
-import { useEffect } from 'react'
-import { ToastContainer } from 'react-toastify';
 import { useSupplierContext } from '../Supplier'
 import Pagination from 'react-paginate'
 import DeleteComp from './Components/DeleteComp'
 import EditComp from './Components/EditComp'
 import 'bootstrap-icons/font/bootstrap-icons.css'
+import { getSuppliers } from 'services/supplier';
 
 const TableSupplier = () => {
-  const { data, queryParams, setQueryParams, refreshSupplier } = useSupplierContext()
+  const { queryParams, setQueryParams } = useSupplierContext()
+  const { data, error, isLoading } = getSuppliers(queryParams);
 
   const handlePageClick = (e: { selected: number }) => {
     const selectedPage = e.selected;
@@ -31,10 +31,6 @@ const TableSupplier = () => {
       orderType: newOrderType,
     });
   };
-
-  useEffect(() => {
-    refreshSupplier();
-  }, [queryParams])
 
   return (
     <>
@@ -87,7 +83,9 @@ const TableSupplier = () => {
             </tr>
           </thead>
           <tbody>
-            {data &&
+            { isLoading ? (
+              <tr><td>Loading</td></tr>
+            ) : data && (
               Object.values(data.data).map((d, index) => {
                 return (
                   <tr key={d.id}>
@@ -103,15 +101,14 @@ const TableSupplier = () => {
                     </td>
                   </tr>
                 )
-              })}
+              }))}
           </tbody>
         </table>
-        <ToastContainer />
       </div>
       <Pagination
         previousLabel={'previous'}
         nextLabel={'next'}
-        pageCount={Math.ceil(data.total / queryParams.limit)}
+        pageCount={!data? 0 : Math.ceil(data.total / queryParams.limit)}
         marginPagesDisplayed={0}
         pageRangeDisplayed={3}
         onPageChange={handlePageClick}
