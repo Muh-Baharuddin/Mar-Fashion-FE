@@ -1,5 +1,6 @@
 import Head from 'next/head'
 import { PropsWithChildren } from 'react'
+import { ToastContainer } from 'react-toastify'
 import MarFashionProvider from 'src/context/MarFashionProvider'
 
 export default function BaseLayout({ children }: PropsWithChildren) {
@@ -11,6 +12,7 @@ export default function BaseLayout({ children }: PropsWithChildren) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <MarFashionProvider>{children}</MarFashionProvider>
+      <ToastContainer />
     </>
   )
 }

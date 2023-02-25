@@ -1,19 +1,40 @@
 import axios from 'axios';
 import { ResponseType } from './types';
+import useSwr from 'swr'
 
 export const setDefaultToken = (token: string) => {
   axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
 }
 
-export const get = async <T>(url: string, params: any): Promise<ResponseType<T>> => {
-  const response = await axios.get<T>(url, {
-    params,
-  })
-  return {
-    data: response.data,
-    statusCode: response.status,
-  };
+const fetcher = ({url, params}: {url: string, params: any}) => {
+  return axios.get(url, { 
+    params, 
+  }).then(res => res.data)
 }
+
+export const stateGet = <T, D>(url: string, params: D) => {
+  const { data, error, mutate } = useSwr<T, D>({ url, params }, fetcher);
+  return {
+    data,
+    error,
+    mutate,
+    isLoading: !data && !error,
+  }
+}
+
+export const get = <T>(url: string, params: any) => {
+  const fetcher = async () => {
+    const response = await axios.get<T>(url, { params });
+    return response.data;
+  };
+
+  const { data, error } = useSwr<T>(url, fetcher);
+
+  return {
+    data,
+    error,
+  };
+};
 
 export const post = async <T>(url: string, data: any): Promise<ResponseType<T>> => {
   const response = await axios.post<T>(url, data);

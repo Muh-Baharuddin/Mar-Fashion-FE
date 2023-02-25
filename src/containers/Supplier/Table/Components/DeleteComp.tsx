@@ -1,9 +1,9 @@
 import { confirmAlert } from 'react-confirm-alert';
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 import 'react-confirm-alert/src/react-confirm-alert.css';
 import 'react-toastify/dist/ReactToastify.css';
 import { useSupplierContext } from "../../Supplier";
-import { deleteSupplier } from "services/supplier";
+import { deleteSupplier, getSuppliers } from "services/supplier";
 import { Supplier } from "services/supplier/types";
 
 type Props = {
@@ -11,12 +11,14 @@ type Props = {
 };
 
 const DeleteComp = ({ supplier }: Props) => {
-  const { refreshSupplier } = useSupplierContext();
+  const { queryParams } = useSupplierContext();
+  const { mutate } = getSuppliers(queryParams);
+
 
   const DeleteConfirm = () => {
     deleteSupplier(supplier.id).then((response) => {
       toast.success(response.data.message);
-      refreshSupplier();
+      mutate();
     })
     .catch(() => {
       toast.error("Maaf terjadi kesalahan pada server. Mohon coba kembali dalam beberapa saat.");
@@ -43,7 +45,6 @@ const DeleteComp = ({ supplier }: Props) => {
       <button onClick={() => handleDelete()} className="btn btn-danger ms-3">
         <i className="bi bi-trash3-fill"></i>
       </button>
-      <ToastContainer />
     </div>
   )
 }
