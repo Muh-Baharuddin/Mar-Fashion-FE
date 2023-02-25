@@ -1,27 +1,25 @@
 import React from 'react';
-import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
-import { useForm } from "react-hook-form";
 import { ToastContainer, toast } from 'react-toastify';
 import { useSupplierContext } from '../Supplier';
 import 'react-toastify/dist/ReactToastify.css';
 import { updateSupplier } from 'services/supplier';
-import { AddSupplier } from 'services/supplier/types';
+import { AddSupplier, Supplier } from 'services/supplier/types';
+import FormComp from './FormComp';
 
 
 type Props = {
   showEdit: boolean;
-  editId: string;
+  supplier: Supplier,
   handleCloseEdit: () => void;
 }
 
 function EditModalSupplier(props: Props) {
-  const {showEdit, editId, handleCloseEdit } = props
+  const {showEdit, supplier, handleCloseEdit } = props
   const { refreshSupplier } = useSupplierContext();
-  const { register, handleSubmit } = useForm<AddSupplier>();
 
   const handleEdit = (data: AddSupplier) => {
-    updateSupplier(editId, data).then(response => {
+    updateSupplier(supplier.id, data).then(response => {
       toast.success(response.data.message);
       handleCloseEdit();
       refreshSupplier();
@@ -40,44 +38,11 @@ function EditModalSupplier(props: Props) {
           <Modal.Title>Edit Supplier</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <form onSubmit={handleSubmit(handleEdit)}>
-            <div className="mb-3">
-              <label className="form-label">
-                Nama
-              </label>
-              <input
-                type="text"
-                className="form-control"
-                {...register('nama', { required: true })}
-              />
-            </div>
-            <div className="mb-3">
-              <label className="form-label">
-                Alamat
-              </label>
-              <input
-                type="text"
-                className="form-control"
-                {...register('alamat', { required: true })}
-              />
-            </div>
-            <div className="mb-3">
-              <label className="form-label">
-                Nomor Telepon
-              </label>
-              <input
-                type="text"
-                className="form-control"
-                {...register('nomor_telepon', { required: true })}
-              />
-            </div>
-            <Button variant="primary" onClick={() => handleEdit} type="submit">
-              Submit
-            </Button>
-            <Button className='mx-2' variant="secondary" onClick={handleCloseEdit}>
-              Close
-            </Button>
-          </form>
+          <FormComp 
+            handleForm={handleEdit} 
+            handleCloseForm={handleCloseEdit} 
+            supplier={supplier}
+          />
         </Modal.Body>
       </Modal>
       <ToastContainer />
