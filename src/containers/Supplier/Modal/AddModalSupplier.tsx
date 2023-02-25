@@ -1,12 +1,11 @@
 import React from 'react'
-import Button from 'react-bootstrap/Button'
 import Modal from 'react-bootstrap/Modal'
-import { useForm } from 'react-hook-form'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { postSupplier } from 'services/supplier'
 import { AddSupplier } from 'services/supplier/types'
 import { useSupplierContext } from '../Supplier'
+import FormComp from './FormComp';
 
 type handleShowType = {
   showAdd: boolean;
@@ -14,7 +13,6 @@ type handleShowType = {
 }
 
 function AddModalSupplier(props: handleShowType) {
-  const { register, handleSubmit } = useForm<AddSupplier>();
   const { showAdd, handleCloseAdd } = props
   const { refreshSupplier } = useSupplierContext();
 
@@ -42,48 +40,7 @@ function AddModalSupplier(props: handleShowType) {
           <Modal.Title>Tambah Supplier</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <form onSubmit={handleSubmit(handleAdd)}>
-            <div className="mb-3">
-              <label className="form-label">
-                Nama
-              </label>
-              <input
-                type="text"
-                className="form-control"
-                {...register('nama', { required: true })}
-              />
-            </div>
-            <div className="mb-3">
-              <label className="form-label">
-                Alamat
-              </label>
-              <input
-                type="text"
-                className="form-control"
-                {...register('alamat', { required: true })}
-              />
-            </div>
-            <div className="mb-3">
-              <label className="form-label">
-                Nomor Telepon
-              </label>
-              <input
-                type="text"
-                className="form-control"
-                {...register('nomor_telepon', { required: true })}
-              />
-            </div>
-            <Button variant="primary" onClick={() => handleAdd} type="submit">
-              Submit
-            </Button>
-            <Button
-              className="mx-2"
-              variant="secondary"
-              onClick={handleCloseAdd}
-            >
-              Close
-            </Button>
-          </form>
+          <FormComp handleForm={handleAdd} handleCloseForm={handleCloseAdd}/>
         </Modal.Body>
       </Modal>
     </>
