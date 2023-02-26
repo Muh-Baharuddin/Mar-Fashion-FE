@@ -23,7 +23,6 @@ function AddModalSupplier(props: handleShowType) {
       mutate();
       handleCloseAdd();
     }).catch((error) => {
-      console.log("ini error ",error)
       let errorMessage = "Maaf terjadi kesalahan pada server. Mohon coba kembali dalam beberapa saat.";
       if (Array.isArray(error.response.data.message)) {
         errorMessage = error.response.data.message.join(", ");
