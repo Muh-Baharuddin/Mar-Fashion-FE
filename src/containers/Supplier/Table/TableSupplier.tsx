@@ -83,7 +83,7 @@ const TableSupplier = () => {
                     <td>{d.nama}</td>
                     <td>{d.alamat}</td>
                     <td>{d.nomor_telepon}</td>
-                    <td style={{display: 'flex'}}>
+                    <td>
                       <EditComp supplier={d} />
                       <DeleteComp supplier={d} />
                     </td>
