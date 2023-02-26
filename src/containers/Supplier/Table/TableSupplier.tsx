@@ -4,6 +4,8 @@ import DeleteComp from './Components/DeleteComp'
 import EditComp from './Components/EditComp'
 import 'bootstrap-icons/font/bootstrap-icons.css'
 import { getSuppliers } from 'services/supplier';
+import { CSSProperties } from "react";
+import BeatLoader from "react-spinners/BeatLoader";
 
 const TableSupplier = () => {
   const { queryParams, setQueryParams } = useSupplierContext()
@@ -30,6 +32,12 @@ const TableSupplier = () => {
       orderBy: column,
       orderType: newOrderType,
     });
+  };
+
+  const override: CSSProperties = {
+    display: "block",
+    margin: "0 auto",
+    borderColor: "red",
   };
 
   return (
@@ -84,7 +92,15 @@ const TableSupplier = () => {
           </thead>
           <tbody>
             { isLoading ? (
-              <tr><td>Loading</td></tr>
+              <tr>
+                <td colSpan={5} style={{ textAlign:'center' }}>
+                  <BeatLoader 
+                    color='silver'
+                    cssOverride={override}
+                    size={15}
+                  />
+                </td>
+              </tr>
             ) : data && (
               Object.values(data.data).map((d, index) => {
                 return (
