@@ -4,6 +4,7 @@ import DeleteComp from './Components/DeleteComp'
 import EditComp from './Components/EditComp'
 import 'bootstrap-icons/font/bootstrap-icons.css'
 import { getSuppliers } from 'services/supplier';
+import FilterComp from './Components/FilterComp'
 
 const TableSupplier = () => {
   const { queryParams, setQueryParams } = useSupplierContext()
@@ -15,11 +16,7 @@ const TableSupplier = () => {
       return { ...prev, page: selectedPage+1};
     });
   }
-
-  const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setQueryParams({ ...queryParams, keywords: event.target.value })
-  }
-
+  
   const handleSortBy = (column: string) => {
     let newOrderType = 'ASC';
     if (column === queryParams.orderBy && queryParams.orderType === 'ASC') {
@@ -35,16 +32,7 @@ const TableSupplier = () => {
   return (
     <>
       <div className="card-body">
-        <div className="row mb-2">
-          <div className="search-bar col-12 col-md-4">
-            <input
-              className="form-control"
-              type="text"
-              placeholder="Search"
-              onChange={handleSearch}
-            />
-          </div>
-        </div>
+        <FilterComp />
         <table className="table table-bordered">
           <thead>
             <tr>
