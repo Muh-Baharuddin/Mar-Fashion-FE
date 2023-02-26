@@ -22,8 +22,12 @@ function AddModalSupplier(props: handleShowType) {
       toast.success('Data berhasil ditambahkan');
       mutate();
       handleCloseAdd();
-    }).catch(() => {
-      toast.error("Maaf terjadi kesalahan pada server. Mohon coba kembali dalam beberapa saat.");
+    }).catch((error) => {
+      let errorMessage = "Maaf terjadi kesalahan pada server. Mohon coba kembali dalam beberapa saat.";
+      if (Array.isArray(error.response.data.message)) {
+        errorMessage = error.response.data.message.join(", ");
+      }
+      toast.error(errorMessage);
       handleCloseAdd();
     })
   }

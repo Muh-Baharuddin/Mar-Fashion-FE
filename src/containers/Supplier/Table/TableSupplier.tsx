@@ -6,6 +6,7 @@ import 'bootstrap-icons/font/bootstrap-icons.css'
 import { getSuppliers } from 'services/supplier';
 import { CSSProperties } from "react";
 import BeatLoader from "react-spinners/BeatLoader";
+import FilterComp from './Components/FilterComp'
 
 const TableSupplier = () => {
   const { queryParams, setQueryParams } = useSupplierContext()
@@ -16,10 +17,6 @@ const TableSupplier = () => {
     setQueryParams((prev) => {
       return { ...prev, page: selectedPage+1};
     });
-  }
-
-  const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setQueryParams({ ...queryParams, keywords: event.target.value })
   }
 
   const handleSortBy = (column: string) => {
@@ -43,16 +40,7 @@ const TableSupplier = () => {
   return (
     <>
       <div className="card-body">
-        <div className="row mb-2">
-          <div className="search-bar col-12 col-md-4">
-            <input
-              className="form-control"
-              type="text"
-              placeholder="Search"
-              onChange={handleSearch}
-            />
-          </div>
-        </div>
+        <FilterComp />
         <table className="table table-bordered">
           <thead>
             <tr>
@@ -111,7 +99,7 @@ const TableSupplier = () => {
                     <td>{d.nama}</td>
                     <td>{d.alamat}</td>
                     <td>{d.nomor_telepon}</td>
-                    <td>
+                    <td style={{display: 'flex'}}>
                       <EditComp supplier={d} />
                       <DeleteComp supplier={d} />
                     </td>
