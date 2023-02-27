@@ -1,13 +1,14 @@
 import { useSupplierContext } from "../../Supplier"
+import debounce from "lodash.debounce";
 
 const FilterComp = () => {
   const { setQueryParams } = useSupplierContext()
 
-  const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleSearch = debounce((event: React.ChangeEvent<HTMLInputElement>) => {
     setQueryParams((prev) => {
       return { ...prev, keywords: event.target.value }
     })
-  }
+  }, 500)
 
   return (
     <div className="row mb-2">
