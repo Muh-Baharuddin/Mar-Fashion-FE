@@ -1,5 +1,4 @@
 import { useSupplierContext } from '../Supplier'
-import Pagination from 'react-paginate'
 import DeleteComp from './Components/DeleteComp'
 import EditComp from './Components/EditComp'
 import 'bootstrap-icons/font/bootstrap-icons.css'
@@ -7,17 +6,11 @@ import { getSuppliers } from 'services/supplier';
 import { CSSProperties } from "react";
 import BeatLoader from "react-spinners/BeatLoader";
 import FilterComp from './Components/FilterComp'
+import PaginationComp from './Components/PaginationComp'
 
 const TableSupplier = () => {
   const { queryParams, setQueryParams } = useSupplierContext()
   const { data, error, isLoading } = getSuppliers(queryParams);
-
-  const handlePageClick = (e: { selected: number }) => {
-    const selectedPage = e.selected;
-    setQueryParams((prev) => {
-      return { ...prev, page: selectedPage+1};
-    });
-  }
 
   const handleSortBy = (column: string) => {
     let newOrderType = 'ASC';
@@ -108,19 +101,10 @@ const TableSupplier = () => {
               }))}
           </tbody>
         </table>
+        <div className="pagination-container">
+          <PaginationComp data={data}/>
+        </div>
       </div>
-      <Pagination
-        previousLabel={'previous'}
-        nextLabel={'next'}
-        pageCount={!data? 0 : Math.ceil(data.total / queryParams.limit)}
-        marginPagesDisplayed={0}
-        pageRangeDisplayed={3}
-        onPageChange={handlePageClick}
-        containerClassName="pagination-container"
-        activeClassName="selected"
-        disabledClassName="disabled"
-        pageLinkClassName={'pagination-item'}
-      />
     </>
   )
 }

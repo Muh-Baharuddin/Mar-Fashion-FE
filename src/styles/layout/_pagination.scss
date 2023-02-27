@@ -2,30 +2,4 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  list-style-type: none;  
-  
-  .pagination-item {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 30px;
-    height: 30px;
-    background-color: #f2f2f2;
-    border: 1px solid #ddd;
-    margin: 0 15px;
-    cursor: pointer;
-
-    &.selected {
-      background-color: #ddd;
-    }
-
-    &:hover {
-      background-color: #ddd;
-    }
-
-    span {
-      width: 100%;
-      text-align: center;
-    }
-  }
 }
