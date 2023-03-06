@@ -10,8 +10,8 @@ interface penjualanContext {
 const defaultState = {
   queryParams: {
     keywords: '',
-    orderBy: 'nama',
-    orderType: 'ASC',
+    orderBy: 'tanggal',
+    orderType: 'DESC',
     page: 1,
     limit: 10,
   },
@@ -26,20 +26,20 @@ export const usePenjualanContext = () => {
 
 export const DataPenjualan = () => {
   const [queryParams, setQueryParams] = useState<QueryParamsType>(defaultState.queryParams)
-  const [showAdd, setShowAdd] = useState(false)
-  const [showEdit, setShowEdit] = useState(false)
 
   return (
     <penjualanContext.Provider value={{
       queryParams,
       setQueryParams,
     }}>
-      <TablePenjualan
-      showAdd={showAdd}
-      showEdit={showEdit}
-      setShowAdd={setShowAdd}
-      setShowEdit={setShowEdit}
-      />
+      <div className="container">
+        <h3>Data Penjualan</h3>
+        <div className="card">
+          <div className="card-header">
+          </div>
+          <TablePenjualan />
+        </div>
+      </div>
     </penjualanContext.Provider>
   )
 }

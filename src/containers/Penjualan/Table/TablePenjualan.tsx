@@ -1,9 +1,11 @@
 import { usePenjualanContext } from '../Penjualan'
 import FilterComp from './Components/FilterComp'
 import 'bootstrap-icons/font/bootstrap-icons.css'
+import { getPenjualan } from 'services/penjualan'
 
 const TablePenjualan = () => {
   const { queryParams, setQueryParams } = usePenjualanContext()
+  const { data, error, isLoading } = getPenjualan(queryParams);
   
   return (
     <>
@@ -22,7 +24,7 @@ const TablePenjualan = () => {
           </thead>
         <tbody>
             {data &&
-              Object.values(data).map((d, index) => {
+              Object.values(data.data).map((d, index) => {
                 return (
                   <tr key={d.id}>
                     <td>
@@ -30,8 +32,8 @@ const TablePenjualan = () => {
                     </td>
                     <td>{d.tanggal}</td>
                     <td>{d.barang}</td>
-                    <td>{d.jumlah}</td>
-                    <td>{d.harga}</td>
+                    <td>{d.jumlah_barang}</td>
+                    <td>{d.total_harga}</td>
                     <td>
                       <button
                         className="btn btn-primary ms-3"
