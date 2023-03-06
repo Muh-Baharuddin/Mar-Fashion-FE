@@ -10,7 +10,7 @@ type handleShowType = {
   handleCloseAdd: () => void
 }
 
-function AddModalBarang(props: handleShowType) {
+function AddModalItem(props: handleShowType) {
   const { register, handleSubmit } = useForm()
   const { showAdd, handleCloseAdd } = props
   const [cookies] = useCookies(['token'])
@@ -113,4 +113,4 @@ function AddModalBarang(props: handleShowType) {
   )
 }
 
-export default AddModalBarang
+export default AddModalItem

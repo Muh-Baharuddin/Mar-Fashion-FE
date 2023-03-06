@@ -12,7 +12,7 @@ type handleShowType = {
   handleCloseEdit: () => void;
 }
 
-function EditModalBarang(props: handleShowType) {
+function EditModalItem(props: handleShowType) {
   const {showEdit, editId, handleCloseEdit} = props
   const { register, handleSubmit } = useForm();
   const [ cookies ] = useCookies(["token"]);
@@ -82,4 +82,4 @@ function EditModalBarang(props: handleShowType) {
   );
 }
 
-export default EditModalBarang
+export default EditModalItem

@@ -6,10 +6,9 @@ import {
 } from 'react'
 import axios from 'axios'
 import 'bootstrap-icons/font/bootstrap-icons.css'
-import AddModalBarang from '../Modal/AddModalBarang'
-import EditModalBarang from '../Modal/EditModalBarang'
+import AddModalBarang from '../Modal/AddModalItem'
+import EditModalBarang from '../Modal/EditModalItem'
 import { useCookies } from 'react-cookie'
-import DataTable from 'react-data-table-component'
 
 interface Data {
   id: string
@@ -27,7 +26,7 @@ type handleShowType = {
   setShowEdit: Dispatch<SetStateAction<boolean>>
 }
 
-const TableBarang = (props: handleShowType) => {
+const TableItem = (props: handleShowType) => {
   const [cookies] = useCookies(['token', 'user'])
   const { showAdd, showEdit, setShowAdd, setShowEdit } = props
   const [data, setData] = useState<Data[]>([])
@@ -135,4 +134,4 @@ const TableBarang = (props: handleShowType) => {
   )
 }
 
-export default TableBarang
+export default TableItem
