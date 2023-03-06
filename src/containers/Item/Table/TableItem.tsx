@@ -4,6 +4,7 @@ import { CSSProperties } from 'react'
 import BeatLoader from "react-spinners/BeatLoader";
 import 'bootstrap-icons/font/bootstrap-icons.css'
 import FilterComp from './Components/FilterComp';
+import EditComp from './Components/EditComp';
 
 const TableItem = () => {
   const { queryParams, setQueryParams } = useItemContext()
@@ -75,6 +76,7 @@ const TableItem = () => {
                   ></i>
                 )}
               </th>
+              <th>Action</th>
             </tr>
           </thead>
           <tbody>
@@ -99,6 +101,9 @@ const TableItem = () => {
                     <td>{d.capital_price}</td>
                     <td>{d.wholescale_price}</td>
                     <td>{d.stock}</td>
+                    <td>
+                      <EditComp item={d} />
+                    </td>
                   </tr>
                 )
               }))}
