@@ -5,6 +5,7 @@ import BeatLoader from "react-spinners/BeatLoader";
 import 'bootstrap-icons/font/bootstrap-icons.css'
 import FilterComp from './Components/FilterComp';
 import EditComp from './Components/EditComp';
+import DeleteComp from './Components/DeleteComp';
 
 const TableItem = () => {
   const { queryParams, setQueryParams } = useItemContext()
@@ -101,8 +102,9 @@ const TableItem = () => {
                     <td>{d.capital_price}</td>
                     <td>{d.wholescale_price}</td>
                     <td>{d.stock}</td>
-                    <td>
+                    <td style={{display: 'flex'}}>
                       <EditComp item={d} />
+                      <DeleteComp item={d} />
                     </td>
                   </tr>
                 )

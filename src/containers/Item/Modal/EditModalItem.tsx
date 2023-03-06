@@ -37,7 +37,7 @@ function EditModalItem(props: Props) {
         keyboard={false}
       >
         <Modal.Header closeButton>
-          <Modal.Title>Edit Supplier</Modal.Title>
+          <Modal.Title>Edit Barang</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <FormComp 
