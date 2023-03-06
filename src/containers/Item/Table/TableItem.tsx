@@ -3,6 +3,7 @@ import { getItems } from 'services/item'
 import { CSSProperties } from 'react'
 import BeatLoader from "react-spinners/BeatLoader";
 import 'bootstrap-icons/font/bootstrap-icons.css'
+import FilterComp from './Components/FilterComp';
 
 const TableItem = () => {
   const { queryParams, setQueryParams } = useItemContext()
@@ -29,6 +30,7 @@ const TableItem = () => {
   return (
     <>
       <div className="card-body">
+      <FilterComp />
         <table className="table table-bordered">
           <thead>
             <tr>
