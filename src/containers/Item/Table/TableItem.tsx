@@ -77,6 +77,16 @@ const TableItem = () => {
                   ></i>
                 )}
               </th>
+              <th onClick={() => handleSortBy('supplier')}>
+                Supplier{' '}
+                {queryParams.orderBy === 'supplier' && (
+                  <i
+                    className={`bi bi-caret-${
+                      queryParams.orderType === 'ASC' ? 'down' : 'up'
+                    }-fill`}
+                  ></i>
+                )}
+              </th>
               <th>Action</th>
             </tr>
           </thead>
@@ -102,6 +112,7 @@ const TableItem = () => {
                     <td>{d.capital_price}</td>
                     <td>{d.wholescale_price}</td>
                     <td>{d.stock}</td>
+                    <td>{d.__supplier__?.name || "-"}</td>
                     <td style={{display: 'flex'}}>
                       <EditComp item={d} />
                       <DeleteComp item={d} />
