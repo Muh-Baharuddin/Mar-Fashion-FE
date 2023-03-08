@@ -25,7 +25,7 @@ type handleShowType = {
   setShowEdit: Dispatch<SetStateAction<boolean>>
 }
 
-export const TableEmployee = (props: handleShowType) => {
+const TableEmployee = (props: handleShowType) => {
   const { showAdd, showEdit, setShowAdd, setShowEdit } = props
   const { user } = useMarContext()
   const [data, setData] = useState<Data[]>([])
@@ -142,3 +142,5 @@ export const TableEmployee = (props: handleShowType) => {
     </div>
   )
 }
+
+export default TableEmployee

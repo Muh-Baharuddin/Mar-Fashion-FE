@@ -16,3 +16,8 @@ export type ResponseType<T> = {
   data: T,
   statusCode: number,
 }
+
+export interface ContextInterface {
+  queryParams: QueryParamsType;
+  setQueryParams: React.Dispatch<React.SetStateAction<QueryParamsType>>;
+}
