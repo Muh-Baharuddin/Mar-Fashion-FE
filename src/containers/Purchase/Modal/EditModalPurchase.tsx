@@ -1,27 +1,27 @@
 import React from 'react';
 import Modal from 'react-bootstrap/Modal';
 import { toast } from 'react-toastify';
-import { useSupplierContext } from '../Supplier';
-import 'react-toastify/dist/ReactToastify.css';
-import { getSuppliers, updateSupplier } from 'services/supplier';
-import { AddSupplier, Supplier } from 'services/supplier/types';
+import { usePurchaseContext } from '../Purchase';
+import { AddPurchase, Purchase } from 'services/purchase/types';
+import { getPurchases, updatePurchase } from 'services/purchase';
 import FormComp from './FormComp';
+import 'react-toastify/dist/ReactToastify.css';
 
 
 type Props = {
   showEdit: boolean;
-  supplier: Supplier,
+  purchase: Purchase,
   handleCloseEdit: () => void;
 }
 
-function EditModalSupplier(props: Props) {
-  const {showEdit, supplier, handleCloseEdit } = props
-  const { queryParams } = useSupplierContext();
+function EditModalPurchase(props: Props) {
+  const {showEdit, purchase, handleCloseEdit } = props
+  const { queryParams } = usePurchaseContext();
 
-  const { mutate } = getSuppliers(queryParams);
+  const { mutate } = getPurchases(queryParams);
 
-  const handleEdit = (data: AddSupplier) => {
-    updateSupplier(supplier.id, data).then(response => {
+  const handleEdit = (data: AddPurchase) => {
+    updatePurchase(purchase.id, data).then(response => {
       toast.success(response.data.message);
       handleCloseEdit();
       mutate();
@@ -37,13 +37,13 @@ function EditModalSupplier(props: Props) {
         keyboard={false}
       >
         <Modal.Header closeButton>
-          <Modal.Title>Edit Supplier</Modal.Title>
+          <Modal.Title>Edit Purchase</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <FormComp 
             handleForm={handleEdit} 
             handleCloseForm={handleCloseEdit} 
-            supplier={supplier}
+            purchase={purchase}
           />
         </Modal.Body>
       </Modal>
@@ -51,4 +51,4 @@ function EditModalSupplier(props: Props) {
   );
 }
 
-export default EditModalSupplier
+export default EditModalPurchase

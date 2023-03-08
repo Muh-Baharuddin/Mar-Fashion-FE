@@ -1,16 +1,16 @@
 import { usePurchaseContext } from '../Purchase';
-import DeleteComp from './Components/DeleteComp'
-import EditComp from './Components/EditComp'
-import { getSuppliers } from 'services/supplier';
 import { CSSProperties } from "react";
+import { getPurchases } from 'services/purchase';
 import BeatLoader from "react-spinners/BeatLoader";
 import FilterComp from './Components/FilterComp'
+import EditComp from './Components/EditComp'
+import DeleteComp from './Components/DeleteComp'
 import PaginationComp from './Components/PaginationComp'
 import 'bootstrap-icons/font/bootstrap-icons.css'
 
 const TablePurchase = () => {
   const { queryParams, setQueryParams } = usePurchaseContext()
-  const { data, error, isLoading } = getSuppliers(queryParams);
+  const { data, error, isLoading } = getPurchases(queryParams);
 
   const handleSortBy = (column: string) => {
     let newOrderType = 'ASC';
@@ -89,12 +89,12 @@ const TablePurchase = () => {
                     <td>
                       {(queryParams.page-1) * queryParams.limit + index + 1}
                     </td>
-                    <td>{d.nama}</td>
-                    <td>{d.alamat}</td>
-                    <td>{d.nomor_telepon}</td>
+                    <td>{d.date}</td>
+                    <td>{d.unit}</td>
+                    <td>{d.cost}</td>
                     <td style={{display: 'flex'}}>
-                      <EditComp supplier={d} />
-                      <DeleteComp supplier={d} />
+                      <EditComp purchase={d} />
+                      <DeleteComp purchase={d} />
                     </td>
                   </tr>
                 )

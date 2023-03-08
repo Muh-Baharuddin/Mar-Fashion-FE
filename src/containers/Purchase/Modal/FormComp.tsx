@@ -1,49 +1,49 @@
 import React from 'react'
 import Button from 'react-bootstrap/Button';
 import { useForm } from 'react-hook-form'
-import { AddSupplier, Supplier } from 'services/supplier/types';
+import { AddPurchase, Purchase } from 'services/purchase/types';
 
 type Props = {
-  handleForm: (data: AddSupplier) => void,
+  handleForm: (data: AddPurchase) => void,
   handleCloseForm: () => void,
-  supplier? : Supplier;
+  purchase? : Purchase;
 };
 
-const FormComp = ({handleForm, handleCloseForm, supplier}: Props) => {
-  const { register, handleSubmit } = useForm<AddSupplier>({
-    defaultValues: supplier,
+const FormComp = ({handleForm, handleCloseForm, purchase}: Props) => {
+  const { register, handleSubmit } = useForm<AddPurchase>({
+    defaultValues: purchase,
   });
 
   return (
     <form onSubmit={handleSubmit(handleForm)}>
       <div className="mb-3">
         <label className="form-label">
-          Nama
+          Tanggal
         </label>
         <input
           type="text"
           className="form-control"
-          {...register('nama', { required: true })}
+          {...register('date', { required: true })}
         />
       </div>
       <div className="mb-3">
         <label className="form-label">
-          Alamat
+          Satuan
         </label>
         <input
           type="text"
           className="form-control"
-          {...register('alamat', { required: true })}
+          {...register('unit', { required: true })}
         />
       </div>
       <div className="mb-3">
         <label className="form-label">
-          Nomor Telepon
+          Total
         </label>
         <input
           type="text"
           className="form-control"
-          {...register('nomor_telepon', { required: true })}
+          {...register('cost', { required: true })}
         />
       </div>
       <Button variant="primary" onClick={() => handleForm} type="submit">
