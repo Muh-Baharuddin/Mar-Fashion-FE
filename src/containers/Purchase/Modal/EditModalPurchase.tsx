@@ -1,33 +1,30 @@
-import axios from 'axios';
 import React from 'react';
-import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
-import { useCookies } from 'react-cookie';
-import { useForm } from "react-hook-form";
+import { toast } from 'react-toastify';
+import { useSupplierContext } from '../Supplier';
+import 'react-toastify/dist/ReactToastify.css';
+import { getSuppliers, updateSupplier } from 'services/supplier';
+import { AddSupplier, Supplier } from 'services/supplier/types';
+import FormComp from './FormComp';
 
 
-type handleShowType = {
+type Props = {
   showEdit: boolean;
-  editId: string;
+  supplier: Supplier,
   handleCloseEdit: () => void;
 }
 
-function EditModalPembelian(props: handleShowType) {
-  const {showEdit, editId, handleCloseEdit} = props
-  const { register, handleSubmit } = useForm();
-  const [ cookies ] = useCookies(["token"]);
+function EditModalSupplier(props: Props) {
+  const {showEdit, supplier, handleCloseEdit } = props
+  const { queryParams } = useSupplierContext();
 
-  let token = cookies.token;
-  let config = {
-    headers: {
-      Authorization: "Bearer " + token,
-    }
-  }
+  const { mutate } = getSuppliers(queryParams);
 
-  const handleEdit = (data: any) => {
-    axios.patch('http://localhost:4000/nota-pembelian/' + editId, data, config).then(response => {
-      alert("Data berhasil diperbarui")
-      window.location.reload()
+  const handleEdit = (data: AddSupplier) => {
+    updateSupplier(supplier.id, data).then(response => {
+      toast.success(response.data.message);
+      handleCloseEdit();
+      mutate();
     })
   }
 
@@ -40,62 +37,18 @@ function EditModalPembelian(props: handleShowType) {
         keyboard={false}
       >
         <Modal.Header closeButton>
-          <Modal.Title>Edit Barang</Modal.Title>
+          <Modal.Title>Edit Supplier</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <form onSubmit={handleSubmit(handleEdit)}>
-          <div className="mb-3">
-              <label className="form-label">
-                Tanggal
-              </label>
-              <input
-                type="date"
-                className="form-control"
-                {...register('tanggal', { required: true })}
-              />
-            </div>
-            <div className="mb-3">
-              <label className="form-label">
-                Supplier
-              </label>
-              <input
-                type="text"
-                className="form-control"
-                {...register('supplier', { required: true })}
-              />
-            </div>
-            <div className="mb-3">
-              <label className="form-label">
-                Barang
-              </label>
-              <input
-                type="text"
-                className="form-control"
-                {...register('barang', { required: true })}
-              />
-            </div>
-            <div className="mb-3">
-              <label className="form-label">
-                Total Biaya
-              </label>
-              <input
-                type="number"
-                min="0"
-                className="form-control"
-                {...register('biaya', { required: true })}
-              />
-            </div>
-            <Button variant="primary" onClick={() => handleEdit} type="submit">
-              Submit
-            </Button>
-            <Button className='mx-2' variant="secondary" onClick={handleCloseEdit}>
-            Close
-            </Button>
-          </form>
+          <FormComp 
+            handleForm={handleEdit} 
+            handleCloseForm={handleCloseEdit} 
+            supplier={supplier}
+          />
         </Modal.Body>
       </Modal>
     </>
   );
 }
 
-export default EditModalPembelian
+export default EditModalSupplier
