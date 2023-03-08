@@ -1,13 +1,13 @@
 import Pagination from 'react-bootstrap/Pagination'
-import { SupplierData } from 'services/supplier/types';
-import { useSupplierContext } from '../../Supplier';
+import { PurchaseData } from 'services/purchase/types';
+import { usePurchaseContext } from '../../Purchase';
 
 type Props = {
-  data: SupplierData | undefined
+  data: PurchaseData | undefined
 }
 
 const PaginationComp = ({data}: Props) => {
-  const { queryParams, setQueryParams } = useSupplierContext()
+  const { queryParams, setQueryParams } = usePurchaseContext()
 
   const handlePageClick = (pageNumber: number) => {
     setQueryParams((prev) => {
