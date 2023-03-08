@@ -1,34 +1,35 @@
-import axios from 'axios'
 import React from 'react'
-import Button from 'react-bootstrap/Button'
 import Modal from 'react-bootstrap/Modal'
-import { useCookies } from 'react-cookie'
-import { useForm } from 'react-hook-form'
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { getItems, postItem } from 'services/item';
+import { AddItem } from 'services/item/types';
+import { useItemContext } from '../Item';
+import FormComp from './FormComp';
 
 type handleShowType = {
-  showAdd: boolean
-  handleCloseAdd: () => void
+  showAdd: boolean;
+  handleCloseAdd: () => void;
 }
 
 function AddModalItem(props: handleShowType) {
-  const { register, handleSubmit } = useForm()
   const { showAdd, handleCloseAdd } = props
-  const [cookies] = useCookies(['token'])
+  const { queryParams } = useItemContext();
+  const { mutate } = getItems(queryParams);
 
-  let token = cookies.token
-  let config = {
-    headers: {
-      Authorization: 'Bearer ' + token,
-    },
-  }
-
-  const handleAdd = (data: any) => {
-    axios
-      .post('http://localhost:4000/barang', data, config)
-      .then((response) => {
-        alert('Data berhasil ditambahkan')
-        window.location.reload()
-      })
+  const handleAdd = (data: AddItem) => {
+    postItem(data).then(() => {
+      toast.success('Data berhasil ditambahkan');
+      mutate();
+      handleCloseAdd();
+    }).catch((error) => {
+      let errorMessage = "Maaf terjadi kesalahan pada server. Mohon coba kembali dalam beberapa saat.";
+      if (Array.isArray(error.response.data.message)) {
+        errorMessage = error.response.data.message.join(", ");
+      }
+      toast.error(errorMessage);
+      handleCloseAdd();
+    })
   }
 
   return (
@@ -43,70 +44,7 @@ function AddModalItem(props: handleShowType) {
           <Modal.Title>Tambah Barang</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <form onSubmit={handleSubmit(handleAdd)}>
-            <div className="mb-3">
-              <label className="form-label">
-                Merek
-              </label>
-              <input
-                type="text"
-                className="form-control"
-                {...register('merek', { required: true })}
-              />
-            </div>
-            <div className="mb-3">
-              <label className="form-label">
-                Size
-              </label>
-              <input
-                type="text"
-                className="form-control"
-                {...register('size', { required: true })}
-              />
-            </div>
-            <div className="mb-3">
-              <label className="form-label">
-                Warna
-              </label>
-              <input
-                type="text"
-                className="form-control"
-                {...register('warna', { required: true })}
-              />
-            </div>
-            <div className="mb-3">
-              <label className="form-label">
-                Stok
-              </label>
-              <input
-                type="number"
-                min="0"
-                className="form-control"
-                {...register('stok', { required: true })}
-              />
-            </div>
-            <div className="mb-3">
-              <label className="form-label">
-                Harga
-              </label>
-              <input
-                type="number"
-                min="0"
-                className="form-control"
-                {...register('harga', { required: true })}
-              />
-            </div>
-            <Button variant="primary" onClick={() => handleAdd} type="submit">
-              Submit
-            </Button>
-            <Button
-              className="mx-2"
-              variant="secondary"
-              onClick={handleCloseAdd}
-            >
-              Close
-            </Button>
-          </form>
+          <FormComp handleForm={handleAdd} handleCloseForm={handleCloseAdd}/>
         </Modal.Body>
       </Modal>
     </>

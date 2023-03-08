@@ -1,136 +1,124 @@
-import {
-  Dispatch,
-  SetStateAction,
-  useEffect,
-  useState,
-} from 'react'
-import axios from 'axios'
+import { useItemContext } from '../Item'
+import { getItems } from 'services/item'
+import { CSSProperties } from 'react'
+import BeatLoader from "react-spinners/BeatLoader";
 import 'bootstrap-icons/font/bootstrap-icons.css'
-import AddModalBarang from '../Modal/AddModalItem'
-import EditModalBarang from '../Modal/EditModalItem'
-import { useCookies } from 'react-cookie'
+import FilterComp from './Components/FilterComp';
+import EditComp from './Components/EditComp';
+import DeleteComp from './Components/DeleteComp';
+import PaginationComp from './Components/PaginationComp';
 
-interface Data {
-  id: string
-  merek: string
-  size: string
-  warna: string
-  stok: number
-  harga: number
-}
+const TableItem = () => {
+  const { queryParams, setQueryParams } = useItemContext()
+  const { data, error, isLoading } = getItems(queryParams);
 
-type handleShowType = {
-  showAdd: boolean
-  showEdit: boolean
-  setShowAdd: Dispatch<SetStateAction<boolean>>
-  setShowEdit: Dispatch<SetStateAction<boolean>>
-}
+  const handleSortBy = (column: string) => {
+    let newOrderType = 'ASC';
+    if (column === queryParams.orderBy && queryParams.orderType === 'ASC') {
+      newOrderType = 'DESC';
+    }
+    setQueryParams({
+      ...queryParams,
+      orderBy: column,
+      orderType: newOrderType,
+    });
+  };
 
-const TableItem = (props: handleShowType) => {
-  const [cookies] = useCookies(['token', 'user'])
-  const { showAdd, showEdit, setShowAdd, setShowEdit } = props
-  const [data, setData] = useState<Data[]>([])
-  const [editId, setEditId] = useState('')
-
-  const handleShowAdd = () => setShowAdd(true)
-  const handleCloseAdd = () => setShowAdd(false)
-
-  const handleShowEdit = (id: string) => {
-    setEditId(id)
-    setShowEdit(true)
-  }
-
-  const handleCloseEdit = () => {
-    setEditId('')
-    setShowEdit(false)
-  }
-
-  useEffect(() => {
-    axios.get('http://localhost:4000/barang', config).then((response) => {
-      setData(response.data)
-    })
-  }, [])
-
-  let token = cookies.token
-  let config = {
-    headers: {
-      Authorization: 'Bearer ' + token,
-    },
-  }
-
-  const handleDelete = (id: string) => {
-    axios
-      .delete('http://localhost:4000/barang/' + id, config)
-      .then((response) => {
-        console.log('ini nilai respon', response)
-        alert(response.data.message)
-        window.location.reload()
-      })
-  }
+  const override: CSSProperties = {
+    display: "block",
+    margin: "0 auto",
+    borderColor: "red",
+  };
 
   return (
-    <div className="card">
-      <div className="card-header">
-        <AddModalBarang showAdd={showAdd} handleCloseAdd={handleCloseAdd} />
-        <EditModalBarang
-          showEdit={showEdit}
-          editId={editId}
-          handleCloseEdit={handleCloseEdit}
-        />
-
-        {cookies.user && (
-          <button onClick={handleShowAdd} className="btn btn-primary">
-            <i className="bi bi-plus-square"></i>
-          </button>
-        )}
-      </div>
+    <>
       <div className="card-body">
+      <FilterComp />
         <table className="table table-bordered">
           <thead>
             <tr>
-              <th>Id</th>
-              <th>Merek</th>
-              <th>Size</th>
-              <th>Warna</th>
-              <th>Stok</th>
-              <th>Harga</th>
-              {cookies.user && <th>Action</th>}
+            <th>Id</th>
+              <th onClick={() => handleSortBy('brand')}>
+                Merek{' '}
+                {queryParams.orderBy === 'brand' && (
+                  <i
+                    className={`bi bi-caret-${
+                      queryParams.orderType === 'ASC' ? 'down' : 'up'
+                    }-fill`}
+                  ></i>
+                )}
+              </th>
+              <th onClick={() => handleSortBy('capital_price')}>
+                Harga Modal{' '}
+                {queryParams.orderBy === 'capital_price' && (
+                  <i
+                    className={`bi bi-caret-${
+                      queryParams.orderType === 'ASC' ? 'down' : 'up'
+                    }-fill`}
+                  ></i>
+                )}
+              </th>
+              <th onClick={() => handleSortBy('wholescale_price')}>
+                Harga Grosir{' '}
+                {queryParams.orderBy === 'wholescale_price' && (
+                  <i
+                    className={`bi bi-caret-${
+                      queryParams.orderType === 'ASC' ? 'down' : 'up'
+                    }-fill`}
+                  ></i>
+                )}
+              </th>
+              <th onClick={() => handleSortBy('stock')}>
+                Stok{' '}
+                {queryParams.orderBy === 'stock' && (
+                  <i
+                    className={`bi bi-caret-${
+                      queryParams.orderType === 'ASC' ? 'down' : 'up'
+                    }-fill`}
+                  ></i>
+                )}
+              </th>
+              <th>Supplier</th>
+              <th>Action</th>
             </tr>
           </thead>
           <tbody>
-            {data &&
-              Object.values(data).map((d, index) => {
+            { isLoading ? (
+              <tr>
+                <td colSpan={5} style={{ textAlign:'center' }}>
+                  <BeatLoader 
+                    color='silver'
+                    cssOverride={override}
+                    size={15}
+                  />
+                </td>
+              </tr>
+            ) : data && (
+              Object.values(data.data).map((d, index) => {
                 return (
                   <tr key={d.id}>
-                    <td>{++index}</td>
-                    <td>{d.merek.slice(0, 150)}</td>
-                    <td>{d.size}</td>
-                    <td>{d.warna}</td>
-                    <td>{d.stok}</td>
-                    <td>{d.harga}</td>
-                    {cookies.user && (
-                      <td>
-                        <button
-                          onClick={() => handleShowEdit(d.id)}
-                          className="btn btn-primary ms-3"
-                        >
-                          <i className="bi bi-pencil-square"></i>
-                        </button>
-                        <button
-                          onClick={() => handleDelete(d.id)}
-                          className="btn btn-danger ms-3"
-                        >
-                          <i className="bi bi-trash3-fill"></i>
-                        </button>
-                      </td>
-                    )}
+                    <td>
+                      {(queryParams.page-1) * queryParams.limit + index + 1}
+                    </td>
+                    <td>{d.brand}</td>
+                    <td>{d.capital_price}</td>
+                    <td>{d.wholescale_price}</td>
+                    <td>{d.stock}</td>
+                    <td>{d.__supplier__?.name || "-"}</td>
+                    <td style={{display: 'flex'}}>
+                      <EditComp item={d} />
+                      <DeleteComp item={d} />
+                    </td>
                   </tr>
                 )
-              })}
+              }))}
           </tbody>
         </table>
+        <div className="pagination-container">
+          <PaginationComp data={data}/>
+        </div>
       </div>
-    </div>
+    </>
   )
 }
 

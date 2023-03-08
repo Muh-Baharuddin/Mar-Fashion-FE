@@ -1,33 +1,30 @@
-import axios from 'axios';
 import React from 'react';
-import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
-import { useCookies } from 'react-cookie';
-import { useForm } from "react-hook-form";
+import 'react-toastify/dist/ReactToastify.css';
+import { toast } from 'react-toastify';
+import { useItemContext } from '../Item';
+import { getItems, updateItem } from 'services/item';
+import { AddItem, Item } from 'services/item/types';
+import FormComp from './FormComp';
 
 
-type handleShowType = {
+type Props = {
   showEdit: boolean;
-  editId: string;
+  item: Item,
   handleCloseEdit: () => void;
 }
 
-function EditModalItem(props: handleShowType) {
-  const {showEdit, editId, handleCloseEdit} = props
-  const { register, handleSubmit } = useForm();
-  const [ cookies ] = useCookies(["token"]);
+function EditModalItem(props: Props) {
+  const {showEdit, item, handleCloseEdit } = props
+  const { queryParams } = useItemContext();
 
-  let token = cookies.token;
-  let config = {
-    headers: {
-      Authorization: "Bearer " + token,
-    }
-  }
+  const { mutate } = getItems(queryParams);
 
-  const handleEdit = (data: any) => {
-    axios.patch('http://localhost:4000/barang/' + editId, data, config).then(response => {
-      alert("Data berhasil diperbarui")
-      window.location.reload()
+  const handleEdit = (data: AddItem) => {
+    updateItem(item.id, data).then(response => {
+      toast.success(response.data.message);
+      handleCloseEdit();
+      mutate();
     })
   }
 
@@ -43,39 +40,11 @@ function EditModalItem(props: handleShowType) {
           <Modal.Title>Edit Barang</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-        <form onSubmit={handleSubmit(handleEdit)}>
-        <div className="mb-3">
-              <label htmlFor="exampleFormControlInput1" className="form-label">Merek</label>
-              <input type="text" className="form-control" id="exampleFormControlInput1" 
-              {...register("merek", {required: true})}/>
-            </div>
-            <div className="mb-3">
-              <label htmlFor="exampleFormControlInput1" className="form-label">Size</label>
-              <input type="text" className="form-control" id="exampleFormControlInput1" 
-              {...register("size", {required: true})}/>
-            </div>
-            <div className="mb-3">
-              <label htmlFor="exampleFormControlInput1" className="form-label">Warna</label>
-              <input type="text" className="form-control" id="exampleFormControlInput1" 
-              {...register("warna", {required: true})}/>
-            </div>
-            <div className="mb-3">
-              <label htmlFor="exampleFormControlInput1" className="form-label">Stok</label>
-              <input type="number" min="0" className="form-control" id="exampleFormControlInput1" 
-              {...register("stok", {required: true})}/>
-            </div>
-            <div className="mb-3">
-              <label htmlFor="exampleFormControlInput1" className="form-label">Harga</label>
-              <input type="number" min="0" className="form-control" id="exampleFormControlInput1" 
-              {...register("harga", {required: true})}/>
-            </div>
-            <Button variant="primary" onClick={() => handleEdit} type="submit">
-              Submit
-            </Button>
-            <Button className='mx-2' variant="secondary" onClick={handleCloseEdit}>
-            Close
-            </Button>
-          </form>
+          <FormComp 
+            handleForm={handleEdit} 
+            handleCloseForm={handleCloseEdit} 
+            item={item}
+          />
         </Modal.Body>
       </Modal>
     </>
