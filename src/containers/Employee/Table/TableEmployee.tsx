@@ -35,12 +35,66 @@ const TableEmployee = () => {
           <thead>
             <tr>
               <th>Id</th>
-              <th>Nama</th>
-              <th>Alamat</th>
-              <th>Nomor Telepon</th>
-              <th>Tanggal Masuk</th>
-              <th>Tanggal Keluar</th>
-              <th>Total Tabungan</th>
+              <th onClick={() => handleSortBy('name')}>
+                Nama{' '}
+                {queryParams.orderBy === 'name' && (
+                  <i
+                    className={`bi bi-caret-${
+                      queryParams.orderType === 'ASC' ? 'down' : 'up'
+                    }-fill`}
+                  ></i>
+                )}
+              </th>
+              <th onClick={() => handleSortBy('address')}>
+                Alamat{' '}
+                {queryParams.orderBy === 'address' && (
+                  <i
+                    className={`bi bi-caret-${
+                      queryParams.orderType === 'ASC' ? 'down' : 'up'
+                    }-fill`}
+                  ></i>
+                )}
+              </th>
+              <th onClick={() => handleSortBy('phone_number')}>
+                Nomor Telepon{' '}
+                {queryParams.orderBy === 'phone_number' && (
+                  <i
+                    className={`bi bi-caret-${
+                      queryParams.orderType === 'ASC' ? 'down' : 'up'
+                    }-fill`}
+                  ></i>
+                )}
+              </th>
+              <th onClick={() => handleSortBy('entry_date')}>
+                Tanggal Masuk{' '}
+                {queryParams.orderBy === 'entry_date' && (
+                  <i
+                    className={`bi bi-caret-${
+                      queryParams.orderType === 'ASC' ? 'down' : 'up'
+                    }-fill`}
+                  ></i>
+                )}
+              </th>
+              <th onClick={() => handleSortBy('exit_date')}>
+                Tanggal Keluar{' '}
+                {queryParams.orderBy === 'exit_date' && (
+                  <i
+                    className={`bi bi-caret-${
+                      queryParams.orderType === 'ASC' ? 'down' : 'up'
+                    }-fill`}
+                  ></i>
+                )}
+              </th>
+              <th onClick={() => handleSortBy('total_saving')}>
+                Total Tabungan{' '}
+                {queryParams.orderBy === 'total_saving' && (
+                  <i
+                    className={`bi bi-caret-${
+                      queryParams.orderType === 'ASC' ? 'down' : 'up'
+                    }-fill`}
+                  ></i>
+                )}
+              </th>
             </tr>
           </thead>
           <tbody>
