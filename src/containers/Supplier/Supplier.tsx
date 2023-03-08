@@ -17,7 +17,7 @@ interface supplierContext {
 const defaultState = {
   queryParams: {
     keywords: '',
-    orderBy: 'nama',
+    orderBy: 'name',
     orderType: 'ASC',
     page: 1,
     limit: 10,

@@ -28,7 +28,7 @@ const DeleteComp = ({ supplier }: Props) => {
   const handleDelete = () => {
     confirmAlert({
       title: 'Konfirmasi',
-      message: 'Apakah Anda yakin ingin menghapus data dari ' + `${supplier.nama} ?`,
+      message: 'Apakah Anda yakin ingin menghapus data dari ' + `${supplier.name} ?`,
       buttons: [
         {
           label: 'Ya',
