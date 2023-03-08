@@ -1,40 +1,40 @@
-import axios from 'axios';
-import React from 'react';
-import Button from 'react-bootstrap/Button';
-import Modal from 'react-bootstrap/Modal';
-import { useForm } from "react-hook-form";
-
+import axios from 'axios'
+import React from 'react'
+import Button from 'react-bootstrap/Button'
+import Modal from 'react-bootstrap/Modal'
+import { useForm } from 'react-hook-form'
 
 type handleShowType = {
-  showEdit: boolean;
-  editId: string;
-  handleCloseEdit: () => void;
+  showAdd: boolean
+  handleCloseAdd: () => void
 }
 
-function EditModalKaryawan(props: handleShowType) {
-  const {showEdit, editId, handleCloseEdit} = props
-  const { register, handleSubmit } = useForm();
+function AddModalEmployee(props: handleShowType) {
+  const { register, handleSubmit } = useForm()
+  const { showAdd, handleCloseAdd } = props
 
-  const handleEdit = (data: any) => {
-    axios.patch(`${process.env.API_ENDPOINT}karyawan/` + editId, data).then(response => {
-      alert(response.data.message)
-      window.location.reload()
-    })
+  const handleAdd = (data: any) => {
+    axios
+      .post(`${process.env.API_ENDPOINT}karyawan`, data)
+      .then((response) => {
+        alert('Data berhasil ditambahkan')
+        window.location.reload()
+      })
   }
 
   return (
     <>
       <Modal
-        show={showEdit}
-        onHide={handleCloseEdit}
+        show={showAdd}
+        onHide={handleCloseAdd}
         backdrop="static"
         keyboard={false}
       >
         <Modal.Header closeButton>
-          <Modal.Title>Edit Barang</Modal.Title>
+          <Modal.Title>Tambah Karyawan</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <form onSubmit={handleSubmit(handleEdit)}>
+          <form onSubmit={handleSubmit(handleAdd)}>
             <div className="mb-3">
               <label className="form-label">
                 Nama
@@ -65,17 +65,21 @@ function EditModalKaryawan(props: handleShowType) {
                 {...register('nomor_telepon', { required: true })}
               />
             </div>
-            <Button variant="primary" onClick={() => handleEdit} type="submit">
+            <Button variant="primary" onClick={() => handleAdd} type="submit">
               Submit
             </Button>
-            <Button className='mx-2' variant="secondary" onClick={handleCloseEdit}>
-            Close
+            <Button
+              className="mx-2"
+              variant="secondary"
+              onClick={handleCloseAdd}
+            >
+              Close
             </Button>
           </form>
         </Modal.Body>
       </Modal>
     </>
-  );
+  )
 }
 
-export default EditModalKaryawan
+export default AddModalEmployee

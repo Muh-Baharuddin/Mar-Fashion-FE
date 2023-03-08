@@ -8,8 +8,8 @@ import { useMarContext } from 'src/context/MarFashionProvider'
 import axios from 'axios'
 import Pagination from 'react-paginate'
 import 'bootstrap-icons/font/bootstrap-icons.css'
-import AddModalKaryawan from '../Modal/AddModalKaryawan'
-import EditModalKaryawan from '../Modal/EditModalKaryawan'
+import AddModalKaryawan from '../Modal/AddModalEmployee'
+import EditModalKaryawan from '../Modal/EditModalEmployee'
 
 interface Data {
   id: string
@@ -25,7 +25,7 @@ type handleShowType = {
   setShowEdit: Dispatch<SetStateAction<boolean>>
 }
 
-export const TableKaryawan = (props: handleShowType) => {
+export const TableEmployee = (props: handleShowType) => {
   const { showAdd, showEdit, setShowAdd, setShowEdit } = props
   const { user } = useMarContext()
   const [data, setData] = useState<Data[]>([])
