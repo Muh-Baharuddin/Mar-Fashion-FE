@@ -6,6 +6,7 @@ import 'bootstrap-icons/font/bootstrap-icons.css'
 import FilterComp from './Components/FilterComp';
 import EditComp from './Components/EditComp';
 import DeleteComp from './Components/DeleteComp';
+import PaginationComp from './Components/PaginationComp';
 
 const TableItem = () => {
   const { queryParams, setQueryParams } = useItemContext()
@@ -113,6 +114,9 @@ const TableItem = () => {
               }))}
           </tbody>
         </table>
+        <div className="pagination-container">
+          <PaginationComp data={data}/>
+        </div>
       </div>
     </>
   )
