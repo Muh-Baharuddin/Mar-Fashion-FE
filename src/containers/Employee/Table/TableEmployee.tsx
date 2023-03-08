@@ -3,6 +3,7 @@ import { getEmployees } from 'services/employee';
 import { CSSProperties } from "react";
 import BeatLoader from "react-spinners/BeatLoader";
 import 'bootstrap-icons/font/bootstrap-icons.css'
+import FilterComp from './Components/FilterComp';
 
 const TableEmployee = () => {
   const { queryParams, setQueryParams } = useEmployeeContext()
@@ -29,6 +30,7 @@ const TableEmployee = () => {
   return (
     <>
       <div className="card-body">
+        <FilterComp />
         <table className="table table-bordered">
           <thead>
             <tr>
@@ -62,8 +64,8 @@ const TableEmployee = () => {
                     <td>{d.name}</td>
                     <td>{d.address}</td>
                     <td>{d.phone_number}</td>
-                    <td>{new Date(d.entry_date).toLocaleDateString('en-GB')}</td>
-                    <td>{d.exit_date ? new Date(d.exit_date).toLocaleDateString('en-GB') : "-"}</td>
+                    <td>{new Date(d.entry_date).toISOString().split('T')[0]}</td>
+                    <td>{d.exit_date ? new Date(d.exit_date).toISOString().split('T')[0] : "-"}</td>
                     <td>{d.total_saving}</td>
                   </tr>
                 )
