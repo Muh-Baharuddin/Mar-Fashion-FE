@@ -62,8 +62,8 @@ const TableEmployee = () => {
                     <td>{d.name}</td>
                     <td>{d.address}</td>
                     <td>{d.phone_number}</td>
-                    <td>{d.entry_date.toLocaleDateString()}</td>
-                    <td>{d.exit_date.toLocaleDateString()}</td>
+                    <td>{new Date(d.entry_date).toLocaleDateString()}</td>
+                    <td>{d.exit_date ? new Date(d.exit_date).toLocaleDateString() : "-"}</td>
                     <td>{d.total_saving}</td>
                   </tr>
                 )
