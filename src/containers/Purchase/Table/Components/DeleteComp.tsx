@@ -5,18 +5,21 @@ import 'react-toastify/dist/ReactToastify.css';
 import { useSupplierContext } from "../../Supplier";
 import { deleteSupplier, getSuppliers } from "services/supplier";
 import { Supplier } from "services/supplier/types";
+import { usePurchaseContext } from '../../Purchase';
+import { deletePurchase, getPurchases } from 'services/purchase';
+import { Purchase } from 'services/purchase/types';
 
 type Props = {
-  supplier: Supplier;
+  purchase: Purchase;
 };
 
-const DeleteComp = ({ supplier }: Props) => {
-  const { queryParams } = useSupplierContext();
-  const { mutate } = getSuppliers(queryParams);
+const DeleteComp = ({ purchase }: Props) => {
+  const { queryParams } = usePurchaseContext();
+  const { mutate } = getPurchases(queryParams);
 
 
   const DeleteConfirm = () => {
-    deleteSupplier(supplier.id).then((response) => {
+    deletePurchase(purchase.id).then((response) => {
       toast.success(response.data.message);
       mutate();
     })
@@ -28,7 +31,7 @@ const DeleteComp = ({ supplier }: Props) => {
   const handleDelete = () => {
     confirmAlert({
       title: 'Konfirmasi',
-      message: 'Apakah Anda yakin ingin menghapus data dari ' + `${supplier.nama} ?`,
+      message: 'Apakah Anda yakin ingin menghapus data dari ' + `${purchase.date} ?`,
       buttons: [
         {
           label: 'Ya',
