@@ -77,16 +77,7 @@ const TableItem = () => {
                   ></i>
                 )}
               </th>
-              <th onClick={() => handleSortBy('supplier')}>
-                Supplier{' '}
-                {queryParams.orderBy === 'supplier' && (
-                  <i
-                    className={`bi bi-caret-${
-                      queryParams.orderType === 'ASC' ? 'down' : 'up'
-                    }-fill`}
-                  ></i>
-                )}
-              </th>
+              <th>Supplier</th>
               <th>Action</th>
             </tr>
           </thead>
