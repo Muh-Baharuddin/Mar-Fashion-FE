@@ -63,7 +63,7 @@ const FormComp = ({handleForm, handleCloseForm, employee}: Props) => {
         <input
           type="date"
           className="form-control"
-          {...register('exit_date', { required: true })}
+          {...register('exit_date')}
         />
       </div>
       <div className="mb-3">

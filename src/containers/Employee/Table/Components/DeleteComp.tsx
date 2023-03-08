@@ -2,7 +2,7 @@ import { confirmAlert } from 'react-confirm-alert';
 import { toast } from 'react-toastify';
 import { useEmployeeContext } from '../../Employee';
 import { Employee } from 'services/employee/types';
-import { deleteSupplier, getSuppliers } from "services/supplier";
+import { deleteEmployee, getEmployees } from 'services/employee';
 import 'react-toastify/dist/ReactToastify.css';
 import 'react-confirm-alert/src/react-confirm-alert.css';
 
@@ -12,11 +12,11 @@ type Props = {
 
 const DeleteComp = ({ employee }: Props) => {
   const { queryParams } = useEmployeeContext();
-  const { mutate } = getSuppliers(queryParams);
+  const { mutate } = getEmployees(queryParams);
 
 
   const DeleteConfirm = () => {
-    deleteSupplier(employee.id).then((response) => {
+    deleteEmployee(employee.id).then((response) => {
       toast.success(response.data.message);
       mutate();
     })

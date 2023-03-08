@@ -4,6 +4,8 @@ import { CSSProperties } from "react";
 import BeatLoader from "react-spinners/BeatLoader";
 import 'bootstrap-icons/font/bootstrap-icons.css'
 import FilterComp from './Components/FilterComp';
+import EditComp from './Components/EditComp';
+import DeleteComp from './Components/DeleteComp';
 
 const TableEmployee = () => {
   const { queryParams, setQueryParams } = useEmployeeContext()
@@ -95,6 +97,7 @@ const TableEmployee = () => {
                   ></i>
                 )}
               </th>
+              <th>Action</th>
             </tr>
           </thead>
           <tbody>
@@ -121,6 +124,10 @@ const TableEmployee = () => {
                     <td>{new Date(d.entry_date).toISOString().split('T')[0]}</td>
                     <td>{d.exit_date ? new Date(d.exit_date).toISOString().split('T')[0] : "-"}</td>
                     <td>{d.total_saving}</td>
+                    <td style={{display: 'flex'}}>
+                      <EditComp employee={d} />
+                      <DeleteComp employee={d} />
+                    </td>
                   </tr>
                 )
               }))}
