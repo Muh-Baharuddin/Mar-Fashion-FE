@@ -10,7 +10,7 @@ type handleShowType = {
   handleCloseAdd: () => void
 }
 
-function AddModalPembelian(props: handleShowType) {
+function AddModalPurchase(props: handleShowType) {
   const { register, handleSubmit } = useForm()
   const { showAdd, handleCloseAdd } = props
   const [cookies] = useCookies(['token'])
@@ -102,4 +102,4 @@ function AddModalPembelian(props: handleShowType) {
   )
 }
 
-export default AddModalPembelian
+export default AddModalPurchase
