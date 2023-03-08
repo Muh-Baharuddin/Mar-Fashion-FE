@@ -1,24 +1,29 @@
-import axios from 'axios';
 import React from 'react';
-import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
-import { useForm } from "react-hook-form";
+import FormComp from './FormComp';
+import { toast } from 'react-toastify';
+import { useEmployeeContext } from '../Employee';
+import { AddEmployee, Employee } from 'services/employee/types';
+import { getEmployees, updateEmployee } from 'services/employee';
+import 'react-toastify/dist/ReactToastify.css';
 
-
-type handleShowType = {
+type Props = {
   showEdit: boolean;
-  editId: string;
+  employee: Employee,
   handleCloseEdit: () => void;
 }
 
-function EditModalEmployee(props: handleShowType) {
-  const {showEdit, editId, handleCloseEdit} = props
-  const { register, handleSubmit } = useForm();
+function EditModalEmployee(props: Props) {
+  const {showEdit, employee, handleCloseEdit } = props
+  const { queryParams } = useEmployeeContext();
 
-  const handleEdit = (data: any) => {
-    axios.patch(`${process.env.API_ENDPOINT}karyawan/` + editId, data).then(response => {
-      alert(response.data.message)
-      window.location.reload()
+  const { mutate } = getEmployees(queryParams);
+
+  const handleEdit = (data: AddEmployee) => {
+    updateEmployee(employee.id, data).then(response => {
+      toast.success(response.data.message);
+      handleCloseEdit();
+      mutate();
     })
   }
 
@@ -31,47 +36,14 @@ function EditModalEmployee(props: handleShowType) {
         keyboard={false}
       >
         <Modal.Header closeButton>
-          <Modal.Title>Edit Barang</Modal.Title>
+          <Modal.Title>Edit Supplier</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <form onSubmit={handleSubmit(handleEdit)}>
-            <div className="mb-3">
-              <label className="form-label">
-                Nama
-              </label>
-              <input
-                type="text"
-                className="form-control"
-                {...register('nama', { required: true })}
-              />
-            </div>
-            <div className="mb-3">
-              <label className="form-label">
-                Alamat
-              </label>
-              <input
-                type="text"
-                className="form-control"
-                {...register('alamat', { required: true })}
-              />
-            </div>
-            <div className="mb-3">
-              <label className="form-label">
-                Nomor Telepon
-              </label>
-              <input
-                type="text"
-                className="form-control"
-                {...register('nomor_telepon', { required: true })}
-              />
-            </div>
-            <Button variant="primary" onClick={() => handleEdit} type="submit">
-              Submit
-            </Button>
-            <Button className='mx-2' variant="secondary" onClick={handleCloseEdit}>
-            Close
-            </Button>
-          </form>
+          <FormComp 
+            handleForm={handleEdit} 
+            handleCloseForm={handleCloseEdit} 
+            employee={employee}
+          />
         </Modal.Body>
       </Modal>
     </>
