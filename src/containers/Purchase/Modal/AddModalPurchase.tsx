@@ -2,9 +2,9 @@ import React from 'react'
 import Modal from 'react-bootstrap/Modal'
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { getSuppliers, postSupplier } from 'services/supplier'
-import { AddSupplier } from 'services/supplier/types'
-import { useSupplierContext } from '../Supplier'
+import { getPurchases, postPurchase } from 'services/purchase';
+import { AddPurchase } from 'services/purchase/types';
+import { usePurchaseContext } from '../Purchase'
 import FormComp from './FormComp';
 
 type handleShowType = {
@@ -12,13 +12,13 @@ type handleShowType = {
   handleCloseAdd: () => void;
 }
 
-function AddModalSupplier(props: handleShowType) {
+function AddModalPurchase(props: handleShowType) {
   const { showAdd, handleCloseAdd } = props
-  const { queryParams } = useSupplierContext();
-  const { mutate } = getSuppliers(queryParams);
+  const { queryParams } = usePurchaseContext();
+  const { mutate } = getPurchases(queryParams);
 
-  const handleAdd = (data: AddSupplier) => {
-    postSupplier(data).then(() => {
+  const handleAdd = (data: AddPurchase) => {
+    postPurchase(data).then(() => {
       toast.success('Data berhasil ditambahkan');
       mutate();
       handleCloseAdd();
@@ -41,7 +41,7 @@ function AddModalSupplier(props: handleShowType) {
         keyboard={false}
       >
         <Modal.Header closeButton>
-          <Modal.Title>Tambah Supplier</Modal.Title>
+          <Modal.Title>Tambah Pembelian</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <FormComp handleForm={handleAdd} handleCloseForm={handleCloseAdd}/>
@@ -51,4 +51,4 @@ function AddModalSupplier(props: handleShowType) {
   )
 }
 
-export default AddModalSupplier
+export default AddModalPurchase
