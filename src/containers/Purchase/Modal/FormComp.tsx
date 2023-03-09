@@ -21,7 +21,7 @@ const FormComp = ({handleForm, handleCloseForm, purchase}: Props) => {
           Tanggal
         </label>
         <input
-          type="text"
+          type="date"
           className="form-control"
           {...register('date', { required: true })}
         />
@@ -30,11 +30,12 @@ const FormComp = ({handleForm, handleCloseForm, purchase}: Props) => {
         <label className="form-label">
           Satuan
         </label>
-        <input
-          type="text"
-          className="form-control"
-          {...register('unit', { required: true })}
-        />
+        <select className="form-control" {...register('unit', { required: true })}>
+          <option value="">Pilih Satuan</option>
+          <option value="PCS">PCS</option>
+          <option value="LUSIN">LUSIN</option>
+          <option value="KODI">KODI</option>
+        </select>
       </div>
       <div className="mb-3">
         <label className="form-label">

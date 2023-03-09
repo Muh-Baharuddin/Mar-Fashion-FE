@@ -128,7 +128,7 @@ export default function SidebarNav() {
       { user?.role === "ADMIN" ? 
         <SidebarNavGroup toggleIcon={faMoneyBill} toggleText="Keuanga"> 
           <SidebarNavItem href="/">Keuangan</SidebarNavItem>
-          <SidebarNavItem href="/pembelian">Pembelian</SidebarNavItem>
+          <SidebarNavItem href="/purchase">Pembelian</SidebarNavItem>
           <SidebarNavItem href="/penjualan">Penjualan</SidebarNavItem>
         </SidebarNavGroup> :
         <SidebarNavItem icon={faMoneyBill} href="/penjualan">Penjualan</SidebarNavItem>

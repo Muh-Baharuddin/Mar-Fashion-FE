@@ -1,8 +1,8 @@
-import { useSupplierContext } from "../../Supplier"
+import { usePurchaseContext } from "../../Purchase";
 import debounce from "lodash.debounce";
 
 const FilterComp = () => {
-  const { setQueryParams } = useSupplierContext()
+  const { setQueryParams } = usePurchaseContext()
 
   const handleSearch = debounce((event: React.ChangeEvent<HTMLInputElement>) => {
     setQueryParams((prev) => {
