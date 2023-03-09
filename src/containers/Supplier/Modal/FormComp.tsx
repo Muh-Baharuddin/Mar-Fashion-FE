@@ -23,7 +23,7 @@ const FormComp = ({handleForm, handleCloseForm, supplier}: Props) => {
         <input
           type="text"
           className="form-control"
-          {...register('nama', { required: true })}
+          {...register('name', { required: true })}
         />
       </div>
       <div className="mb-3">
@@ -33,7 +33,17 @@ const FormComp = ({handleForm, handleCloseForm, supplier}: Props) => {
         <input
           type="text"
           className="form-control"
-          {...register('alamat', { required: true })}
+          {...register('address', { required: true })}
+        />
+      </div>
+      <div className="mb-3">
+        <label className="form-label">
+          Kota
+        </label>
+        <input
+          type="text"
+          className="form-control"
+          {...register('city', { required: true })}
         />
       </div>
       <div className="mb-3">
@@ -43,7 +53,37 @@ const FormComp = ({handleForm, handleCloseForm, supplier}: Props) => {
         <input
           type="text"
           className="form-control"
-          {...register('nomor_telepon', { required: true })}
+          {...register('phone_number', { required: true })}
+        />
+      </div>
+      <div className="mb-3">
+        <label className="form-label">
+          Nomor Rekening
+        </label>
+        <input
+          type="text"
+          className="form-control"
+          {...register('account_number', { required: true })}
+        />
+      </div>
+      <div className="mb-3">
+        <label className="form-label">
+          Rekening Atas Nama
+        </label>
+        <input
+          type="text"
+          className="form-control"
+          {...register('account_owner', { required: true })}
+        />
+      </div>
+      <div className="mb-3">
+        <label className="form-label">
+          Bank
+        </label>
+        <input
+          type="text"
+          className="form-control"
+          {...register('bank', { required: true })}
         />
       </div>
       <Button variant="primary" onClick={() => handleForm} type="submit">

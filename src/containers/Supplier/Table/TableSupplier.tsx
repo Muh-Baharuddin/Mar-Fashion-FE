@@ -38,9 +38,9 @@ const TableSupplier = () => {
           <thead>
             <tr>
             <th>Id</th>
-              <th onClick={() => handleSortBy('nama')}>
+              <th onClick={() => handleSortBy('name')}>
                 Nama{' '}
-                {queryParams.orderBy === 'nama' && (
+                {queryParams.orderBy === 'name' && (
                   <i
                     className={`bi bi-caret-${
                       queryParams.orderType === 'ASC' ? 'down' : 'up'
@@ -48,9 +48,9 @@ const TableSupplier = () => {
                   ></i>
                 )}
               </th>
-              <th onClick={() => handleSortBy('alamat')}>
+              <th onClick={() => handleSortBy('address')}>
                 Alamat{' '}
-                {queryParams.orderBy === 'alamat' && (
+                {queryParams.orderBy === 'address' && (
                   <i
                     className={`bi bi-caret-${
                       queryParams.orderType === 'ASC' ? 'down' : 'up'
@@ -58,9 +58,49 @@ const TableSupplier = () => {
                   ></i>
                 )}
               </th>
-              <th onClick={() => handleSortBy('nomor_telepon')}>
+              <th onClick={() => handleSortBy('city')}>
+                Kota{' '}
+                {queryParams.orderBy === 'city' && (
+                  <i
+                    className={`bi bi-caret-${
+                      queryParams.orderType === 'ASC' ? 'down' : 'up'
+                    }-fill`}
+                  ></i>
+                )}
+              </th>
+              <th onClick={() => handleSortBy('phone_number')}>
                 Nomor Telepon{' '}
-                {queryParams.orderBy === 'nomor_telepon' && (
+                {queryParams.orderBy === 'phone_number' && (
+                  <i
+                    className={`bi bi-caret-${
+                      queryParams.orderType === 'ASC' ? 'down' : 'up'
+                    }-fill`}
+                  ></i>
+                )}
+              </th>
+              <th onClick={() => handleSortBy('account_number')}>
+                Nomor Rekening{' '}
+                {queryParams.orderBy === 'account_number' && (
+                  <i
+                    className={`bi bi-caret-${
+                      queryParams.orderType === 'ASC' ? 'down' : 'up'
+                    }-fill`}
+                  ></i>
+                )}
+              </th>
+              <th onClick={() => handleSortBy('account_owner')}>
+                Rekening Atas Nama{' '}
+                {queryParams.orderBy === 'account_owner' && (
+                  <i
+                    className={`bi bi-caret-${
+                      queryParams.orderType === 'ASC' ? 'down' : 'up'
+                    }-fill`}
+                  ></i>
+                )}
+              </th>
+              <th onClick={() => handleSortBy('bank')}>
+                Bank{' '}
+                {queryParams.orderBy === 'bank' && (
                   <i
                     className={`bi bi-caret-${
                       queryParams.orderType === 'ASC' ? 'down' : 'up'
@@ -89,9 +129,13 @@ const TableSupplier = () => {
                     <td>
                       {(queryParams.page-1) * queryParams.limit + index + 1}
                     </td>
-                    <td>{d.nama}</td>
-                    <td>{d.alamat}</td>
-                    <td>{d.nomor_telepon}</td>
+                    <td>{d.name}</td>
+                    <td>{d.address}</td>
+                    <td>{d.city}</td>
+                    <td>{d.phone_number}</td>
+                    <td>{d.account_number}</td>
+                    <td>{d.account_owner}</td>
+                    <td>{d.bank}</td>
                     <td style={{display: 'flex'}}>
                       <EditComp supplier={d} />
                       <DeleteComp supplier={d} />
