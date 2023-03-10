@@ -1,12 +1,12 @@
 import { useState } from "react";
-import EditModalSupplier from "../../Modal/EditModalSupplier";
-import { Supplier } from "services/supplier/types";
+import EditModalPurchase from "../../Modal/EditModalPurchase";
+import { Purchase } from "services/purchase/types";
 
 type Props = {
-  supplier: Supplier;
+  purchase: Purchase;
 };
 
-const EditComp = ({ supplier }: Props) => {
+const EditComp = ({ purchase }: Props) => {
   const [showEdit, setShowEdit] = useState(false);
 
   const handleShowEdit = () => {
@@ -19,9 +19,9 @@ const EditComp = ({ supplier }: Props) => {
 
   return (
     <div>
-      <EditModalSupplier
+      <EditModalPurchase
         showEdit={showEdit}
-        supplier={supplier}
+        purchase={purchase}
         handleCloseEdit={handleCloseEdit}
       />
       <button

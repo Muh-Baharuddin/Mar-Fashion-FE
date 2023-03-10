@@ -7,8 +7,8 @@ import 'react-toastify/dist/ReactToastify.css';
 const defaultState = {
   queryParams: {
     keywords: '',
-    orderBy: 'nama',
-    orderType: 'ASC',
+    orderBy: 'date',
+    orderType: 'DESC',
     page: 1,
     limit: 10,
   },
