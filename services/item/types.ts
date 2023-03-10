@@ -9,6 +9,9 @@ export interface Item {
   __supplier__: {
     name: string;
   };
+  __categories__: Array<{
+    name: string;
+  }>;
 }
 
 export type AddItem = Omit<Item, "id">;
