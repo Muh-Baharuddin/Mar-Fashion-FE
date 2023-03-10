@@ -2,7 +2,9 @@ import { Data } from "services/types"
 
 export interface Purchase {
   id: string
+  invoice: string
   date: Date
+  supplier: string
   unit: string
   cost: string
 }
