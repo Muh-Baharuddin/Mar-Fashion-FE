@@ -4,7 +4,7 @@ import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { getSuppliers, postSupplier } from 'services/supplier'
 import { AddSupplier } from 'services/supplier/types'
-import { useSupplierContext } from '../Supplier'
+import { usePurchaseContext } from '../Purchase';
 import FormComp from './FormComp';
 
 type handleShowType = {
@@ -12,9 +12,9 @@ type handleShowType = {
   handleCloseAdd: () => void;
 }
 
-function AddModalSupplier(props: handleShowType) {
+function AddModalPurchase(props: handleShowType) {
   const { showAdd, handleCloseAdd } = props
-  const { queryParams } = useSupplierContext();
+  const { queryParams } = usePurchaseContext();
   const { mutate } = getSuppliers(queryParams);
 
   const handleAdd = (data: AddSupplier) => {
@@ -51,4 +51,4 @@ function AddModalSupplier(props: handleShowType) {
   )
 }
 
-export default AddModalSupplier
+export default AddModalPurchase

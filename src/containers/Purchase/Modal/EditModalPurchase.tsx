@@ -6,6 +6,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { getSuppliers, updateSupplier } from 'services/supplier';
 import { AddSupplier, Supplier } from 'services/supplier/types';
 import FormComp from './FormComp';
+import { usePurchaseContext } from '../Purchase';
 
 
 type Props = {
@@ -14,9 +15,9 @@ type Props = {
   handleCloseEdit: () => void;
 }
 
-function EditModalSupplier(props: Props) {
+function EditModalPurchase(props: Props) {
   const {showEdit, supplier, handleCloseEdit } = props
-  const { queryParams } = useSupplierContext();
+  const { queryParams } = usePurchaseContext();
 
   const { mutate } = getSuppliers(queryParams);
 
@@ -51,4 +52,4 @@ function EditModalSupplier(props: Props) {
   );
 }
 
-export default EditModalSupplier
+export default EditModalPurchase

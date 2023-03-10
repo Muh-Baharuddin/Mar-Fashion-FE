@@ -1,15 +1,15 @@
-import { useSupplierContext } from '../Supplier'
-import DeleteComp from './Components/DeleteComp'
-import EditComp from './Components/EditComp'
-import 'bootstrap-icons/font/bootstrap-icons.css'
+import { usePurchaseContext } from '../Purchase';
 import { getSuppliers } from 'services/supplier';
 import { CSSProperties } from "react";
+import DeleteComp from './Components/DeleteComp'
+import EditComp from './Components/EditComp'
 import BeatLoader from "react-spinners/BeatLoader";
 import FilterComp from './Components/FilterComp'
 import PaginationComp from './Components/PaginationComp'
+import 'bootstrap-icons/font/bootstrap-icons.css'
 
 const TablePurchase = () => {
-  const { queryParams, setQueryParams } = useSupplierContext()
+  const { queryParams, setQueryParams } = usePurchaseContext()
   const { data, error, isLoading } = getSuppliers(queryParams);
 
   const handleSortBy = (column: string) => {
