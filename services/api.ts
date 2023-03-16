@@ -22,9 +22,9 @@ export const stateGet = <T, D>(url: string, params: D) => {
   }
 }
 
-export const get = <T>(url: string, params: any) => {
+export const get = <T>(url: string) => {
   const fetcher = async () => {
-    const response = await axios.get<T>(url, { params });
+    const response = await axios.get<T>(url);
     return response.data;
   };
 
@@ -33,8 +33,14 @@ export const get = <T>(url: string, params: any) => {
   return {
     data,
     error,
+    isLoading: !data && !error,
   };
 };
+
+// export const get = async <T>(url: string) => {
+//   const response = await axios.get<T>(url);
+//   return response.data;
+// };
 
 export const post = async <T>(url: string, data: any): Promise<ResponseType<T>> => {
   const response = await axios.post<T>(url, data);

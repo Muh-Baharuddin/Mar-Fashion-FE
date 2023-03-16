@@ -1,7 +1,10 @@
 import React from 'react'
 import Button from 'react-bootstrap/Button';
 import { useForm } from 'react-hook-form'
+import { getCategorys } from 'services/category';
 import { AddItem, Item } from 'services/item/types';
+import { CSSProperties } from 'react'
+import BeatLoader from "react-spinners/BeatLoader";
 
 type Props = {
   handleForm: (data: AddItem) => void,
@@ -9,10 +12,23 @@ type Props = {
   item? : Item;
 };
 
-const FormComp = ({handleForm, handleCloseForm, item}: Props) => {
+const FormComp = ({ handleForm, handleCloseForm, item }: Props) => {
   const { register, handleSubmit } = useForm<AddItem>({
     defaultValues: item,
   });
+
+  const override: CSSProperties = {
+    display: "block",
+    margin: "0 auto",
+    borderColor: "red",
+  };
+
+  const { data, isLoading } = getCategorys();
+  console.log("ini data dari A",data),
+
+  React.useEffect(() => {
+    console.log("ini data dari B",data?.data)
+  }, []);
 
   return (
     <form onSubmit={handleSubmit(handleForm)}>
@@ -25,6 +41,24 @@ const FormComp = ({handleForm, handleCloseForm, item}: Props) => {
           className="form-control"
           {...register('brand', { required: true })}
         />
+      </div>
+      <div className="mb-3">
+        <label className="form-label">
+          Kategori
+        </label>
+        <select
+          className="form-select"
+          multiple
+          {...register('__categories__', { required: true })}
+        >
+          {data?
+            data.data.map((category) => (
+              <option key={category.id} value={category.id}>
+                {category.name}
+              </option>
+            )) : <option>Loading...</option>
+          }
+        </select>
       </div>
       <div className="mb-3">
         <label className="form-label">

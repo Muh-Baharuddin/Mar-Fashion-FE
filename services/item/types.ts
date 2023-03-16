@@ -10,6 +10,7 @@ export interface Item {
     name: string;
   };
   __categories__: Array<{
+    id: string;
     name: string;
   }>;
 }
