@@ -37,7 +37,7 @@ const TableItem = () => {
         <table className="table table-bordered">
           <thead>
             <tr>
-            <th>Id</th>
+              <th>Id</th>
               <th onClick={() => handleSortBy('brand')}>
                 Merek{' '}
                 {queryParams.orderBy === 'brand' && (
@@ -48,6 +48,7 @@ const TableItem = () => {
                   ></i>
                 )}
               </th>
+              <th>Kategori</th>
               <th onClick={() => handleSortBy('capital_price')}>
                 Harga Modal{' '}
                 {queryParams.orderBy === 'capital_price' && (
@@ -101,6 +102,15 @@ const TableItem = () => {
                       {(queryParams.page-1) * queryParams.limit + index + 1}
                     </td>
                     <td>{d.brand}</td>
+                    <td>
+                      {d.__categories__?.length > 0 ?
+                        d.__categories__.map((category: {name: string}) => (
+                          <span>{category.name} </span>
+                        ))
+                        :
+                        "-"
+                      }
+                    </td>
                     <td>{d.capital_price}</td>
                     <td>{d.wholescale_price}</td>
                     <td>{d.stock}</td>
