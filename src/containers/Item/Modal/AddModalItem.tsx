@@ -19,12 +19,10 @@ function AddModalItem(props: handleShowType) {
 
   const handleAdd = (data: AddItem) => {
     postItem(data).then(() => {
-      console.log("ini dari post", data)
       toast.success('Data berhasil ditambahkan');
       mutate();
       handleCloseAdd();
     }).catch((error) => {
-      console.log("ini dari post", data)
       let errorMessage = "Maaf terjadi kesalahan pada server. Mohon coba kembali dalam beberapa saat.";
       if (Array.isArray(error.response.data.message)) {
         errorMessage = error.response.data.message.join(", ");
