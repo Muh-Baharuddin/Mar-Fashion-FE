@@ -110,23 +110,6 @@ const FormComp = ({ handleForm, handleCloseForm, item }: Props) => {
           {...register('stock', { required: true })}
         />
       </div>
-      <div className="mb-3">
-        <label className="form-label">
-          Supplier
-        </label>
-        <select
-          className="form-select"
-          {...register('__supplier__')}
-        >
-          {data?
-            data.data.map((category) => (
-              <option key={category.id} value={JSON.stringify({id: category.id, name: category.name})}>
-                {category.name}
-              </option>
-            )) : <option>Loading...</option>
-          }
-        </select>
-      </div>
       <Button variant="primary" onClick={() => handleForm} type="submit">
         Submit
       </Button>
