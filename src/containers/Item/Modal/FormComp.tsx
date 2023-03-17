@@ -42,8 +42,6 @@ const FormComp = ({ handleForm, handleCloseForm, item }: Props) => {
   const { data } = getCategorys();
 
   const handleDataForm = (data: RawData) => {
-    console.log("vasda", data)
-    console.log("asdas", data.__categories__)
     const categories = data.__categories__?.map((category) => (JSON.parse(category)));
     const newData = {...data, __categories__: categories};
     handleForm(newData);
@@ -111,6 +109,23 @@ const FormComp = ({ handleForm, handleCloseForm, item }: Props) => {
           className="form-control"
           {...register('stock', { required: true })}
         />
+      </div>
+      <div className="mb-3">
+        <label className="form-label">
+          Supplier
+        </label>
+        <select
+          className="form-select"
+          {...register('__supplier__')}
+        >
+          {data?
+            data.data.map((category) => (
+              <option key={category.id} value={JSON.stringify({id: category.id, name: category.name})}>
+                {category.name}
+              </option>
+            )) : <option>Loading...</option>
+          }
+        </select>
       </div>
       <Button variant="primary" onClick={() => handleForm} type="submit">
         Submit
