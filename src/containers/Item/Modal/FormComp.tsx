@@ -2,8 +2,8 @@ import React from 'react'
 import Button from 'react-bootstrap/Button';
 import { useForm } from 'react-hook-form'
 import { getCategorys } from 'services/category';
-import { AddItem, Item } from 'services/item/types';
-import { getAllSuppliers } from 'services/supplier';
+import { AddItem, Item, RawData } from 'services/item/types';
+import { getSuppliers } from 'services/supplier';
 
 type Props = {
   handleForm: (data: AddItem) => void,
@@ -11,18 +11,18 @@ type Props = {
   item? : Item;
 };
 
-export interface RawData {
-  brand: string
-  capital_price: number;
-  wholescale_price: number;
-  stock: number;
-  __supplier__?: {
-    name: string;
-  };
-  __categories__: string[];
+const queryParams = {
+  keywords: '',
+  orderBy: 'name',
+  orderType: 'ASC',
+  page: 1,
+  limit: 1000,
 }
 
 const FormComp = ({ handleForm, handleCloseForm, item }: Props) => {
+  const { data: categoryData } = getCategorys(queryParams);
+  const { data: supplierData, isLoading: isSupplierLoading } = getSuppliers(queryParams);
+  
   const itemToRawData = (item: Item): RawData => {
     const categories = item.__categories__?.map((category) => category.id || '') || [];
     return {
@@ -40,13 +40,9 @@ const FormComp = ({ handleForm, handleCloseForm, item }: Props) => {
     defaultValues,
   });
 
-  const { data: categoryData } = getCategorys();
-  const { data: supplierData, isLoading: isSupplierLoading } = getAllSuppliers();
-
   const handleDataForm = (data: RawData) => {
     const categories = data.__categories__?.map((category) => (JSON.parse(category)));
     const newData = {...data, __categories__: categories};
-    console.log("newData",newData)
     handleForm(newData);
   };
 
@@ -125,7 +121,7 @@ const FormComp = ({ handleForm, handleCloseForm, item }: Props) => {
             <option>Loading...</option>
           ) : (
             supplierData?.data.map((supplier) => (
-              <option key={supplier.id} value={supplier.name}>
+              <option key={supplier.id} value={supplier.id}>
                 {supplier.name}
               </option>
             ))
