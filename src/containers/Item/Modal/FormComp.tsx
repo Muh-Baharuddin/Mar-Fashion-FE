@@ -3,8 +3,6 @@ import Button from 'react-bootstrap/Button';
 import { useForm } from 'react-hook-form'
 import { getCategorys } from 'services/category';
 import { AddItem, Item } from 'services/item/types';
-import { CSSProperties } from 'react'
-import BeatLoader from "react-spinners/BeatLoader";
 
 type Props = {
   handleForm: (data: AddItem) => void,
@@ -12,26 +10,47 @@ type Props = {
   item? : Item;
 };
 
-const FormComp = ({ handleForm, handleCloseForm, item }: Props) => {
-  const { register, handleSubmit } = useForm<AddItem>({
-    defaultValues: item,
-  });
+export interface RawData {
+  brand: string
+  capital_price: number;
+  wholescale_price: number;
+  stock: number;
+  __supplier__?: {
+    name: string;
+  };
+  __categories__: string[];
+}
 
-  const override: CSSProperties = {
-    display: "block",
-    margin: "0 auto",
-    borderColor: "red",
+const FormComp = ({ handleForm, handleCloseForm, item }: Props) => {
+  const itemToRawData = (item: Item): RawData => {
+    const categories = item.__categories__?.map((category) => category.id || '') || [];
+    return {
+      brand: item.brand,
+      capital_price: item.capital_price,
+      wholescale_price: item.wholescale_price,
+      stock: item.stock,
+      __categories__: categories,
+    };
   };
 
-  const { data, isLoading } = getCategorys();
-  console.log("ini data dari A",data),
+  const defaultValues = item ? itemToRawData(item) : {};
 
-  React.useEffect(() => {
-    console.log("ini data dari B",data?.data)
-  }, []);
+  const { register, handleSubmit } = useForm<RawData>({
+    defaultValues,
+  });
+
+  const { data } = getCategorys();
+
+  const handleDataForm = (data: RawData) => {
+    console.log("vasda", data)
+    console.log("asdas", data.__categories__)
+    const categories = data.__categories__?.map((category) => (JSON.parse(category)));
+    const newData = {...data, __categories__: categories};
+    handleForm(newData);
+  };
 
   return (
-    <form onSubmit={handleSubmit(handleForm)}>
+    <form onSubmit={handleSubmit(handleDataForm)}>
       <div className="mb-3">
         <label className="form-label">
           Merek
@@ -53,7 +72,7 @@ const FormComp = ({ handleForm, handleCloseForm, item }: Props) => {
         >
           {data?
             data.data.map((category) => (
-              <option key={category.id} value={category.id}>
+              <option key={category.id} value={JSON.stringify({id: category.id, name: category.name})}>
                 {category.name}
               </option>
             )) : <option>Loading...</option>
