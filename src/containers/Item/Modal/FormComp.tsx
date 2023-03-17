@@ -3,6 +3,7 @@ import Button from 'react-bootstrap/Button';
 import { useForm } from 'react-hook-form'
 import { getCategorys } from 'services/category';
 import { AddItem, Item } from 'services/item/types';
+import { getAllSuppliers } from 'services/supplier';
 
 type Props = {
   handleForm: (data: AddItem) => void,
@@ -39,11 +40,13 @@ const FormComp = ({ handleForm, handleCloseForm, item }: Props) => {
     defaultValues,
   });
 
-  const { data } = getCategorys();
+  const { data: categoryData } = getCategorys();
+  const { data: supplierData, isLoading: isSupplierLoading } = getAllSuppliers();
 
   const handleDataForm = (data: RawData) => {
     const categories = data.__categories__?.map((category) => (JSON.parse(category)));
     const newData = {...data, __categories__: categories};
+    console.log("newData",newData)
     handleForm(newData);
   };
 
@@ -68,8 +71,8 @@ const FormComp = ({ handleForm, handleCloseForm, item }: Props) => {
           multiple
           {...register('__categories__', { required: true })}
         >
-          {data?
-            data.data.map((category) => (
+          {categoryData?
+            categoryData.data.map((category) => (
               <option key={category.id} value={JSON.stringify({id: category.id, name: category.name})}>
                 {category.name}
               </option>
@@ -109,6 +112,25 @@ const FormComp = ({ handleForm, handleCloseForm, item }: Props) => {
           className="form-control"
           {...register('stock', { required: true })}
         />
+      </div>
+      <div className="mb-3">
+        <label className="form-label">
+          Supplier
+        </label>
+        <select
+          className="form-select"
+          {...register('__supplier__')}
+        >
+          {isSupplierLoading ? (
+            <option>Loading...</option>
+          ) : (
+            supplierData?.data.map((supplier) => (
+              <option key={supplier.id} value={supplier.name}>
+                {supplier.name}
+              </option>
+            ))
+          )}
+        </select>
       </div>
       <Button variant="primary" onClick={() => handleForm} type="submit">
         Submit

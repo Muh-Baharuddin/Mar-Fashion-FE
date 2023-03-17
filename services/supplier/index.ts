@@ -4,8 +4,14 @@ import { AddSupplier, Supplier, SupplierData, SupplierMessage } from "./types";
 
 const supplier_url = `${process.env.API_ENDPOINT}/supplier`
 
+const supplierNoQuery_url = `${process.env.API_ENDPOINT}/supplier/item`
+
 export const getSuppliers = (params: QueryParamsType) => {
   return api.stateGet<SupplierData, QueryParamsType>(supplier_url, params);
+}
+
+export const getAllSuppliers = () => {
+  return api.get<SupplierData>(supplierNoQuery_url);
 }
 
 export const postSupplier = (data: AddSupplier) => {
