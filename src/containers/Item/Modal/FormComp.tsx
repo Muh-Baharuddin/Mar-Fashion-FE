@@ -24,13 +24,13 @@ const FormComp = ({ handleForm, handleCloseForm, item }: Props) => {
   const { data: supplierData, isLoading: isSupplierLoading } = getSuppliers(queryParams);
   
   const itemToRawData = (item: Item): RawData => {
-    const categories = item.__categories__?.map((category) => category.id || '') || [];
+    const categories = item.categories?.map((category) => category.id || '') || [];
     return {
       brand: item.brand,
       capital_price: item.capital_price,
       wholescale_price: item.wholescale_price,
       stock: item.stock,
-      __categories__: categories,
+      categories,
     };
   };
 
@@ -41,8 +41,8 @@ const FormComp = ({ handleForm, handleCloseForm, item }: Props) => {
   });
 
   const handleDataForm = (data: RawData) => {
-    const categories = data.__categories__?.map((category) => (JSON.parse(category)));
-    const newData = {...data, __categories__: categories};
+    const categories = data.categories?.map((category) => (JSON.parse(category)));
+    const newData = {...data, categories: categories};
     handleForm(newData);
   };
 
@@ -65,7 +65,7 @@ const FormComp = ({ handleForm, handleCloseForm, item }: Props) => {
         <select
           className="form-select"
           multiple
-          {...register('__categories__', { required: true })}
+          {...register('categories', { required: true })}
         >
           {categoryData?
             categoryData.data.map((category) => (

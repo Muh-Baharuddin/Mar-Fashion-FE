@@ -9,7 +9,7 @@ export interface Item {
   __supplier__?: {
     name: string;
   };
-  __categories__: Array<{
+  categories: Array<{
     id: string;
     name: string;
   }>;
@@ -23,6 +23,6 @@ export type ItemMessage = {
   message: string,
 }
 
-export interface RawData extends Omit<Item, 'id' | '__categories__'> {
-  __categories__: string[];
+export interface RawData extends Omit<Item, 'id' | 'categories'> {
+  categories: string[];
 }
