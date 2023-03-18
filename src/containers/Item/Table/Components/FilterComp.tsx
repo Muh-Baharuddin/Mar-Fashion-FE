@@ -6,7 +6,7 @@ const FilterComp = () => {
 
   const handleSearch = debounce((event: React.ChangeEvent<HTMLInputElement>) => {
     setQueryParams((prev) => {
-      return { ...prev, keywords: event.target.value }
+      return { ...prev, keywords: event.target.value, page: 1 }
     })
   }, 500)
 
