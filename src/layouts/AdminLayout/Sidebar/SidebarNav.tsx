@@ -133,7 +133,7 @@ export default function SidebarNav() {
         </SidebarNavGroup> :
         <SidebarNavItem icon={faMoneyBill} href="/penjualan">Penjualan</SidebarNavItem>
       }
-      <SidebarNavItem icon={faPencil} href="/karyawan">Karyawan</SidebarNavItem>
+      <SidebarNavItem icon={faPencil} href="/employee">Karyawan</SidebarNavItem>
       { user?.role === "ADMIN" ?
         <SidebarNavItem icon={faChartPie} href="/supplier">Supplier</SidebarNavItem> 
         : ""

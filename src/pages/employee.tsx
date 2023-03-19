@@ -1,10 +1,10 @@
 import { AdminLayout } from '@layouts/AdminLayout'
-import { DataKaryawan } from '../containers/Karyawan'
+import { DataEmployee } from '../containers/Employee'
 
 const DataKaryawanPage = () => {
   return (
     <AdminLayout>
-      <DataKaryawan />
+      <DataEmployee />
     </AdminLayout>
   )
 }

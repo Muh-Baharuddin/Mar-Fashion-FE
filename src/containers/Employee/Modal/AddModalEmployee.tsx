@@ -1,25 +1,35 @@
-import axios from 'axios'
 import React from 'react'
-import Button from 'react-bootstrap/Button'
 import Modal from 'react-bootstrap/Modal'
-import { useForm } from 'react-hook-form'
+import FormComp from './FormComp';
+import { toast } from 'react-toastify';
+import { getEmployees, postEmployee } from 'services/employee';
+import { AddEmployee } from 'services/employee/types';
+import { useEmployeeContext } from '../Employee';
+import 'react-toastify/dist/ReactToastify.css';
 
 type handleShowType = {
-  showAdd: boolean
-  handleCloseAdd: () => void
+  showAdd: boolean;
+  handleCloseAdd: () => void;
 }
 
 function AddModalEmployee(props: handleShowType) {
-  const { register, handleSubmit } = useForm()
   const { showAdd, handleCloseAdd } = props
+  const { queryParams } = useEmployeeContext();
+  const { mutate } = getEmployees(queryParams);
 
-  const handleAdd = (data: any) => {
-    axios
-      .post(`${process.env.API_ENDPOINT}karyawan`, data)
-      .then((response) => {
-        alert('Data berhasil ditambahkan')
-        window.location.reload()
-      })
+  const handleAdd = (data: AddEmployee) => {
+    postEmployee(data).then(() => {
+      toast.success('Data berhasil ditambahkan');
+      mutate();
+      handleCloseAdd();
+    }).catch((error) => {
+      let errorMessage = "Maaf terjadi kesalahan pada server. Mohon coba kembali dalam beberapa saat.";
+      if (Array.isArray(error.response.data.message)) {
+        errorMessage = error.response.data.message.join(", ");
+      }
+      toast.error(errorMessage);
+      handleCloseAdd();
+    })
   }
 
   return (
@@ -34,48 +44,7 @@ function AddModalEmployee(props: handleShowType) {
           <Modal.Title>Tambah Karyawan</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <form onSubmit={handleSubmit(handleAdd)}>
-            <div className="mb-3">
-              <label className="form-label">
-                Nama
-              </label>
-              <input
-                type="text"
-                className="form-control"
-                {...register('nama', { required: true })}
-              />
-            </div>
-            <div className="mb-3">
-              <label className="form-label">
-                Alamat
-              </label>
-              <input
-                type="text"
-                className="form-control"
-                {...register('alamat', { required: true })}
-              />
-            </div>
-            <div className="mb-3">
-              <label className="form-label">
-                Nomor Telepon
-              </label>
-              <input
-                type="text"
-                className="form-control"
-                {...register('nomor_telepon', { required: true })}
-              />
-            </div>
-            <Button variant="primary" onClick={() => handleAdd} type="submit">
-              Submit
-            </Button>
-            <Button
-              className="mx-2"
-              variant="secondary"
-              onClick={handleCloseAdd}
-            >
-              Close
-            </Button>
-          </form>
+          <FormComp handleForm={handleAdd} handleCloseForm={handleCloseAdd}/>
         </Modal.Body>
       </Modal>
     </>
