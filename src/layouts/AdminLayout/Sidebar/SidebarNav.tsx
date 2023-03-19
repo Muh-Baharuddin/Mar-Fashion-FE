@@ -124,7 +124,7 @@ export default function SidebarNav() {
   return (
     <ul className="list-unstyled">
       <SidebarNavTitle>Dashboard</SidebarNavTitle>
-      <SidebarNavItem icon={faShirt} href="barang">Barang</SidebarNavItem>
+      <SidebarNavItem icon={faShirt} href="item">Barang</SidebarNavItem>
       { user?.role === "ADMIN" ? 
         <SidebarNavGroup toggleIcon={faMoneyBill} toggleText="Keuanga"> 
           <SidebarNavItem href="/">Keuangan</SidebarNavItem>

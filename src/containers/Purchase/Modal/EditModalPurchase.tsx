@@ -1,27 +1,27 @@
 import React from 'react';
 import Modal from 'react-bootstrap/Modal';
-import 'react-toastify/dist/ReactToastify.css';
 import { toast } from 'react-toastify';
-import { useItemContext } from '../Item';
-import { getItems, updateItem } from 'services/item';
-import { AddItem, Item } from 'services/item/types';
+import { usePurchaseContext } from '../Purchase';
+import { AddPurchase, Purchase } from 'services/purchase/types';
+import { getPurchases, updatePurchase } from 'services/purchase';
 import FormComp from './FormComp';
+import 'react-toastify/dist/ReactToastify.css';
 
 
 type Props = {
   showEdit: boolean;
-  item: Item,
+  purchase: Purchase,
   handleCloseEdit: () => void;
 }
 
-function EditModalItem(props: Props) {
-  const {showEdit, item, handleCloseEdit } = props
-  const { queryParams } = useItemContext();
+function EditModalPurchase(props: Props) {
+  const {showEdit, purchase, handleCloseEdit } = props
+  const { queryParams } = usePurchaseContext();
 
-  const { mutate } = getItems(queryParams);
+  const { mutate } = getPurchases(queryParams);
 
-  const handleEdit = (data: AddItem) => {
-    updateItem(item.id, data).then(response => {
+  const handleEdit = (data: AddPurchase) => {
+    updatePurchase(purchase.id, data).then(response => {
       toast.success(response.data.message);
       handleCloseEdit();
       mutate();
@@ -37,13 +37,13 @@ function EditModalItem(props: Props) {
         keyboard={false}
       >
         <Modal.Header closeButton>
-          <Modal.Title>Edit Barang</Modal.Title>
+          <Modal.Title>Edit Purchase</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <FormComp 
             handleForm={handleEdit} 
             handleCloseForm={handleCloseEdit} 
-            item={item}
+            purchase={purchase}
           />
         </Modal.Body>
       </Modal>
@@ -51,4 +51,4 @@ function EditModalItem(props: Props) {
   );
 }
 
-export default EditModalItem
+export default EditModalPurchase

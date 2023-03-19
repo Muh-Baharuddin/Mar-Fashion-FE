@@ -2,21 +2,21 @@ import { confirmAlert } from 'react-confirm-alert';
 import { toast } from 'react-toastify';
 import 'react-confirm-alert/src/react-confirm-alert.css';
 import 'react-toastify/dist/ReactToastify.css';
-import { useSupplierContext } from "../../Supplier";
-import { deleteSupplier, getSuppliers } from "services/supplier";
-import { Supplier } from "services/supplier/types";
+import { useItemContext } from '../../Item';
+import { Item } from 'services/item/types';
+import { deleteItem, getItems } from 'services/item';
 
 type Props = {
-  supplier: Supplier;
+  item: Item;
 };
 
-const DeleteComp = ({ supplier }: Props) => {
-  const { queryParams } = useSupplierContext();
-  const { mutate } = getSuppliers(queryParams);
+const DeleteComp = ({ item }: Props) => {
+  const { queryParams } = useItemContext();
+  const { mutate } = getItems(queryParams);
 
 
   const DeleteConfirm = () => {
-    deleteSupplier(supplier.id).then((response) => {
+    deleteItem(item.id).then((response) => {
       toast.success(response.data.message);
       mutate();
     })
@@ -28,7 +28,7 @@ const DeleteComp = ({ supplier }: Props) => {
   const handleDelete = () => {
     confirmAlert({
       title: 'Konfirmasi',
-      message: 'Apakah Anda yakin ingin menghapus data dari ' + `${supplier.name} ?`,
+      message: 'Apakah Anda yakin ingin menghapus data dari ' + `${item.brand} ?`,
       buttons: [
         {
           label: 'Ya',

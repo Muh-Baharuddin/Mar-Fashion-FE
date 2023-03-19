@@ -1,10 +1,10 @@
 import { AdminLayout } from '@layouts/AdminLayout'
-import { DataBarang } from '../containers/Barang'
+import { DataItem } from '../containers/Item'
 
 const DataBarangPage = () => {
   return (
     <AdminLayout>
-      <DataBarang />
+      <DataItem />
     </AdminLayout>
   )
 }

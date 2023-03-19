@@ -1,5 +1,6 @@
 import { createContext, useContext, useState } from 'react'
 import { QueryParamsType } from 'services/types';
+import AddComp from './Table/Components/AddComp';
 import TableItem from './Table/TableItem';
 
 interface ItemContext {

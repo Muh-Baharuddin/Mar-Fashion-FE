@@ -1,16 +1,16 @@
-import { useItemContext } from '../Item'
-import { getItems } from 'services/item'
-import { CSSProperties } from 'react'
+import { usePurchaseContext } from '../Purchase';
+import { CSSProperties } from "react";
+import { getPurchases } from 'services/purchase';
 import BeatLoader from "react-spinners/BeatLoader";
+import FilterComp from './Components/FilterComp'
+import EditComp from './Components/EditComp'
+import DeleteComp from './Components/DeleteComp'
+import PaginationComp from './Components/PaginationComp'
 import 'bootstrap-icons/font/bootstrap-icons.css'
-import FilterComp from './Components/FilterComp';
-import EditComp from './Components/EditComp';
-import DeleteComp from './Components/DeleteComp';
-import PaginationComp from './Components/PaginationComp';
 
-const TableItem = () => {
-  const { queryParams, setQueryParams } = useItemContext()
-  const { data, error, isLoading } = getItems(queryParams);
+const TablePurchase = () => {
+  const { queryParams, setQueryParams } = usePurchaseContext()
+  const { data, error, isLoading } = getPurchases(queryParams);
 
   const handleSortBy = (column: string) => {
     let newOrderType = 'ASC';
@@ -33,14 +33,14 @@ const TableItem = () => {
   return (
     <>
       <div className="card-body">
-      <FilterComp />
+        <FilterComp />
         <table className="table table-bordered">
           <thead>
             <tr>
-              <th>Id</th>
-              <th onClick={() => handleSortBy('brand')}>
-                Merek{' '}
-                {queryParams.orderBy === 'brand' && (
+            <th>Id</th>
+              <th onClick={() => handleSortBy('date')}>
+                Tanggal{' '}
+                {queryParams.orderBy === 'date' && (
                   <i
                     className={`bi bi-caret-${
                       queryParams.orderType === 'ASC' ? 'down' : 'up'
@@ -48,10 +48,9 @@ const TableItem = () => {
                   ></i>
                 )}
               </th>
-              <th>Kategori</th>
-              <th onClick={() => handleSortBy('capital_price')}>
-                Harga Modal{' '}
-                {queryParams.orderBy === 'capital_price' && (
+              <th onClick={() => handleSortBy('unit')}>
+                Satuan{' '}
+                {queryParams.orderBy === 'unit' && (
                   <i
                     className={`bi bi-caret-${
                       queryParams.orderType === 'ASC' ? 'down' : 'up'
@@ -59,9 +58,9 @@ const TableItem = () => {
                   ></i>
                 )}
               </th>
-              <th onClick={() => handleSortBy('wholescale_price')}>
-                Harga Grosir{' '}
-                {queryParams.orderBy === 'wholescale_price' && (
+              <th onClick={() => handleSortBy('cost')}>
+                Total{' '}
+                {queryParams.orderBy === 'cost' && (
                   <i
                     className={`bi bi-caret-${
                       queryParams.orderType === 'ASC' ? 'down' : 'up'
@@ -69,17 +68,6 @@ const TableItem = () => {
                   ></i>
                 )}
               </th>
-              <th onClick={() => handleSortBy('stock')}>
-                Stok{' '}
-                {queryParams.orderBy === 'stock' && (
-                  <i
-                    className={`bi bi-caret-${
-                      queryParams.orderType === 'ASC' ? 'down' : 'up'
-                    }-fill`}
-                  ></i>
-                )}
-              </th>
-              <th>Supplier</th>
               <th>Action</th>
             </tr>
           </thead>
@@ -101,23 +89,12 @@ const TableItem = () => {
                     <td>
                       {(queryParams.page-1) * queryParams.limit + index + 1}
                     </td>
-                    <td>{d.brand}</td>
-                    <td>
-                      {d.__categories__?.length > 0 ?
-                        d.__categories__.map((category: {name: string}, index: number) => (
-                          <span key={index}>{category.name}{index !== d.__categories__.length - 1 ? ', ' : ''}</span>
-                        ))
-                        :
-                        "-"
-                      }
-                    </td>
-                    <td>{d.capital_price}</td>
-                    <td>{d.wholescale_price}</td>
-                    <td>{d.stock}</td>
-                    <td>{d.__supplier__?.name || "-"}</td>
+                    <td>{new Date(d.date).toISOString().split('T')[0]}</td>
+                    <td>{d.unit}</td>
+                    <td>{d.cost}</td>
                     <td style={{display: 'flex'}}>
-                      <EditComp item={d} />
-                      <DeleteComp item={d} />
+                      <EditComp purchase={d} />
+                      <DeleteComp purchase={d} />
                     </td>
                   </tr>
                 )
@@ -132,4 +109,4 @@ const TableItem = () => {
   )
 }
 
-export default TableItem
+export default TablePurchase
