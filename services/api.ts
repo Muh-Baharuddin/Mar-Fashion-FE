@@ -22,9 +22,9 @@ export const stateGet = <T, D>(url: string, params: D) => {
   }
 }
 
-export const get = <T>(url: string, params: any) => {
+export const get = <T>(url: string) => {
   const fetcher = async () => {
-    const response = await axios.get<T>(url, { params });
+    const response = await axios.get<T>(url);
     return response.data;
   };
 
@@ -33,6 +33,7 @@ export const get = <T>(url: string, params: any) => {
   return {
     data,
     error,
+    isLoading: !data && !error,
   };
 };
 

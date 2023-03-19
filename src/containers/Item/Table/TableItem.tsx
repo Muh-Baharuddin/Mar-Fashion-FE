@@ -104,8 +104,8 @@ const TableItem = () => {
                     <td>{d.brand}</td>
                     <td>
                       {d.__categories__?.length > 0 ?
-                        d.__categories__.map((category: {name: string}) => (
-                          <span>{category.name} </span>
+                        d.__categories__.map((category: {name: string}, index: number) => (
+                          <span key={index}>{category.name}{index !== d.__categories__.length - 1 ? ', ' : ''}</span>
                         ))
                         :
                         "-"

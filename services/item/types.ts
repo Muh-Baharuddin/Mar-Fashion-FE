@@ -6,10 +6,11 @@ export interface Item {
   capital_price: number;
   wholescale_price: number;
   stock: number;
-  __supplier__: {
+  __supplier__?: {
     name: string;
   };
-  __categories__: Array<{
+  categories: Array<{
+    id: string;
     name: string;
   }>;
 }
@@ -20,4 +21,8 @@ export type ItemData = Data<Item>
 
 export type ItemMessage = {
   message: string,
+}
+
+export interface RawData extends Omit<Item, 'id' | 'categories'> {
+  categories: string[];
 }
