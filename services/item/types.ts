@@ -8,7 +8,7 @@ export interface Item {
   stock: number;
   __supplier__?: string;
   __categories__: Array<{
-    id: string;
+    id?: string;
     name: string;
   }>;
 }

@@ -5,6 +5,7 @@ import { getCategorys } from 'services/category';
 import { AddItem, Item, RawData } from 'services/item/types';
 import { getSuppliers } from 'services/supplier';
 import Select, { MultiValue } from 'react-select'
+import CreatableSelect from 'react-select/creatable';
 
 type Props = {
   handleForm: (data: AddItem) => void,
@@ -41,7 +42,13 @@ const FormComp = ({ handleForm, handleCloseForm, item }: Props) => {
   }));
 
   const handleCategoryChange = (newValue: MultiValue<{ value: string; label: string; }>) => {
-    const selectedValues = newValue?.map(option => ({ id: option.value, name: option.label }));
+    const selectedValues = newValue?.map(option => {
+      if (option.value === option.label) {
+        return { name: option.label };
+      } else {
+        return { id: option.value, name: option.label };
+      }
+    });
     setValue('__categories__', selectedValues);
   };
 
@@ -71,11 +78,12 @@ const FormComp = ({ handleForm, handleCloseForm, item }: Props) => {
         <label className="form-label">
           Kategori
         </label>
-        <Select
+        <CreatableSelect
           isMulti
           options={categoryOptions}
           isClearable={isClearable}
           onChange={handleCategoryChange}
+          formatCreateLabel={(inputValue) => `Buat kategori baru: ${inputValue}`}
         />
       </div>
       <div className="mb-3">
