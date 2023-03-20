@@ -4,7 +4,7 @@ import { useForm } from 'react-hook-form'
 import { getCategorys } from 'services/category';
 import { AddItem, Item, RawData } from 'services/item/types';
 import { getSuppliers } from 'services/supplier';
-import Select from 'react-select'
+import Select, { MultiValue } from 'react-select'
 
 type Props = {
   handleForm: (data: AddItem) => void,
@@ -32,7 +32,18 @@ const FormComp = ({ handleForm, handleCloseForm, item }: Props) => {
   const [isClearable, setIsClearable] = useState(true);
   
   const { data: categoryData } = getCategorys(queryParams);
-  const { data: supplierData, isLoading: isSupplierLoading } = getSuppliers(queryParams);
+  const { data: supplierData } = getSuppliers(queryParams);
+
+  const categoryOptions = 
+  categoryData?.data.map((category) => ({
+    value: category.id,
+    label: category.name,
+  }));
+
+  const handleCategoryChange = (newValue: MultiValue<{ value: string; label: string; }>) => {
+    const selectedValues = newValue?.map(option => ({ id: option.value, name: option.label }));
+    setValue('__categories__', selectedValues);
+  };
 
   const supplierOptions = 
     supplierData?.data.map((supplier) => ({
@@ -60,19 +71,12 @@ const FormComp = ({ handleForm, handleCloseForm, item }: Props) => {
         <label className="form-label">
           Kategori
         </label>
-        <select
-          className="form-select"
-          multiple
-          {...register('__categories__', { required: true })}
-        >
-          {categoryData?
-            categoryData.data.map((category) => (
-              <option key={category.id} value={JSON.stringify({id: category.id, name: category.name})}>
-                {category.name}
-              </option>
-            )) : <option>Loading...</option>
-          }
-        </select>
+        <Select
+          isMulti
+          options={categoryOptions}
+          isClearable={isClearable}
+          onChange={handleCategoryChange}
+        />
       </div>
       <div className="mb-3">
         <label className="form-label">
