@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import Button from 'react-bootstrap/Button';
 import { useForm } from 'react-hook-form'
 import { getCategorys } from 'services/category';
-import { AddItem, Item, RawData } from 'services/item/types';
+import { AddItem, Item } from 'services/item/types';
 import { getSuppliers } from 'services/supplier';
 import Select, { MultiValue } from 'react-select'
 import CreatableSelect from 'react-select/creatable';

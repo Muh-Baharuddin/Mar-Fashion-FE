@@ -20,7 +20,3 @@ export type ItemData = Data<Item>
 export type ItemMessage = {
   message: string,
 }
-
-export interface RawData extends Omit<Item, 'id' | '__categories__'> {
-  __categories__: string[];
-}
