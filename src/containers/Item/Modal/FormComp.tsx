@@ -59,7 +59,8 @@ const FormComp = ({ handleForm, handleCloseForm, item }: Props) => {
     }));
 
   const handleSupplierChange = (selectedOption: Option | null) => {
-    setValue('__supplier__', selectedOption?.value);
+    const selectedValue = {id: selectedOption?.value, name: selectedOption?.label}
+    setValue('__supplier__', selectedValue);
   };
 
   return (
