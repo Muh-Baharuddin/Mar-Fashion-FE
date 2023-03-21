@@ -1,12 +1,12 @@
-import { useItemContext } from "../../Item";
+import { useEmployeeContext } from "../../Employee";
 import debounce from "lodash.debounce";
 
 const FilterComp = () => {
-  const { setQueryParams } = useItemContext()
+  const { setQueryParams } = useEmployeeContext()
 
   const handleSearch = debounce((event: React.ChangeEvent<HTMLInputElement>) => {
     setQueryParams((prev) => {
-      return { ...prev, keywords: event.target.value, page: 1 }
+      return { ...prev, keywords: event.target.value }
     })
   }, 500)
 

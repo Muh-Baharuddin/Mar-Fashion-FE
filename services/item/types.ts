@@ -6,9 +6,11 @@ export interface Item {
   capital_price: number;
   wholescale_price: number;
   stock: number;
-  __supplier__: {
+  __supplier__?: string;
+  __categories__: Array<{
+    id?: string;
     name: string;
-  };
+  }>;
 }
 
 export type AddItem = Omit<Item, "id">;

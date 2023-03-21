@@ -1,18 +1,43 @@
-import { useState } from 'react'
-import { TableKaryawan } from './Table/TableKaryawan'
+import { createContext, useContext, useState } from 'react'
+import { ContextInterface, QueryParamsType } from 'services/types';
+import TableEmployee from './Table/TableEmployee';
+import AddComp from './Table/Components/AddComp'
+import 'react-toastify/dist/ReactToastify.css';
 
-export const DataKaryawan = () => {
-  const [showAdd, setShowAdd] = useState(false)
-  const [showEdit, setShowEdit] = useState(false)
+const defaultState = {
+  queryParams: {
+    keywords: '',
+    orderBy: 'name',
+    orderType: 'ASC',
+    page: 1,
+    limit: 10,
+  },
+  setQueryParams: () => {},
+}
+
+const employeeContext = createContext<ContextInterface>(defaultState)
+
+export const useEmployeeContext = () => {
+  return useContext(employeeContext)
+} 
+
+export const DataEmployee = () => {
+  const [queryParams, setQueryParams] = useState<QueryParamsType>(defaultState.queryParams)
 
   return (
-    <div className="container">
-      <TableKaryawan
-        showAdd={showAdd}
-        showEdit={showEdit}
-        setShowAdd={setShowAdd}
-        setShowEdit={setShowEdit}
-      />
-    </div>
+    <employeeContext.Provider value={{
+      queryParams,
+      setQueryParams,
+    }}>
+      <div className="container">
+        <h3>Data Karyawan</h3>
+        <div className="card">
+          <div className="card-header">
+            <AddComp />
+          </div>
+          <TableEmployee />
+        </div>
+      </div>
+    </employeeContext.Provider>
   )
 }
