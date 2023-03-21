@@ -7,6 +7,8 @@ import FilterComp from './Components/FilterComp';
 import EditComp from './Components/EditComp';
 import DeleteComp from './Components/DeleteComp';
 import PaginationComp from './Components/PaginationComp';
+import 'intl';
+import 'intl/locale-data/jsonp/id-ID';
 
 const TableItem = () => {
   const { queryParams, setQueryParams } = useItemContext()
@@ -111,8 +113,8 @@ const TableItem = () => {
                         "-"
                       }
                     </td>
-                    <td>{d.capital_price}</td>
-                    <td>{d.wholescale_price}</td>
+                    <td>{d.capital_price.toLocaleString('id-ID', { style: 'currency', currency: 'IDR' })}</td>
+                    <td>{d.wholescale_price.toLocaleString('id-ID', { style: 'currency', currency: 'IDR' })}</td>
                     <td>{d.stock}</td>
                     <td>{d.__supplier__?.name || "-"}</td>
                     <td style={{display: 'flex'}}>
