@@ -50,7 +50,16 @@ const TableItem = () => {
                   ></i>
                 )}
               </th>
-              <th>Kategori</th>
+              <th onClick={() => handleSortBy('category')}>
+                Kategory{' '}
+                {queryParams.orderBy === 'category' && (
+                  <i
+                    className={`bi bi-caret-${
+                      queryParams.orderType === 'ASC' ? 'down' : 'up'
+                    }-fill`}
+                  ></i>
+                )}
+              </th>
               <th onClick={() => handleSortBy('capital_price')}>
                 Harga Modal{' '}
                 {queryParams.orderBy === 'capital_price' && (
