@@ -1,15 +1,22 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Button from 'react-bootstrap/Button';
 import { useForm } from 'react-hook-form'
 import { getCategorys } from 'services/category';
-import { AddItem, Item, RawData } from 'services/item/types';
+import { AddItem, Item } from 'services/item/types';
 import { getSuppliers } from 'services/supplier';
+import Select, { MultiValue } from 'react-select'
+import CreatableSelect from 'react-select/creatable';
 
 type Props = {
   handleForm: (data: AddItem) => void,
   handleCloseForm: () => void,
   item? : Item;
 };
+
+type Option = {
+  value: string;
+  label: string;
+}
 
 const queryParams = {
   keywords: '',
@@ -20,34 +27,43 @@ const queryParams = {
 }
 
 const FormComp = ({ handleForm, handleCloseForm, item }: Props) => {
-  const { data: categoryData } = getCategorys(queryParams);
-  const { data: supplierData, isLoading: isSupplierLoading } = getSuppliers(queryParams);
+  const { register, handleSubmit, setValue } = useForm<AddItem>({
+    defaultValues: item,
+  });
+  const [isClearable, setIsClearable] = useState(true);
   
-  const itemToRawData = (item: Item): RawData => {
-    const categories = item.categories?.map((category) => category.id || '') || [];
-    return {
-      brand: item.brand,
-      capital_price: item.capital_price,
-      wholescale_price: item.wholescale_price,
-      stock: item.stock,
-      categories,
-    };
+  const { data: categoryData } = getCategorys(queryParams);
+  const { data: supplierData } = getSuppliers(queryParams);
+
+  const categoryOptions = 
+  categoryData?.data.map((category) => ({
+    value: category.id,
+    label: category.name,
+  }));
+
+  const handleCategoryChange = (newValue: MultiValue<{ value: string; label: string; }>) => {
+    const selectedValues = newValue?.map(option => {
+      if (option.value === option.label) {
+        return { name: option.label };
+      } else {
+        return { id: option.value, name: option.label };
+      }
+    });
+    setValue('__categories__', selectedValues);
   };
 
-  const defaultValues = item ? itemToRawData(item) : {};
+  const supplierOptions = 
+    supplierData?.data.map((supplier) => ({
+      value: supplier.id,
+      label: supplier.name,
+    }));
 
-  const { register, handleSubmit } = useForm<RawData>({
-    defaultValues,
-  });
-
-  const handleDataForm = (data: RawData) => {
-    const categories = data.categories?.map((category) => (JSON.parse(category)));
-    const newData = {...data, categories: categories};
-    handleForm(newData);
+  const handleSupplierChange = (selectedOption: Option | null) => {
+    setValue('__supplier__', selectedOption?.value);
   };
 
   return (
-    <form onSubmit={handleSubmit(handleDataForm)}>
+    <form onSubmit={handleSubmit(handleForm)}>
       <div className="mb-3">
         <label className="form-label">
           Merek
@@ -62,19 +78,13 @@ const FormComp = ({ handleForm, handleCloseForm, item }: Props) => {
         <label className="form-label">
           Kategori
         </label>
-        <select
-          className="form-select"
-          multiple
-          {...register('categories', { required: true })}
-        >
-          {categoryData?
-            categoryData.data.map((category) => (
-              <option key={category.id} value={JSON.stringify({id: category.id, name: category.name})}>
-                {category.name}
-              </option>
-            )) : <option>Loading...</option>
-          }
-        </select>
+        <CreatableSelect
+          isMulti
+          options={categoryOptions}
+          isClearable={isClearable}
+          onChange={handleCategoryChange}
+          formatCreateLabel={(inputValue) => `Buat kategori baru: ${inputValue}`}
+        />
       </div>
       <div className="mb-3">
         <label className="form-label">
@@ -113,20 +123,11 @@ const FormComp = ({ handleForm, handleCloseForm, item }: Props) => {
         <label className="form-label">
           Supplier
         </label>
-        <select
-          className="form-select"
-          {...register('__supplier__')}
-        >
-          {isSupplierLoading ? (
-            <option>Loading...</option>
-          ) : (
-            supplierData?.data.map((supplier) => (
-              <option key={supplier.id} value={supplier.id}>
-                {supplier.name}
-              </option>
-            ))
-          )}
-        </select>
+        <Select
+          options={supplierOptions}
+          isClearable={isClearable}
+          onChange={handleSupplierChange}
+        />
       </div>
       <Button variant="primary" onClick={() => handleForm} type="submit">
         Submit
