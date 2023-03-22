@@ -78,7 +78,16 @@ const TableSupplier = () => {
                   ></i>
                 )}
               </th>
-              <th>Barang</th>
+              <th onClick={() => handleSortBy('items')}>
+                Barang{' '}
+                {queryParams.orderBy === 'items' && (
+                  <i
+                    className={`bi bi-caret-${
+                      queryParams.orderType === 'ASC' ? 'down' : 'up'
+                    }-fill`}
+                  ></i>
+                )}
+              </th>
               <th onClick={() => handleSortBy('account_number')}>
                 Nomor Rekening{' '}
                 {queryParams.orderBy === 'account_number' && (
