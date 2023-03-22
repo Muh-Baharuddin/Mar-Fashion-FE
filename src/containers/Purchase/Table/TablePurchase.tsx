@@ -48,6 +48,7 @@ const TablePurchase = () => {
                   ></i>
                 )}
               </th>
+              <th>Nomor Invoice</th>
               <th onClick={() => handleSortBy('unit')}>
                 Satuan{' '}
                 {queryParams.orderBy === 'unit' && (
@@ -58,6 +59,7 @@ const TablePurchase = () => {
                   ></i>
                 )}
               </th>
+              <th>Hutang</th>
               <th onClick={() => handleSortBy('cost')}>
                 Total{' '}
                 {queryParams.orderBy === 'cost' && (
@@ -90,7 +92,9 @@ const TablePurchase = () => {
                       {(queryParams.page-1) * queryParams.limit + index + 1}
                     </td>
                     <td>{new Date(d.date).toISOString().split('T')[0]}</td>
+                    <td>{d.invoice}</td>
                     <td>{d.unit}</td>
+                    <td>{d?.debt || "-"}</td>
                     <td>{d.cost}</td>
                     <td style={{display: 'flex'}}>
                       <EditComp purchase={d} />

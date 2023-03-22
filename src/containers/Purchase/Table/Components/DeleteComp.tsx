@@ -28,7 +28,7 @@ const DeleteComp = ({ purchase }: Props) => {
   const handleDelete = () => {
     confirmAlert({
       title: 'Konfirmasi',
-      message: 'Apakah Anda yakin ingin menghapus data dari ' + `${purchase.date} ?`,
+      message: 'Apakah Anda yakin ingin menghapus data dari invoice bernomor "' + `${purchase.invoice}" ?`,
       buttons: [
         {
           label: 'Ya',
