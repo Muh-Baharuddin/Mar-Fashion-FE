@@ -3,7 +3,7 @@ import DeleteComp from './Components/DeleteComp'
 import EditComp from './Components/EditComp'
 import 'bootstrap-icons/font/bootstrap-icons.css'
 import { getSuppliers } from 'services/supplier';
-import { CSSProperties } from "react";
+import { CSSProperties, useEffect } from "react";
 import BeatLoader from "react-spinners/BeatLoader";
 import FilterComp from './Components/FilterComp'
 import PaginationComp from './Components/PaginationComp'
@@ -78,6 +78,7 @@ const TableSupplier = () => {
                   ></i>
                 )}
               </th>
+              <th>Barang</th>
               <th onClick={() => handleSortBy('account_number')}>
                 Nomor Rekening{' '}
                 {queryParams.orderBy === 'account_number' && (
@@ -133,6 +134,14 @@ const TableSupplier = () => {
                     <td>{d.address}</td>
                     <td>{d.city}</td>
                     <td>{d.phone_number}</td>
+                    <td>
+                      {d.__items__?.length > 0 ?
+                        d.__items__.map((items: {brand: string}, index: number) => (
+                          <span key={index}>{items.brand}{index !== d.__items__.length - 1 ? ', ' : ''}</span>
+                        ))
+                        : "-"
+                      }
+                    </td>
                     <td>{d.account_number}</td>
                     <td>{d.account_owner}</td>
                     <td>{d.bank}</td>
