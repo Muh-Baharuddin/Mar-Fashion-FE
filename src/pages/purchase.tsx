@@ -1,5 +1,5 @@
 import { AdminLayout } from "@layouts/AdminLayout"
-import { DataPurchase } from "../containers/Purchase/Purchase"
+import { DataPurchase } from "../containers/Purchase"
 
 const NotaPembelianPage = () => {
   return (
