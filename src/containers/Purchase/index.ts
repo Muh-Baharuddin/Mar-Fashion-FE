@@ -1,1 +1,1 @@
-export * from './Pembelian'
+export * from './Purchase'
