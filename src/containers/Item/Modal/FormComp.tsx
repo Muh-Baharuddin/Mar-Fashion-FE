@@ -1,10 +1,10 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Button from 'react-bootstrap/Button';
 import { useForm } from 'react-hook-form'
 import { getCategorys } from 'services/category';
 import { AddItem, Item } from 'services/item/types';
 import { getSuppliers } from 'services/supplier';
-import Select, { MultiValue } from 'react-select'
+import Select, { MultiValue, SingleValue } from 'react-select'
 import CreatableSelect from 'react-select/creatable';
 
 type Props = {
@@ -35,6 +35,11 @@ const FormComp = ({ handleForm, handleCloseForm, item }: Props) => {
   const { data: categoryData } = getCategorys(queryParams);
   const { data: supplierData } = getSuppliers(queryParams);
 
+  const categoryDefaultValues = item?.__categories__?.map((category) => ({
+    value: category.id ? category.id : category.name,
+    label: category.name,
+  }))
+
   const categoryOptions = 
   categoryData?.data.map((category) => ({
     value: category.id,
@@ -52,14 +57,20 @@ const FormComp = ({ handleForm, handleCloseForm, item }: Props) => {
     setValue('__categories__', selectedValues);
   };
 
+  const supplierDefaultValue = item?.__supplier__ ? {
+    value: item.__supplier__.id,
+    label: item.__supplier__.name,
+  } : null;
+
   const supplierOptions = 
     supplierData?.data.map((supplier) => ({
       value: supplier.id,
       label: supplier.name,
     }));
 
-  const handleSupplierChange = (selectedOption: Option | null) => {
-    setValue('__supplier__', selectedOption?.value);
+  const handleSupplierChange = (newValue: SingleValue<{ value: string | undefined; label: string | undefined; }>) => {
+    const selectedValue = {id: newValue?.value, name: newValue?.label}
+    setValue('__supplier__', selectedValue);
   };
 
   return (
@@ -81,6 +92,7 @@ const FormComp = ({ handleForm, handleCloseForm, item }: Props) => {
         <CreatableSelect
           isMulti
           options={categoryOptions}
+          defaultValue={categoryDefaultValues}
           isClearable={isClearable}
           onChange={handleCategoryChange}
           formatCreateLabel={(inputValue) => `Buat kategori baru: ${inputValue}`}
@@ -125,6 +137,7 @@ const FormComp = ({ handleForm, handleCloseForm, item }: Props) => {
         </label>
         <Select
           options={supplierOptions}
+          defaultValue={supplierDefaultValue}
           isClearable={isClearable}
           onChange={handleSupplierChange}
         />

@@ -6,7 +6,10 @@ export interface Item {
   capital_price: number;
   wholescale_price: number;
   stock: number;
-  __supplier__?: string;
+  __supplier__?: {
+    id?: string; 
+    name?: string;
+  };
   __categories__: Array<{
     id?: string;
     name: string;

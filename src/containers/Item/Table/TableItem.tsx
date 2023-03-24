@@ -7,6 +7,8 @@ import FilterComp from './Components/FilterComp';
 import EditComp from './Components/EditComp';
 import DeleteComp from './Components/DeleteComp';
 import PaginationComp from './Components/PaginationComp';
+import 'intl';
+import 'intl/locale-data/jsonp/id-ID';
 
 const TableItem = () => {
   const { queryParams, setQueryParams } = useItemContext()
@@ -48,7 +50,16 @@ const TableItem = () => {
                   ></i>
                 )}
               </th>
-              <th>Kategori</th>
+              <th onClick={() => handleSortBy('category')}>
+                Kategory{' '}
+                {queryParams.orderBy === 'category' && (
+                  <i
+                    className={`bi bi-caret-${
+                      queryParams.orderType === 'ASC' ? 'down' : 'up'
+                    }-fill`}
+                  ></i>
+                )}
+              </th>
               <th onClick={() => handleSortBy('capital_price')}>
                 Harga Modal{' '}
                 {queryParams.orderBy === 'capital_price' && (
@@ -79,7 +90,16 @@ const TableItem = () => {
                   ></i>
                 )}
               </th>
-              <th>Supplier</th>
+              <th onClick={() => handleSortBy('supplier')}>
+                Supplier{' '}
+                {queryParams.orderBy === 'supplier' && (
+                  <i
+                    className={`bi bi-caret-${
+                      queryParams.orderType === 'ASC' ? 'down' : 'up'
+                    }-fill`}
+                  ></i>
+                )}
+              </th>
               <th>Action</th>
             </tr>
           </thead>
@@ -111,8 +131,8 @@ const TableItem = () => {
                         "-"
                       }
                     </td>
-                    <td>{d.capital_price}</td>
-                    <td>{d.wholescale_price}</td>
+                    <td>{d.capital_price.toLocaleString('id-ID', { style: 'currency', currency: 'IDR' })}</td>
+                    <td>{d.wholescale_price.toLocaleString('id-ID', { style: 'currency', currency: 'IDR' })}</td>
                     <td>{d.stock}</td>
                     <td>{d.__supplier__?.name || "-"}</td>
                     <td style={{display: 'flex'}}>
