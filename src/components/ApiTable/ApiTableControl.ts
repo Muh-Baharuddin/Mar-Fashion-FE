@@ -3,7 +3,7 @@ import React, { ReactNode } from 'react'
 interface Column<T> {
   label: string;
   value: keyof T | ((row: T) => ReactNode);
-  sort?: keyof T;
+  sort?: string;
 }
 
 interface ApiTableControlProps<T> {

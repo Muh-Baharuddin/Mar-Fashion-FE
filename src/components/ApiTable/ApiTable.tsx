@@ -1,4 +1,4 @@
-import React, { useContext, createContext } from 'react'
+import React, { useContext, createContext, Dispatch, SetStateAction } from 'react'
 import { useState } from 'react';
 import {  QueryParamsType } from 'services/types';
 import { ApiTableControl } from './ApiTableControl'
@@ -9,6 +9,8 @@ import { TablePagination } from './TableComp/TablePagination';
 
 interface ApiTableProps<T> {
   control: ApiTableControl<T>;
+  params: QueryParamsType;
+  setParams: Dispatch<SetStateAction<QueryParamsType>>
 }
 
 interface ApiTableContextProps<T> {
@@ -24,14 +26,16 @@ export const useApiTableContext = <T extends unknown>() => {
   return useContext<ApiTableContextProps<T>>(TableContext);
 } 
 
-export const ApiTable = <T extends unknown>(props: ApiTableProps<T>) => {
-  const [params, setParams] = useState<QueryParamsType>({
-    keywords: '',
-    orderBy: 'brand',
-    orderType: 'ASC',
-    page: 1,
-    limit: 10,
-  })
+// export const ApiTable = <T extends unknown>(props: ApiTableProps<T>) => {
+export const ApiTable = <T extends unknown>({control, params, setParams}: ApiTableProps<T>) => {
+
+  // const [params, setParams] = useState<QueryParamsType>({
+  //   keywords: '',
+  //   orderBy: 'brand',
+  //   orderType: 'ASC',
+  //   page: 1,
+  //   limit: 10,
+  // })
 
   const handleSort = (by: string, type: string)=> {
     setParams((prev) => {
@@ -60,7 +64,7 @@ export const ApiTable = <T extends unknown>(props: ApiTableProps<T>) => {
     });
   }
 
-  props.control.filterFunction = setFilter;
+  control.filterFunction = setFilter;
   
   return (
     <TableContext.Provider
@@ -68,7 +72,7 @@ export const ApiTable = <T extends unknown>(props: ApiTableProps<T>) => {
         params,
         handleSort,
         handlePageClick,
-        control: props.control,
+        control,
       }}
     >
       <table className="table table-bordered">
