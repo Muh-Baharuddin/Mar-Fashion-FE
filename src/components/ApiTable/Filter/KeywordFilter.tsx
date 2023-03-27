@@ -3,7 +3,7 @@ import { ApiTableControl } from "src/components/ApiTable";
 import { Supplier } from "services/supplier/types";
 
 interface FilterCompProps {
-  control: ApiTableControl<Supplier>
+  control: ApiTableControl<any>
 }
 
 export const KeywordsFilter = (props: FilterCompProps) => {

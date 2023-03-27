@@ -27,7 +27,7 @@ export const useApiTableContext = <T extends unknown>() => {
 export const ApiTable = <T extends unknown>(props: ApiTableProps<T>) => {
   const [params, setParams] = useState<QueryParamsType>({
     keywords: '',
-    orderBy: 'name',
+    orderBy: 'brand',
     orderType: 'ASC',
     page: 1,
     limit: 10,

@@ -44,7 +44,7 @@ const control = new ApiTableControl<Supplier>({
     },
     {
       label: "Barang",
-      value(data) {
+      value: (data) => {
         return (
           <div>
             {data.__items__?.length > 0 ?
