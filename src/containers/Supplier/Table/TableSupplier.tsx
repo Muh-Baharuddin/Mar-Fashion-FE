@@ -45,6 +45,22 @@ const control = new ApiTableControl<Supplier>({
       sort: "bank",
     },
     {
+      label: "Barang",
+      value(data) {
+        return (
+          <div>
+            {data.__items__?.length > 0 ?
+              data.__items__.map((item, index) => (
+                <span key={index}>{item.brand}{index !== data.__items__.length - 1 ? ', ' : ''}</span>
+              ))
+              :
+              "-"
+            }
+          </div>
+        );
+      },
+    },
+    {
       label: "Actions",
       value: (data) => (
         <div style={{ display: 'flex' }}>
