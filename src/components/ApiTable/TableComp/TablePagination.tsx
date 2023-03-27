@@ -1,22 +1,13 @@
 import Pagination from 'react-bootstrap/Pagination'
-import { SupplierData } from 'services/supplier/types';
-import { useSupplierContext } from '../../Supplier';
+import { useApiTableContext } from '../ApiTable';
+import { getData } from '../service';
 
-type Props = {
-  data: SupplierData | undefined
-}
+export const TablePagination = () => {
+  const { params, control , handlePageClick} = useApiTableContext()
+  const { data } =  getData(control.url, params);
 
-const PaginationComp = ({data}: Props) => {
-  const { queryParams, setQueryParams } = useSupplierContext()
-
-  const handlePageClick = (pageNumber: number) => {
-    setQueryParams((prev) => {
-      return { ...prev, page: pageNumber};
-    });
-  }
-
-  const activePage = queryParams.page;
-  const totalPages = !data ? 0 : Math.ceil(data.total / queryParams.limit);
+  const activePage = params.page;
+  const totalPages = !data ? 0 : Math.ceil(data.total / params.limit);
   const maxPagesShow = 5;
   
   let startPage = Math.max(activePage - Math.floor(maxPagesShow / 2), 1);
@@ -37,7 +28,6 @@ const PaginationComp = ({data}: Props) => {
       </Pagination.Item>,
     );
   }
-
   return (
     <Pagination>
       <Pagination.First onClick={() => handlePageClick(1)} disabled={activePage <= 1}/>
@@ -48,5 +38,3 @@ const PaginationComp = ({data}: Props) => {
     </Pagination>
   )
 }
-
-export default PaginationComp

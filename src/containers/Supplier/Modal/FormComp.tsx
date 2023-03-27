@@ -1,7 +1,9 @@
-import React from 'react'
+import { useState } from 'react'
 import Button from 'react-bootstrap/Button';
 import { useForm } from 'react-hook-form'
 import { AddSupplier, Supplier } from 'services/supplier/types';
+import Select, { MultiValue } from 'react-select'
+import { getItems } from 'services/item';
 
 type Props = {
   handleForm: (data: AddSupplier) => void,
@@ -9,10 +11,39 @@ type Props = {
   supplier? : Supplier;
 };
 
+const queryParams = {
+  keywords: '',
+  orderBy: 'brand',
+  orderType: 'ASC',
+  page: 1,
+  limit: 1000,
+}
+
 const FormComp = ({handleForm, handleCloseForm, supplier}: Props) => {
-  const { register, handleSubmit } = useForm<AddSupplier>({
+  const { register, handleSubmit, setValue } = useForm<AddSupplier>({
     defaultValues: supplier,
   });
+  const [isClearable, setIsClearable] = useState(true);
+
+  const { data: itemsData } = getItems(queryParams);
+
+  const itemsDefaultValues = supplier?.__items__?.map((item) => ({
+    value: item.id,
+    label: item.brand,
+  }))
+
+  const itemsOptions = 
+  itemsData?.data.map((item) => ({
+    value: item.id,
+    label: item.brand,
+  }));
+
+  const handleItemsChange = (newValue: MultiValue<{ value: string; label: string; }>) => {
+    const selectedValues = newValue?.map(option => {
+      return {id: option.value, brand: option.label};
+    });
+    setValue('__items__', selectedValues);
+  };
 
   return (
     <form onSubmit={handleSubmit(handleForm)}>
@@ -84,6 +115,18 @@ const FormComp = ({handleForm, handleCloseForm, supplier}: Props) => {
           type="text"
           className="form-control"
           {...register('bank', { required: true })}
+        />
+      </div>
+      <div className="mb-3">
+        <label className="form-label">
+          Barang
+        </label>
+        <Select
+          isMulti
+          options={itemsOptions}
+          defaultValue={itemsDefaultValues}
+          isClearable={isClearable}
+          onChange={handleItemsChange}
         />
       </div>
       <Button variant="primary" onClick={() => handleForm} type="submit">
