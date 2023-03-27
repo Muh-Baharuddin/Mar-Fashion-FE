@@ -4,8 +4,7 @@ import { ApiTable, ApiTableControl, KeywordsFilter } from '../../../components/A
 import EditComp from './Components/EditComp';
 import DeleteComp from './Components/DeleteComp';
 import { Item } from 'services/item/types';
-import { useState } from 'react';
-import { QueryParamsType } from 'services/types';
+import { useItemContext } from '../Item';
 
 const control = new ApiTableControl<Item>({
   columns: [
@@ -33,12 +32,16 @@ const control = new ApiTableControl<Item>({
     },
     {
       label: "Harga Modal",
-      value: "capital_price",
+      value: (data) => {
+        return `Rp. ${data.capital_price}`
+      },
       sort: "capital_price",
     },
     {
       label: "Harga Grosir",
-      value: "wholescale_price",
+      value: (data) => {
+        return `Rp. ${data.wholescale_price}`
+      },
       sort: "wholescale_price",
     },
     {
@@ -69,21 +72,15 @@ const control = new ApiTableControl<Item>({
 });
 
 const TableItem = () => {
-  const [params, setParams] = useState<QueryParamsType>({
-    keywords: '',
-    orderBy: 'brand',
-    orderType: 'ASC',
-    page: 1,
-    limit: 10,
-  })
+  const { queryParams, setQueryParams } = useItemContext()
   return (
     <>
       <div className="card-body">
         <KeywordsFilter control={control}/>
         <ApiTable
           control={control}
-          params={params}
-          setParams={setParams}
+          params={queryParams}
+          setParams={setQueryParams}
         />
       </div>
     </>
