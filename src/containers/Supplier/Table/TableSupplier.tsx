@@ -9,9 +9,7 @@ const control = new ApiTableControl<Supplier>({
   columns: [
     {
       label: "Nama",
-      value(data) {
-        return `Rp. ${data.name} ${data.city}`
-      },
+      value: "name",
       sort: "name",
     },
     {
