@@ -1,6 +1,6 @@
 import { createContext, useContext, useState } from 'react'
 import { QueryParamsType } from 'services/types';
-// import AddComp from './Table/Components/AddComp';
+import AddEmployeeSaving from './Table/Components/AddEmployeeSaving';
 import TableEmployeeSaving from './Table/TableEmployee_Saving';
 
 interface EmployeeSavingContextType {
@@ -33,10 +33,10 @@ export const DataEmployeeSaving = () => {
       setQueryParams,
     }}>
       <div className="container">
-        <h3>Data Simpanan Ambilan Karyawan</h3>
+        <h3>Data Tabungan Karyawan</h3>
         <div className="card">
           <div className="card-header">
-            {/* <AddComp /> */}
+            <AddEmployeeSaving />
           </div>
           <TableEmployeeSaving />
         </div>

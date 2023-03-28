@@ -16,6 +16,10 @@ export interface EmployeeSaving {
   type: string
   total: number
   description: string
+  __employee__?: {
+    id?: string; 
+    name?: string;
+  };
 }
 
 export type AddEmployee = Omit<Employee, "id">;

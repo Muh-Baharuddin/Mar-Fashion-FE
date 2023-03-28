@@ -3,6 +3,8 @@ import { ApiTable, ApiTableControl, KeywordsFilter } from '../../../components/A
 import { useEmployeeSavingContext } from '../Employee_Saving';
 import { EmployeeSaving } from 'services/employee/types';
 import { employeeSaving_url } from 'services/employee';
+import EditEmployeeSaving from './Components/EditEmployeeSaving';
+import DeleteEmployeeSaving from './Components/DeleteEmployeeSaving';
 
 const control = new ApiTableControl<EmployeeSaving>({
   columns: [
@@ -14,6 +16,15 @@ const control = new ApiTableControl<EmployeeSaving>({
         </div>
       ),
       sort: "date",
+    },
+    {
+      label: "Karyawan",
+      value: (data) => (
+        <div>
+          {data.__employee__?.name}
+        </div>
+      ),
+      sort: "employee",
     },
     {
       label: "Tipe",
@@ -30,7 +41,15 @@ const control = new ApiTableControl<EmployeeSaving>({
       value: "description",
       sort: "description",
     },
-    
+    {
+      label: "Actions",
+      value: (data) => (
+        <div style={{ display: 'flex' }}>
+          <EditEmployeeSaving employeeSaving={data} />
+          <DeleteEmployeeSaving employeeSaving={data} />
+        </div>
+      )
+    },
   ],
   url: employeeSaving_url,
 });
