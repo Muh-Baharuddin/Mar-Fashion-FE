@@ -1,5 +1,4 @@
 import React, { useContext, createContext, Dispatch, SetStateAction } from 'react'
-import { useState } from 'react';
 import {  QueryParamsType } from 'services/types';
 import { ApiTableControl } from './ApiTableControl'
 import { TableBody } from './TableComp/TableBody';
@@ -26,16 +25,7 @@ export const useApiTableContext = <T extends unknown>() => {
   return useContext<ApiTableContextProps<T>>(TableContext);
 } 
 
-// export const ApiTable = <T extends unknown>(props: ApiTableProps<T>) => {
 export const ApiTable = <T extends unknown>({control, params, setParams}: ApiTableProps<T>) => {
-
-  // const [params, setParams] = useState<QueryParamsType>({
-  //   keywords: '',
-  //   orderBy: 'brand',
-  //   orderType: 'ASC',
-  //   page: 1,
-  //   limit: 10,
-  // })
 
   const handleSort = (by: string, type: string)=> {
     setParams((prev) => {
