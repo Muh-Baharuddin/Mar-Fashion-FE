@@ -13,7 +13,7 @@ export interface Employee {
 export interface EmployeeSaving {
   id: string
   date: Date
-  type: string
+  type?: string
   total: number
   description: string
   __employee__?: {

@@ -11,6 +11,26 @@ type Props = {
   employeeSaving? : EmployeeSaving;
 };
 
+// type SavingType = {
+//   [key: string]: string;
+// }
+
+// const savingType: SavingType = {
+//   SIMPANAN: "SIMPANAN",
+//   AMBILAN: "AMBILAN"
+// }
+
+type SavingType = {
+  SIMPANAN: string;
+  AMBILAN: string;
+}
+
+const savingType: SavingType = {
+  SIMPANAN: "SIMPANAN",
+  AMBILAN: "AMBILAN"
+}
+
+
 const EmployeeQueryParams = {
   keywords: '',
   orderBy: 'name',
@@ -42,6 +62,18 @@ const FormComp = ({handleForm, handleCloseForm, employeeSaving}: Props) => {
     setValue('__employee__', selectedValue);
   };
 
+  const typeDefaultValue = employeeSaving?.type ? {
+    value: employeeSaving.type,
+    label: employeeSaving.type,
+  } : null;
+
+  const typeOptions = Object.keys(savingType).map((key) => ({ value: key, label: key }));
+
+  const handleTypeChange = (newValue: SingleValue<{ value: string | undefined; label: string | undefined; }>) => {
+    const selectedValue = newValue?.value
+    setValue('type', selectedValue);
+  };
+
   return (
     <form onSubmit={handleSubmit(handleForm)}>
       <div className="mb-3">
@@ -58,10 +90,11 @@ const FormComp = ({handleForm, handleCloseForm, employeeSaving}: Props) => {
         <label className="form-label">
           Tipe
         </label>
-        <input
-          type="text"
-          className="form-control"
-          {...register('type', { required: true })}
+        <Select
+          options={typeOptions}
+          defaultValue={typeDefaultValue}
+          isClearable={isClearable}
+          onChange={handleTypeChange}
         />
       </div>
       <div className="mb-3">
