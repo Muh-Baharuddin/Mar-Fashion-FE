@@ -10,7 +10,17 @@ export interface Employee {
   total_saving: number;
 }
 
+export interface EmployeeSaving {
+  id: string
+  date: Date
+  type: string
+  total: number
+  description: string
+}
+
 export type AddEmployee = Omit<Employee, "id">;
+
+export type AddEmployeeSaving = Omit<EmployeeSaving, "id">;
 
 export type EmployeeData = Data<Employee>
 
