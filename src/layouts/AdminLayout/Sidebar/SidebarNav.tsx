@@ -130,6 +130,7 @@ export default function SidebarNav() {
           <SidebarNavItem href="/">Keuangan</SidebarNavItem>
           <SidebarNavItem href="/purchase">Pembelian</SidebarNavItem>
           <SidebarNavItem href="/penjualan">Penjualan</SidebarNavItem>
+          <SidebarNavItem href="/employee-saving">Simpanan Karyawan</SidebarNavItem>
         </SidebarNavGroup> :
         <SidebarNavItem icon={faMoneyBill} href="/penjualan">Penjualan</SidebarNavItem>
       }

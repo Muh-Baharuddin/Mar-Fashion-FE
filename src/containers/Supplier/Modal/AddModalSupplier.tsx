@@ -1,11 +1,11 @@
 import React from 'react'
 import Modal from 'react-bootstrap/Modal'
-import { toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import { getSuppliers, postSupplier } from 'services/supplier'
-import { AddSupplier } from 'services/supplier/types'
-import { useSupplierContext } from '../Supplier'
 import FormComp from './FormComp';
+import 'react-toastify/dist/ReactToastify.css';
+import { toast } from 'react-toastify';
+import { postSupplier } from 'services/supplier'
+import { AddSupplier, Supplier } from 'services/supplier/types'
+import { useTableContext } from 'src/components/ApiTable';
 
 type handleShowType = {
   showAdd: boolean;
@@ -14,13 +14,12 @@ type handleShowType = {
 
 function AddModalSupplier(props: handleShowType) {
   const { showAdd, handleCloseAdd } = props
-  const { queryParams } = useSupplierContext();
-  const { mutate } = getSuppliers(queryParams);
+  const { tableData } = useTableContext<Supplier>();
 
   const handleAdd = (data: AddSupplier) => {
     postSupplier(data).then(() => {
       toast.success('Data berhasil ditambahkan');
-      mutate();
+      tableData.control.refresh();
       handleCloseAdd();
     }).catch((error) => {
       let errorMessage = "Maaf terjadi kesalahan pada server. Mohon coba kembali dalam beberapa saat.";

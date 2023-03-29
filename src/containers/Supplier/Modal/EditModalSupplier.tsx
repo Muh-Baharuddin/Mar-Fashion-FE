@@ -1,11 +1,11 @@
 import React from 'react';
 import Modal from 'react-bootstrap/Modal';
-import { toast } from 'react-toastify';
-import { useSupplierContext } from '../Supplier';
-import 'react-toastify/dist/ReactToastify.css';
-import { getSuppliers, updateSupplier } from 'services/supplier';
-import { AddSupplier, Supplier } from 'services/supplier/types';
 import FormComp from './FormComp';
+import 'react-toastify/dist/ReactToastify.css';
+import { toast } from 'react-toastify';
+import { updateSupplier } from 'services/supplier';
+import { AddSupplier, Supplier } from 'services/supplier/types';
+import { useTableContext } from 'src/components/ApiTable';
 
 
 type Props = {
@@ -16,15 +16,13 @@ type Props = {
 
 function EditModalSupplier(props: Props) {
   const {showEdit, supplier, handleCloseEdit } = props
-  const { queryParams } = useSupplierContext();
-
-  const { mutate } = getSuppliers(queryParams);
+  const { tableData} = useTableContext<Supplier>();
 
   const handleEdit = (data: AddSupplier) => {
     updateSupplier(supplier.id, data).then(response => {
       toast.success(response.data.message);
       handleCloseEdit();
-      mutate();
+      tableData.control.refresh();
     })
   }
 

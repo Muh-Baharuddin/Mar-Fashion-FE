@@ -1,10 +1,10 @@
 import React from 'react'
 import Modal from 'react-bootstrap/Modal'
-import FormComp from './FormComp';
+import FormComp from './FormEmployeeSaving';
 import { toast } from 'react-toastify';
-import { postEmployee } from 'services/employee';
-import { AddEmployee } from 'services/employee/types';
-import { useEmployeeContext } from '../Employee';
+import { postEmployeeSaving } from 'services/employee';
+import { AddEmployeeSaving } from 'services/employee/types';
+import { useEmployeeSavingContext } from '../Employee_Saving';
 import 'react-toastify/dist/ReactToastify.css';
 
 type handleShowType = {
@@ -14,11 +14,11 @@ type handleShowType = {
 
 function AddModalEmployee(props: handleShowType) {
   const { showAdd, handleCloseAdd } = props
-  const { control } = useEmployeeContext();
+  const { control } = useEmployeeSavingContext();
 
-  const handleAdd = (data: AddEmployee) => {
-    postEmployee(data).then(() => {
-      toast.success('Data berhasil ditambahkan');
+  const handleAdd = (data: AddEmployeeSaving) => {
+    postEmployeeSaving(data).then(() => {
+      toast.success('Data Simpanan Karyawan berhasil ditambahkan');
       control.refresh();
       handleCloseAdd();
     }).catch((error) => {
@@ -40,7 +40,7 @@ function AddModalEmployee(props: handleShowType) {
         keyboard={false}
       >
         <Modal.Header closeButton>
-          <Modal.Title>Tambah Karyawan</Modal.Title>
+          <Modal.Title>Kelola Simpanan Karyawan</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <FormComp handleForm={handleAdd} handleCloseForm={handleCloseAdd}/>

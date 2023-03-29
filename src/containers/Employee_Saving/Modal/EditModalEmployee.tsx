@@ -1,24 +1,24 @@
 import React from 'react';
 import Modal from 'react-bootstrap/Modal';
-import FormComp from './FormComp';
+import FormComp from './FormEmployeeSaving';
 import { toast } from 'react-toastify';
-import { useEmployeeContext } from '../Employee';
-import { AddEmployee, Employee } from 'services/employee/types';
-import { getEmployees, updateEmployee } from 'services/employee';
+import { useEmployeeSavingContext } from '../Employee_Saving';
+import { AddEmployeeSaving, EmployeeSaving } from 'services/employee/types';
+import { updateEmployeeSaving } from 'services/employee';
 import 'react-toastify/dist/ReactToastify.css';
 
 type Props = {
   showEdit: boolean;
-  employee: Employee,
+  employeeSaving: EmployeeSaving,
   handleCloseEdit: () => void;
 }
 
 function EditModalEmployee(props: Props) {
-  const {showEdit, employee, handleCloseEdit } = props
-  const { control } = useEmployeeContext();
+  const {showEdit, employeeSaving, handleCloseEdit } = props
+  const { control } = useEmployeeSavingContext();
 
-  const handleEdit = (data: AddEmployee) => {
-    updateEmployee(employee.id, data).then(response => {
+  const handleEdit = (data: AddEmployeeSaving) => {
+    updateEmployeeSaving(employeeSaving.id, data).then(response => {
       toast.success(response.data.message);
       handleCloseEdit();
       control.refresh();
@@ -34,13 +34,13 @@ function EditModalEmployee(props: Props) {
         keyboard={false}
       >
         <Modal.Header closeButton>
-          <Modal.Title>Edit Supplier</Modal.Title>
+          <Modal.Title>Edit Simpanan Karyawan</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <FormComp 
             handleForm={handleEdit} 
             handleCloseForm={handleCloseEdit} 
-            employee={employee}
+            employeeSaving={employeeSaving}
           />
         </Modal.Body>
       </Modal>

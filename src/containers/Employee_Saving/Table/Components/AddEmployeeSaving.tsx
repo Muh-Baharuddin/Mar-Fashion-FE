@@ -1,14 +1,15 @@
 import { useState } from 'react'
-import AddModalSupplier from '../../Modal/AddModalSupplier'
+import AddModalEmployee from '../../Modal/AddModalEmployee'
 
-const AddComp = () => {
+const AddEmployeeSaving = () => {
   const [showAdd, setShowAdd] = useState(false)
+
   const handleShowAdd = () => setShowAdd(true)
   const handleCloseAdd = () => setShowAdd(false)
 
   return (
     <div>
-      <AddModalSupplier showAdd={showAdd} handleCloseAdd={handleCloseAdd} />
+      <AddModalEmployee showAdd={showAdd} handleCloseAdd={handleCloseAdd} />
       <button onClick={handleShowAdd} className="btn btn-primary">
         <i className="bi bi-plus-square"></i>
       </button>
@@ -16,4 +17,4 @@ const AddComp = () => {
   )
 }
 
-export default AddComp
+export default AddEmployeeSaving

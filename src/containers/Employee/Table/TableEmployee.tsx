@@ -2,11 +2,10 @@ import 'bootstrap-icons/font/bootstrap-icons.css'
 import { ApiTable, ApiTableControl, KeywordsFilter } from '../../../components/ApiTable'
 import EditComp from './Components/EditComp';
 import DeleteComp from './Components/DeleteComp';
-import { useEmployeeContext } from '../Employee';
 import { Employee } from 'services/employee/types';
 import { employee_url } from 'services/employee';
 
-const control = new ApiTableControl<Employee>({
+export const control = new ApiTableControl<Employee>({
   columns: [
     {
       label: "Nama",
@@ -57,18 +56,18 @@ const control = new ApiTableControl<Employee>({
     },
   ],
   url: employee_url,
+  orderBy: "name",
+  orderType: "ASC"
 });
 
 const TableEmployee = () => {
-  const { queryParams, setQueryParams } = useEmployeeContext()
+
   return (
     <>
       <div className="card-body">
         <KeywordsFilter control={control}/>
         <ApiTable
           control={control}
-          params={queryParams}
-          setParams={setQueryParams}
         />
       </div>
     </>

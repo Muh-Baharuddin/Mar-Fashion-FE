@@ -1,21 +1,19 @@
-import React, { useContext, createContext, Dispatch, SetStateAction } from 'react'
-import {  QueryParamsType } from 'services/types';
+import React, { useContext, createContext, useState } from 'react'
+import { QueryParamsType } from 'services/types';
 import { ApiTableControl } from './ApiTableControl'
+import { useTableContext } from './ApiTableProvider';
 import { TableBody } from './TableComp/TableBody';
 import { TableHead } from './TableComp/TableHead';
 import { TablePagination } from './TableComp/TablePagination';
 
-
 interface ApiTableProps<T> {
   control: ApiTableControl<T>;
-  params: QueryParamsType;
-  setParams: Dispatch<SetStateAction<QueryParamsType>>
 }
 
 interface ApiTableContextProps<T> {
   control: ApiTableControl<T>;
   params: QueryParamsType,
-  handleSort: (by: string, type: string)=> void;
+  handleSort: (by: string, type: "ASC" | "DESC")=> void;
   handlePageClick: (page: number) => void;
 }
 
@@ -25,9 +23,25 @@ export const useApiTableContext = <T extends unknown>() => {
   return useContext<ApiTableContextProps<T>>(TableContext);
 } 
 
-export const ApiTable = <T extends unknown>({control, params, setParams}: ApiTableProps<T>) => {
+export const ApiTable = <T extends unknown>({control}: ApiTableProps<T>) => {
+  try {
+    const { setControl } = useTableContext<T>();
+    setControl(control);
+  } catch(err) {}
 
-  const handleSort = (by: string, type: string)=> {
+  const defaulParams: QueryParamsType = {
+    keywords: '',
+    orderBy: control.orderBy as string,
+    orderType: control.orderType,
+    page: 1,
+    limit: 10,
+  }
+
+  const [ params, setParams] = useState<QueryParamsType>(defaulParams);
+
+  const handleSort = (by: string, type: "ASC" | "DESC")=> {
+    control.orderBy = by as keyof T;
+    control.orderType = type;
     setParams((prev) => {
       return {
         ...prev,
@@ -38,6 +52,8 @@ export const ApiTable = <T extends unknown>({control, params, setParams}: ApiTab
       }
     });
   }
+
+  control.handleSortFunction = handleSort;
 
   const handlePageClick = (page: number) => {
     setParams((prev) => {

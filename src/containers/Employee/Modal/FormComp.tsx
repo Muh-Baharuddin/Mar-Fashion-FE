@@ -23,7 +23,10 @@ const FormComp = ({handleForm, handleCloseForm, employee}: Props) => {
         <input
           type="text"
           className="form-control"
-          {...register('name', { required: true })}
+          placeholder="Nama Karyawan"
+          {...register('name', { 
+            required: true,
+          })}
         />
       </div>
       <div className="mb-3">
@@ -33,6 +36,7 @@ const FormComp = ({handleForm, handleCloseForm, employee}: Props) => {
         <input
           type="text"
           className="form-control"
+          placeholder="Alamat Karyawan"
           {...register('address', { required: true })}
         />
       </div>
@@ -43,6 +47,7 @@ const FormComp = ({handleForm, handleCloseForm, employee}: Props) => {
         <input
           type="text"
           className="form-control"
+          placeholder="Nomor Telepon Karyawan"
           {...register('phone_number', { required: true })}
         />
       </div>
@@ -63,7 +68,7 @@ const FormComp = ({handleForm, handleCloseForm, employee}: Props) => {
         <input
           type="date"
           className="form-control"
-          {...register('exit_date')}
+          {...register('exit_date', { value: null})}
         />
       </div>
       <div className="mb-3">
@@ -74,7 +79,8 @@ const FormComp = ({handleForm, handleCloseForm, employee}: Props) => {
           type="number"
           min={0}
           className="form-control"
-          {...register('total_saving', { required: true })}
+          placeholder="Tabungan Karyawan"
+          {...register('total_saving', { required: true, valueAsNumber: true, })}
         />
       </div>
       <Button variant="primary" onClick={() => handleForm} type="submit">

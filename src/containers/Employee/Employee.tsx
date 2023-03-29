@@ -1,33 +1,25 @@
 import { createContext, useContext, useState } from 'react'
-import { ContextInterface, QueryParamsType } from 'services/types';
+import { Employee } from 'services/employee/types';
+import { ApiTableControl } from '../../components/ApiTable';
+import { control } from './Table/TableEmployee'
 import TableEmployee from './Table/TableEmployee';
 import AddComp from './Table/Components/AddComp'
-import 'react-toastify/dist/ReactToastify.css';
 
-const defaultState = {
-  queryParams: {
-    keywords: '',
-    orderBy: 'name',
-    orderType: 'ASC',
-    page: 1,
-    limit: 10,
-  },
-  setQueryParams: () => {},
+interface EmployeeContext {
+  control: ApiTableControl<Employee>
 }
 
-const employeeContext = createContext<ContextInterface>(defaultState)
+const employeeContext = createContext<EmployeeContext>(undefined as unknown as EmployeeContext)
 
 export const useEmployeeContext = () => {
   return useContext(employeeContext)
 } 
 
 export const DataEmployee = () => {
-  const [queryParams, setQueryParams] = useState<QueryParamsType>(defaultState.queryParams)
 
   return (
     <employeeContext.Provider value={{
-      queryParams,
-      setQueryParams,
+      control,
     }}>
       <div className="container">
         <h3>Data Karyawan</h3>

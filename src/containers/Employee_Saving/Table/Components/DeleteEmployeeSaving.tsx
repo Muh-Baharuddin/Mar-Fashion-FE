@@ -1,22 +1,20 @@
 import { confirmAlert } from 'react-confirm-alert';
 import { toast } from 'react-toastify';
-import 'react-confirm-alert/src/react-confirm-alert.css';
+import { EmployeeSaving } from 'services/employee/types';
+import { deleteEmployeeSaving } from 'services/employee';
+import { useEmployeeSavingContext } from '../../Employee_Saving';
 import 'react-toastify/dist/ReactToastify.css';
-import { useSupplierContext } from "../../Supplier";
-import { deleteSupplier, getSuppliers } from "services/supplier";
-import { Supplier } from "services/supplier/types";
-import { useApiTableContext } from 'src/components/ApiTable';
+import 'react-confirm-alert/src/react-confirm-alert.css';
 
 type Props = {
-  supplier: Supplier;
+  employeeSaving: EmployeeSaving;
 };
 
-const DeleteComp = ({ supplier }: Props) => {
-  const { control } = useApiTableContext<Supplier>();
-
+const DeleteEmployeeSaving = ({ employeeSaving }: Props) => {
+  const { control } = useEmployeeSavingContext();
 
   const DeleteConfirm = () => {
-    deleteSupplier(supplier.id).then((response) => {
+    deleteEmployeeSaving(employeeSaving.id).then((response) => {
       toast.success(response.data.message);
       control.refresh();
     })
@@ -28,7 +26,7 @@ const DeleteComp = ({ supplier }: Props) => {
   const handleDelete = () => {
     confirmAlert({
       title: 'Konfirmasi',
-      message: 'Apakah Anda yakin ingin menghapus data dari ' + `${supplier.name} ?`,
+      message: 'Apakah Anda yakin ingin menghapus data dari ' + `${employeeSaving.__employee__?.name} pada tanggal ${employeeSaving.date} ?`,
       buttons: [
         {
           label: 'Ya',
@@ -49,4 +47,4 @@ const DeleteComp = ({ supplier }: Props) => {
   )
 }
 
-export default DeleteComp
+export default DeleteEmployeeSaving
