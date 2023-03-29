@@ -20,7 +20,7 @@ const queryParams = {
 }
 
 const FormComp = ({handleForm, handleCloseForm, supplier}: Props) => {
-  const { register, handleSubmit, setValue } = useForm<AddSupplier>({
+  const { register, handleSubmit, setValue, formState: { errors } } = useForm<AddSupplier>({
     defaultValues: supplier,
   });
   const [isClearable, setIsClearable] = useState(true);
@@ -54,8 +54,13 @@ const FormComp = ({handleForm, handleCloseForm, supplier}: Props) => {
         <input
           type="text"
           className="form-control"
+          placeholder="Nama Supplier"
+          aria-invalid={errors.name ? "true" : "false"}
           {...register('name', { required: true })}
         />
+        {errors.name && errors.name.type === "required" && (
+          <span role="alert" style={{color:'red'}}>Nama Tidak Boleh Kosong</span>
+        )}
       </div>
       <div className="mb-3">
         <label className="form-label">
@@ -64,8 +69,12 @@ const FormComp = ({handleForm, handleCloseForm, supplier}: Props) => {
         <input
           type="text"
           className="form-control"
+          placeholder="Alamat Supplier"
           {...register('address', { required: true })}
         />
+        {errors.address && errors.address.type === "required" && (
+          <span role="alert" style={{color:'red'}}>Alamat Tidak Boleh Kosong</span>
+        )}
       </div>
       <div className="mb-3">
         <label className="form-label">
@@ -74,8 +83,12 @@ const FormComp = ({handleForm, handleCloseForm, supplier}: Props) => {
         <input
           type="text"
           className="form-control"
+          placeholder="Kota Supplier"
           {...register('city', { required: true })}
         />
+        {errors.city && errors.city.type === "required" && (
+          <span role="alert" style={{color:'red'}}>Kota Tidak Boleh Kosong</span>
+        )}
       </div>
       <div className="mb-3">
         <label className="form-label">
@@ -84,8 +97,15 @@ const FormComp = ({handleForm, handleCloseForm, supplier}: Props) => {
         <input
           type="text"
           className="form-control"
-          {...register('phone_number', { required: true })}
+          placeholder="Nomor Telepon Supplier"
+          {...register('phone_number', { required: true, minLength: 10})}
         />
+        {errors.phone_number && errors.phone_number.type === "required" && (
+          <span role="alert" style={{color:'red'}}>Nomor Telepon Tidak Boleh Kosong</span>
+        )}
+        {errors.phone_number && errors.phone_number.type === "minLength" && (
+          <span role="alert" style={{color:'red'}}>Nomor Telepon Minimal 10 Digit</span>
+        )}
       </div>
       <div className="mb-3">
         <label className="form-label">
@@ -94,8 +114,15 @@ const FormComp = ({handleForm, handleCloseForm, supplier}: Props) => {
         <input
           type="text"
           className="form-control"
-          {...register('account_number', { required: true })}
+          placeholder="Nomor Rekening Supplier"
+          {...register('account_number', { required: true, minLength: 10 })}
         />
+        {errors.account_number && errors.account_number.type === "required" && (
+          <span role="alert" style={{color:'red'}}>Nomor Rekening Tidak Boleh Kosong</span>
+        )}
+        {errors.account_number && errors.account_number.type === "minLength" && (
+          <span role="alert" style={{color:'red'}}>Nomor Rekening Minimal 10 Digit</span>
+        )}
       </div>
       <div className="mb-3">
         <label className="form-label">
@@ -104,8 +131,12 @@ const FormComp = ({handleForm, handleCloseForm, supplier}: Props) => {
         <input
           type="text"
           className="form-control"
+          placeholder="Rekening Atas Nama Supplier"
           {...register('account_owner', { required: true })}
         />
+        {errors.account_owner && errors.account_owner.type === "required" && (
+          <span role="alert" style={{color:'red'}}>Nama Pemilik Rekening Tidak Boleh Kosong</span>
+        )}
       </div>
       <div className="mb-3">
         <label className="form-label">
@@ -114,8 +145,12 @@ const FormComp = ({handleForm, handleCloseForm, supplier}: Props) => {
         <input
           type="text"
           className="form-control"
+          placeholder="Contoh: Mandiri"
           {...register('bank', { required: true })}
         />
+        {errors.bank && errors.bank.type === "required" && (
+          <span role="alert" style={{color:'red'}}>Bank Tidak Boleh Kosong</span>
+        )}
       </div>
       <div className="mb-3">
         <label className="form-label">
