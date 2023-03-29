@@ -1,152 +1,87 @@
-import { useItemContext } from '../Item'
-import { getItems } from 'services/item'
-import { CSSProperties } from 'react'
-import BeatLoader from "react-spinners/BeatLoader";
 import 'bootstrap-icons/font/bootstrap-icons.css'
-import FilterComp from './Components/FilterComp';
+import { item_url } from 'services/item';
+import { ApiTable, ApiTableControl, KeywordsFilter } from '../../../components/ApiTable'
 import EditComp from './Components/EditComp';
 import DeleteComp from './Components/DeleteComp';
-import PaginationComp from './Components/PaginationComp';
-import 'intl';
-import 'intl/locale-data/jsonp/id-ID';
+import { Item } from 'services/item/types';
+import { useItemContext } from '../Item';
+
+const control = new ApiTableControl<Item>({
+  columns: [
+    {
+      label: "Merek",
+      value: "brand",
+      sort: "brand",
+    },
+    {
+      label: "Kategori",
+      value: (data) => {
+        return (
+          <div>
+            {data.__categories__?.length > 0 ?
+              data.__categories__.map((category: {name: string}, index: number) => (
+                <span key={index}>{category.name}{index !== data.__categories__.length - 1 ? ', ' : ''}</span>
+              ))
+              :
+              "-"
+            }
+          </div>
+        )
+      },
+      sort: "category",
+    },
+    {
+      label: "Harga Modal",
+      value: (data) => {
+        return `Rp. ${data.capital_price}`
+      },
+      sort: "capital_price",
+    },
+    {
+      label: "Harga Grosir",
+      value: (data) => {
+        return `Rp. ${data.wholescale_price}`
+      },
+      sort: "wholescale_price",
+    },
+    {
+      label: "Stok",
+      value: "stock",
+      sort: "stock",
+    },
+    {
+      label: "Supplier",
+      value: (data) => (
+        <div>
+          {data.__supplier__?.name || "-"}
+        </div>
+      ),
+      sort: "supplier",
+    },
+    {
+      label: "Actions",
+      value: (data) => (
+        <div style={{ display: 'flex' }}>
+          <EditComp item={data} />
+          <DeleteComp item={data} />
+        </div>
+      )
+    },
+  ],
+  url: item_url,
+});
 
 const TableItem = () => {
   const { queryParams, setQueryParams } = useItemContext()
-  const { data, error, isLoading } = getItems(queryParams);
-
-  const handleSortBy = (column: string) => {
-    let newOrderType = 'ASC';
-    if (column === queryParams.orderBy && queryParams.orderType === 'ASC') {
-      newOrderType = 'DESC';
-    }
-    setQueryParams({
-      ...queryParams,
-      orderBy: column,
-      orderType: newOrderType,
-    });
-  };
-
-  const override: CSSProperties = {
-    display: "block",
-    margin: "0 auto",
-    borderColor: "red",
-  };
-
   return (
     <>
       <div className="card-body">
-      <FilterComp />
-        <table className="table table-bordered">
-          <thead>
-            <tr>
-              <th>Id</th>
-              <th onClick={() => handleSortBy('brand')}>
-                Merek{' '}
-                {queryParams.orderBy === 'brand' && (
-                  <i
-                    className={`bi bi-caret-${
-                      queryParams.orderType === 'ASC' ? 'down' : 'up'
-                    }-fill`}
-                  ></i>
-                )}
-              </th>
-              <th onClick={() => handleSortBy('category')}>
-                Kategory{' '}
-                {queryParams.orderBy === 'category' && (
-                  <i
-                    className={`bi bi-caret-${
-                      queryParams.orderType === 'ASC' ? 'down' : 'up'
-                    }-fill`}
-                  ></i>
-                )}
-              </th>
-              <th onClick={() => handleSortBy('capital_price')}>
-                Harga Modal{' '}
-                {queryParams.orderBy === 'capital_price' && (
-                  <i
-                    className={`bi bi-caret-${
-                      queryParams.orderType === 'ASC' ? 'down' : 'up'
-                    }-fill`}
-                  ></i>
-                )}
-              </th>
-              <th onClick={() => handleSortBy('wholescale_price')}>
-                Harga Grosir{' '}
-                {queryParams.orderBy === 'wholescale_price' && (
-                  <i
-                    className={`bi bi-caret-${
-                      queryParams.orderType === 'ASC' ? 'down' : 'up'
-                    }-fill`}
-                  ></i>
-                )}
-              </th>
-              <th onClick={() => handleSortBy('stock')}>
-                Stok{' '}
-                {queryParams.orderBy === 'stock' && (
-                  <i
-                    className={`bi bi-caret-${
-                      queryParams.orderType === 'ASC' ? 'down' : 'up'
-                    }-fill`}
-                  ></i>
-                )}
-              </th>
-              <th onClick={() => handleSortBy('supplier')}>
-                Supplier{' '}
-                {queryParams.orderBy === 'supplier' && (
-                  <i
-                    className={`bi bi-caret-${
-                      queryParams.orderType === 'ASC' ? 'down' : 'up'
-                    }-fill`}
-                  ></i>
-                )}
-              </th>
-              <th>Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            { isLoading ? (
-              <tr>
-                <td colSpan={5} style={{ textAlign:'center' }}>
-                  <BeatLoader 
-                    color='silver'
-                    cssOverride={override}
-                    size={15}
-                  />
-                </td>
-              </tr>
-            ) : data && (
-              Object.values(data.data).map((d, index) => {
-                return (
-                  <tr key={d.id}>
-                    <td>
-                      {(queryParams.page-1) * queryParams.limit + index + 1}
-                    </td>
-                    <td>{d.brand}</td>
-                    <td>
-                      {d.__categories__?.length > 0 ?
-                        d.__categories__.map((category: {name: string}, index: number) => (
-                          <span key={index}>{category.name}{index !== d.__categories__.length - 1 ? ', ' : ''}</span>
-                        ))
-                        :
-                        "-"
-                      }
-                    </td>
-                    <td>{d.capital_price.toLocaleString('id-ID', { style: 'currency', currency: 'IDR' })}</td>
-                    <td>{d.wholescale_price.toLocaleString('id-ID', { style: 'currency', currency: 'IDR' })}</td>
-                    <td>{d.stock}</td>
-                    <td>{d.__supplier__?.name || "-"}</td>
-                    <td style={{display: 'flex'}}>
-                      <EditComp item={d} />
-                      <DeleteComp item={d} />
-                    </td>
-                  </tr>
-                )
-              }))}
-          </tbody>
-        </table>
-        <div className="pagination-container">
-          <PaginationComp data={data}/>
-        </div>
+        <KeywordsFilter control={control}/>
+        <ApiTable
+          control={control}
+          params={queryParams}
+          setParams={setQueryParams}
+        />
       </div>
     </>
   )

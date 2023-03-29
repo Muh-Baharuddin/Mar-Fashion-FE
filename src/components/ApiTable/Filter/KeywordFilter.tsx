@@ -1,13 +1,14 @@
-import { useSupplierContext } from "../../Supplier"
 import debounce from "lodash.debounce";
+import { ApiTableControl } from "src/components/ApiTable";
+import { Supplier } from "services/supplier/types";
 
-const FilterComp = () => {
-  const { setQueryParams } = useSupplierContext()
+interface FilterCompProps {
+  control: ApiTableControl<any>
+}
 
+export const KeywordsFilter = (props: FilterCompProps) => {
   const handleSearch = debounce((event: React.ChangeEvent<HTMLInputElement>) => {
-    setQueryParams((prev) => {
-      return { ...prev, keywords: event.target.value }
-    })
+    props.control.filter('keywords', event.target.value);
   }, 500)
 
   return (
@@ -23,5 +24,3 @@ const FilterComp = () => {
     </div>
   )
 }
-
-export default FilterComp

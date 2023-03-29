@@ -2,12 +2,7 @@ import { createContext, useContext, useState } from 'react'
 import { QueryParamsType } from 'services/types';
 import AddComp from './Table/Components/AddComp'
 import TableSupplier from './Table/TableSupplier'
-import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { getSuppliers } from 'services/supplier'
-import { Data } from 'services/types';
-import { Supplier, SupplierData } from 'services/supplier/types';
-import useSWR from 'swr'
 
 interface supplierContext {
   queryParams: QueryParamsType;

@@ -2,7 +2,7 @@ import * as api from "services/api";
 import { QueryParamsType } from 'services/types';
 import { AddEmployee, Employee, EmployeeData, EmployeeMessage } from "./types";
 
-const employee_url = `${process.env.API_ENDPOINT}/employee`
+export const employee_url = `${process.env.API_ENDPOINT}/employee`
 
 export const getEmployees = (params: QueryParamsType) => {
   return api.stateGet<EmployeeData, QueryParamsType>(employee_url, params);

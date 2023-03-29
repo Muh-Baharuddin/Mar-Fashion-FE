@@ -2,7 +2,7 @@ import * as api from "services/api";
 import { QueryParamsType } from 'services/types';
 import { AddItem, Item, ItemData, ItemMessage } from "./types";
 
-const item_url = `${process.env.API_ENDPOINT}/item`
+export const item_url = `${process.env.API_ENDPOINT}/item`
 
 export const getItems = (params: QueryParamsType) => {
   return api.stateGet<ItemData, QueryParamsType>(item_url, params);
