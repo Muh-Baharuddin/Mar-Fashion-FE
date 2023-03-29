@@ -1,6 +1,5 @@
 import debounce from "lodash.debounce";
 import { ApiTableControl } from "src/components/ApiTable";
-import { Supplier } from "services/supplier/types";
 
 interface FilterCompProps {
   control: ApiTableControl<any>

@@ -6,13 +6,15 @@ interface Column<T> {
   sort?: keyof T | string;
 }
 
-interface ApiTableControlProps<T> {
+export interface ApiTableControlProps<T> {
   columns: Column<T>[];
   url: string,
   numbering?: boolean;
   orderType?: "ASC" | "DESC",
   orderBy?: keyof T,
 }
+
+type OrderType = "ASC" | "DESC";
 
 export class ApiTableControl<T> {
   private columns: Column<T>[] = [];
@@ -23,6 +25,7 @@ export class ApiTableControl<T> {
   orderBy: keyof T = "id" as keyof T; 
   filterFunction: (name: string, value: any)=> void = (name, value) => {};
   refreshFunction: ()=> void = () => {};
+  handleSortFunction: (by: string, type: OrderType) => void = (by, type) => {};
 
   constructor (props: ApiTableControlProps<T>) {
     this.columns = props.columns
@@ -68,6 +71,11 @@ export class ApiTableControl<T> {
 
   filter(name: string, value: any) {
     this.filterFunction(name, value);
+  }
+
+  applySortType(type: OrderType) {
+    this.orderType =  type;
+    this.handleSortFunction(this.orderBy as string, this.orderType);
   }
 
   refresh() {

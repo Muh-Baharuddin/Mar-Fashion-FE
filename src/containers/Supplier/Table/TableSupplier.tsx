@@ -1,12 +1,12 @@
+import { useEffect } from 'react';
 import 'bootstrap-icons/font/bootstrap-icons.css'
 import { supplier_url } from 'services/supplier';
-import { ApiTable, ApiTableControl, KeywordsFilter } from '../../../components/ApiTable'
+import { ApiTable, ApiTableControl, ApiTableControlProps, KeywordsFilter } from '../../../components/ApiTable'
 import { Supplier, } from 'services/supplier/types';
 import EditComp from './Components/EditComp';
 import DeleteComp from './Components/DeleteComp';
-import { useSupplierContext } from '../Supplier';
 
-export const control = new ApiTableControl<Supplier>({
+const tableProps: ApiTableControlProps<Supplier> = {
   columns: [
     {
       label: "Nama",
@@ -73,10 +73,10 @@ export const control = new ApiTableControl<Supplier>({
   url: supplier_url,
   orderBy: "name",
   orderType: "ASC"
-});
+};
 
 const TableSupplier = () => {
-  const { control } = useSupplierContext()
+  const control = new ApiTableControl<Supplier>(tableProps);
   return (
     <>
       <div className="card-body">

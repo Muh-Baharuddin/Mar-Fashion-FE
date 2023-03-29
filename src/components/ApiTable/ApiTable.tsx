@@ -1,10 +1,10 @@
 import React, { useContext, createContext, useState } from 'react'
-import {  QueryParamsType } from 'services/types';
+import { QueryParamsType } from 'services/types';
 import { ApiTableControl } from './ApiTableControl'
+import { useTableContext } from './ApiTableProvider';
 import { TableBody } from './TableComp/TableBody';
 import { TableHead } from './TableComp/TableHead';
 import { TablePagination } from './TableComp/TablePagination';
-
 
 interface ApiTableProps<T> {
   control: ApiTableControl<T>;
@@ -13,7 +13,7 @@ interface ApiTableProps<T> {
 interface ApiTableContextProps<T> {
   control: ApiTableControl<T>;
   params: QueryParamsType,
-  handleSort: (by: string, type: string)=> void;
+  handleSort: (by: string, type: "ASC" | "DESC")=> void;
   handlePageClick: (page: number) => void;
 }
 
@@ -24,6 +24,11 @@ export const useApiTableContext = <T extends unknown>() => {
 } 
 
 export const ApiTable = <T extends unknown>({control}: ApiTableProps<T>) => {
+  try {
+    const { setControl } = useTableContext<T>();
+    setControl(control);
+  } catch(err) {}
+
   const defaulParams: QueryParamsType = {
     keywords: '',
     orderBy: control.orderBy as string,
@@ -34,8 +39,9 @@ export const ApiTable = <T extends unknown>({control}: ApiTableProps<T>) => {
 
   const [ params, setParams] = useState<QueryParamsType>(defaulParams);
 
-
-  const handleSort = (by: string, type: string)=> {
+  const handleSort = (by: string, type: "ASC" | "DESC")=> {
+    control.orderBy = by as keyof T;
+    control.orderType = type;
     setParams((prev) => {
       return {
         ...prev,
@@ -46,6 +52,8 @@ export const ApiTable = <T extends unknown>({control}: ApiTableProps<T>) => {
       }
     });
   }
+
+  control.handleSortFunction = handleSort;
 
   const handlePageClick = (page: number) => {
     setParams((prev) => {

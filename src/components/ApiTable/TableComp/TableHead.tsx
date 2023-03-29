@@ -4,7 +4,7 @@ import { useApiTableContext } from '../ApiTable';
 export const TableHead = () => {
   const { control, params, handleSort } = useApiTableContext();
   const handleSortBy = (column: string) => {
-    let newOrderType = 'ASC';
+    let newOrderType: 'ASC' | 'DESC' = 'ASC';
     if (column === params.orderBy && params.orderType === 'ASC') {
       newOrderType = 'DESC';
     }
