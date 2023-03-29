@@ -101,7 +101,7 @@ const FormComp = ({handleForm, handleCloseForm, employeeSaving}: Props) => {
           type="number"
           min={0}
           className="form-control"
-          {...register('total', { required: true })}
+          {...register('total', { required: true, valueAsNumber: true })}
         />
       </div>
       <div className="mb-3">

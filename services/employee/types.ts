@@ -6,7 +6,7 @@ export interface Employee {
   address: string
   phone_number: string
   entry_date: Date;
-  exit_date: Date;
+  exit_date: Date | null;
   total_saving: number;
 }
 
