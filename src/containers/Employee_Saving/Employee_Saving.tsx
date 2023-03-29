@@ -1,7 +1,7 @@
 import { createContext, useContext, useState } from 'react'
 import { EmployeeSaving } from 'services/employee/types';
 import { control } from './Table/TableEmployee_Saving';
-import { ApiTableControl } from 'src/components/ApiTable';
+import { ApiTableControl } from '../../components/ApiTable';
 import AddEmployeeSaving from './Table/Components/AddEmployeeSaving';
 import TableEmployeeSaving from './Table/TableEmployee_Saving';
 

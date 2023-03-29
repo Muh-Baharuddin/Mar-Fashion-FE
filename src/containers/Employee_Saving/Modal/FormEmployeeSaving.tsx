@@ -65,13 +65,8 @@ const FormComp = ({handleForm, handleCloseForm, employeeSaving}: Props) => {
     setValue('type', selectedValue);
   };
 
-  const sendData = (data) => {
-    console.log(data)
-    handleForm(data)
-  }
-
   return (
-    <form onSubmit={handleSubmit(sendData)}>
+    <form onSubmit={handleSubmit(handleForm)}>
       <div className="mb-3">
         <label className="form-label">
           Tanggal

@@ -1,6 +1,6 @@
 import { createContext, useContext, useState } from 'react'
 import { Employee } from 'services/employee/types';
-import { ApiTableControl } from 'src/components/ApiTable';
+import { ApiTableControl } from '../../components/ApiTable';
 import { control } from './Table/TableEmployee'
 import TableEmployee from './Table/TableEmployee';
 import AddComp from './Table/Components/AddComp'

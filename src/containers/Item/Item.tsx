@@ -1,7 +1,7 @@
 import { createContext, useContext, useState } from 'react'
 import { Item } from 'services/item/types';
 import { control } from './Table/TableItem';
-import { ApiTableControl } from 'src/components/ApiTable';
+import { ApiTableControl } from '../../components/ApiTable';
 import AddComp from './Table/Components/AddComp';
 import TableItem from './Table/TableItem';
 

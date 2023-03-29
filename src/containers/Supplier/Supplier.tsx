@@ -1,6 +1,6 @@
 import { createContext, useContext } from 'react'
 import { control } from './Table/TableSupplier'
-import { ApiTableControl } from 'src/components/ApiTable';
+import { ApiTableControl } from '../../components/ApiTable';
 import { Supplier } from 'services/supplier/types';
 import AddComp from './Table/Components/AddComp'
 import TableSupplier from './Table/TableSupplier'
