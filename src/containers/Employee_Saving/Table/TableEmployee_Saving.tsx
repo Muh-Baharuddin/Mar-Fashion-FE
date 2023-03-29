@@ -6,7 +6,7 @@ import { employeeSaving_url } from 'services/employee';
 import EditEmployeeSaving from './Components/EditEmployeeSaving';
 import DeleteEmployeeSaving from './Components/DeleteEmployeeSaving';
 
-const control = new ApiTableControl<EmployeeSaving>({
+export const control = new ApiTableControl<EmployeeSaving>({
   columns: [
     {
       label: "Tanggal",
@@ -52,18 +52,18 @@ const control = new ApiTableControl<EmployeeSaving>({
     },
   ],
   url: employeeSaving_url,
+  orderBy: "date",
+  orderType: "DESC"
 });
 
 const TableEmployeeSaving = () => {
-  const { queryParams, setQueryParams } = useEmployeeSavingContext()
+
   return (
     <>
       <div className="card-body">
         <KeywordsFilter control={control}/>
         <ApiTable
           control={control}
-          params={queryParams}
-          setParams={setQueryParams}
         />
       </div>
     </>

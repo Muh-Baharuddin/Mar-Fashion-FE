@@ -5,20 +5,20 @@ import 'react-toastify/dist/ReactToastify.css';
 import { useSupplierContext } from "../../Supplier";
 import { deleteSupplier, getSuppliers } from "services/supplier";
 import { Supplier } from "services/supplier/types";
+import { useApiTableContext } from 'src/components/ApiTable';
 
 type Props = {
   supplier: Supplier;
 };
 
 const DeleteComp = ({ supplier }: Props) => {
-  const { queryParams } = useSupplierContext();
-  const { mutate } = getSuppliers(queryParams);
+  const { control } = useApiTableContext<Supplier>();
 
 
   const DeleteConfirm = () => {
     deleteSupplier(supplier.id).then((response) => {
       toast.success(response.data.message);
-      mutate();
+      control.refresh();
     })
     .catch(() => {
       toast.error("Maaf terjadi kesalahan pada server. Mohon coba kembali dalam beberapa saat.");

@@ -6,7 +6,7 @@ import EditComp from './Components/EditComp';
 import DeleteComp from './Components/DeleteComp';
 import { useSupplierContext } from '../Supplier';
 
-const control = new ApiTableControl<Supplier>({
+export const control = new ApiTableControl<Supplier>({
   columns: [
     {
       label: "Nama",
@@ -71,18 +71,18 @@ const control = new ApiTableControl<Supplier>({
     },
   ],
   url: supplier_url,
+  orderBy: "name",
+  orderType: "ASC"
 });
 
 const TableSupplier = () => {
-  const { queryParams, setQueryParams } = useSupplierContext()
+  const { control } = useSupplierContext()
   return (
     <>
       <div className="card-body">
         <KeywordsFilter control={control}/>
         <ApiTable
           control={control}
-          params={queryParams}
-          setParams={setQueryParams}
         />
       </div>
     </>

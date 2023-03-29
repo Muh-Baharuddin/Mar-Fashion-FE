@@ -2,7 +2,7 @@ import React from 'react'
 import Modal from 'react-bootstrap/Modal'
 import FormComp from './FormEmployeeSaving';
 import { toast } from 'react-toastify';
-import { getEmployeeSaving, postEmployeeSaving } from 'services/employee';
+import { postEmployeeSaving } from 'services/employee';
 import { AddEmployeeSaving } from 'services/employee/types';
 import { useEmployeeSavingContext } from '../Employee_Saving';
 import 'react-toastify/dist/ReactToastify.css';
@@ -14,13 +14,12 @@ type handleShowType = {
 
 function AddModalEmployee(props: handleShowType) {
   const { showAdd, handleCloseAdd } = props
-  const { queryParams } = useEmployeeSavingContext();
-  const { mutate } = getEmployeeSaving(queryParams);
+  const { control } = useEmployeeSavingContext();
 
   const handleAdd = (data: AddEmployeeSaving) => {
     postEmployeeSaving(data).then(() => {
       toast.success('Data Simpanan Karyawan berhasil ditambahkan');
-      mutate();
+      control.refresh();
       handleCloseAdd();
     }).catch((error) => {
       let errorMessage = "Maaf terjadi kesalahan pada server. Mohon coba kembali dalam beberapa saat.";

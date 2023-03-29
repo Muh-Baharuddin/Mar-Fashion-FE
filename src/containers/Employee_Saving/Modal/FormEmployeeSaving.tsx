@@ -11,15 +11,6 @@ type Props = {
   employeeSaving? : EmployeeSaving;
 };
 
-// type SavingType = {
-//   [key: string]: string;
-// }
-
-// const savingType: SavingType = {
-//   SIMPANAN: "SIMPANAN",
-//   AMBILAN: "AMBILAN"
-// }
-
 type SavingType = {
   SIMPANAN: string;
   AMBILAN: string;
@@ -74,8 +65,13 @@ const FormComp = ({handleForm, handleCloseForm, employeeSaving}: Props) => {
     setValue('type', selectedValue);
   };
 
+  const sendData = (data) => {
+    console.log(data)
+    handleForm(data)
+  }
+
   return (
-    <form onSubmit={handleSubmit(handleForm)}>
+    <form onSubmit={handleSubmit(sendData)}>
       <div className="mb-3">
         <label className="form-label">
           Tanggal
@@ -110,7 +106,7 @@ const FormComp = ({handleForm, handleCloseForm, employeeSaving}: Props) => {
       </div>
       <div className="mb-3">
         <label className="form-label">
-          Total Tabungan
+          Keterangan
         </label>
         <input
           type="text"

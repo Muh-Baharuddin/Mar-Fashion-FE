@@ -2,7 +2,7 @@ import { confirmAlert } from 'react-confirm-alert';
 import { toast } from 'react-toastify';
 import { useEmployeeContext } from '../../Employee';
 import { Employee } from 'services/employee/types';
-import { deleteEmployee, getEmployees } from 'services/employee';
+import { deleteEmployee } from 'services/employee';
 import 'react-toastify/dist/ReactToastify.css';
 import 'react-confirm-alert/src/react-confirm-alert.css';
 
@@ -11,14 +11,12 @@ type Props = {
 };
 
 const DeleteComp = ({ employee }: Props) => {
-  const { queryParams } = useEmployeeContext();
-  const { mutate } = getEmployees(queryParams);
-
+  const { control } = useEmployeeContext();
 
   const DeleteConfirm = () => {
     deleteEmployee(employee.id).then((response) => {
       toast.success(response.data.message);
-      mutate();
+      control.refresh();
     })
     .catch(() => {
       toast.error("Maaf terjadi kesalahan pada server. Mohon coba kembali dalam beberapa saat.");

@@ -10,6 +10,8 @@ interface ApiTableControlProps<T> {
   columns: Column<T>[];
   url: string,
   numbering?: boolean;
+  orderType?: "ASC" | "DESC",
+  orderBy?: keyof T,
 }
 
 export class ApiTableControl<T> {
@@ -17,6 +19,8 @@ export class ApiTableControl<T> {
   private keyName: string = "id";
   url: string = "";
   numbering?: boolean = true;
+  orderType: "ASC" | "DESC" = "DESC";
+  orderBy: keyof T = "id" as keyof T; 
   filterFunction: (name: string, value: any)=> void = (name, value) => {};
   refreshFunction: ()=> void = () => {};
 
@@ -24,6 +28,12 @@ export class ApiTableControl<T> {
     this.columns = props.columns
     this.url = props.url;
     this.numbering = props.numbering;
+    if(props.orderBy) {
+      this.orderBy = props.orderBy;
+    }
+    if(props.orderType) {
+      this.orderType = props.orderType;
+    }
   }
 
   getColumns() {

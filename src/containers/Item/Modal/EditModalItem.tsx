@@ -3,7 +3,7 @@ import Modal from 'react-bootstrap/Modal';
 import 'react-toastify/dist/ReactToastify.css';
 import { toast } from 'react-toastify';
 import { useItemContext } from '../Item';
-import { getItems, updateItem } from 'services/item';
+import { updateItem } from 'services/item';
 import { AddItem, Item } from 'services/item/types';
 import FormComp from './FormComp';
 
@@ -16,15 +16,13 @@ type Props = {
 
 function EditModalItem(props: Props) {
   const {showEdit, item, handleCloseEdit } = props
-  const { queryParams } = useItemContext();
-
-  const { mutate } = getItems(queryParams);
+  const {control} = useItemContext();
 
   const handleEdit = (data: AddItem) => {
     updateItem(item.id, data).then(response => {
       toast.success(response.data.message);
       handleCloseEdit();
-      mutate();
+      control.refresh();
     })
   }
 

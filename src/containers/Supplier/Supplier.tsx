@@ -1,44 +1,31 @@
-import { createContext, useContext, useState } from 'react'
-import { QueryParamsType } from 'services/types';
+import { createContext, useContext } from 'react'
+import { control } from './Table/TableSupplier'
+import { ApiTableControl } from 'src/components/ApiTable';
+import { Supplier } from 'services/supplier/types';
 import AddComp from './Table/Components/AddComp'
 import TableSupplier from './Table/TableSupplier'
-import 'react-toastify/dist/ReactToastify.css';
 
-interface supplierContext {
-  queryParams: QueryParamsType;
-  setQueryParams: React.Dispatch<React.SetStateAction<QueryParamsType>>;
+interface SupplierContext {
+  control: ApiTableControl<Supplier>
 }
 
-const defaultState = {
-  queryParams: {
-    keywords: '',
-    orderBy: 'name',
-    orderType: 'ASC',
-    page: 1,
-    limit: 10,
-  },
-  setQueryParams: () => {},
-}
-
-const supplierContext = createContext<supplierContext>(defaultState)
+const supplierContext = createContext<SupplierContext>(undefined as unknown as SupplierContext)
 
 export const useSupplierContext = () => {
   return useContext(supplierContext)
 } 
 
 export const DataSupplier = () => {
-  const [queryParams, setQueryParams] = useState<QueryParamsType>(defaultState.queryParams)
 
   return (
     <supplierContext.Provider value={{
-      queryParams,
-      setQueryParams,
+      control, 
     }}>
       <div className="container">
         <h3>Data Supplier</h3>
         <div className="card">
           <div className="card-header">
-            <AddComp />
+            <AddComp/>
           </div>
           <TableSupplier />
         </div>

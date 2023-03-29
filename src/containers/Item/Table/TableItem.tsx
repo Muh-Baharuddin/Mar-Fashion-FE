@@ -6,7 +6,7 @@ import DeleteComp from './Components/DeleteComp';
 import { Item } from 'services/item/types';
 import { useItemContext } from '../Item';
 
-const control = new ApiTableControl<Item>({
+export const control = new ApiTableControl<Item>({
   columns: [
     {
       label: "Merek",
@@ -69,18 +69,17 @@ const control = new ApiTableControl<Item>({
     },
   ],
   url: item_url,
+  orderBy: "brand",
+  orderType: "ASC"
 });
 
 const TableItem = () => {
-  const { queryParams, setQueryParams } = useItemContext()
   return (
     <>
       <div className="card-body">
         <KeywordsFilter control={control}/>
         <ApiTable
           control={control}
-          params={queryParams}
-          setParams={setQueryParams}
         />
       </div>
     </>

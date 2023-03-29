@@ -1,7 +1,7 @@
 import { confirmAlert } from 'react-confirm-alert';
 import { toast } from 'react-toastify';
 import { EmployeeSaving } from 'services/employee/types';
-import { deleteEmployeeSaving, getEmployeeSaving } from 'services/employee';
+import { deleteEmployeeSaving } from 'services/employee';
 import { useEmployeeSavingContext } from '../../Employee_Saving';
 import 'react-toastify/dist/ReactToastify.css';
 import 'react-confirm-alert/src/react-confirm-alert.css';
@@ -11,14 +11,12 @@ type Props = {
 };
 
 const DeleteEmployeeSaving = ({ employeeSaving }: Props) => {
-  const { queryParams } = useEmployeeSavingContext();
-  const { mutate } = getEmployeeSaving(queryParams);
-
+  const { control } = useEmployeeSavingContext();
 
   const DeleteConfirm = () => {
     deleteEmployeeSaving(employeeSaving.id).then((response) => {
       toast.success(response.data.message);
-      mutate();
+      control.refresh();
     })
     .catch(() => {
       toast.error("Maaf terjadi kesalahan pada server. Mohon coba kembali dalam beberapa saat.");
@@ -28,7 +26,7 @@ const DeleteEmployeeSaving = ({ employeeSaving }: Props) => {
   const handleDelete = () => {
     confirmAlert({
       title: 'Konfirmasi',
-      message: 'Apakah Anda yakin ingin menghapus data dari ' + `${employeeSaving.date.toLocaleDateString} ?`,
+      message: 'Apakah Anda yakin ingin menghapus data dari ' + `${employeeSaving.__employee__?.name} pada tanggal ${employeeSaving.date} ?`,
       buttons: [
         {
           label: 'Ya',

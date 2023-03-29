@@ -4,7 +4,7 @@ import FormComp from './FormEmployeeSaving';
 import { toast } from 'react-toastify';
 import { useEmployeeSavingContext } from '../Employee_Saving';
 import { AddEmployeeSaving, EmployeeSaving } from 'services/employee/types';
-import { getEmployeeSaving, updateEmployeeSaving } from 'services/employee';
+import { updateEmployeeSaving } from 'services/employee';
 import 'react-toastify/dist/ReactToastify.css';
 
 type Props = {
@@ -15,15 +15,13 @@ type Props = {
 
 function EditModalEmployee(props: Props) {
   const {showEdit, employeeSaving, handleCloseEdit } = props
-  const { queryParams } = useEmployeeSavingContext();
-
-  const { mutate } = getEmployeeSaving(queryParams);
+  const { control } = useEmployeeSavingContext();
 
   const handleEdit = (data: AddEmployeeSaving) => {
     updateEmployeeSaving(employeeSaving.id, data).then(response => {
       toast.success(response.data.message);
       handleCloseEdit();
-      mutate();
+      control.refresh();
     })
   }
 

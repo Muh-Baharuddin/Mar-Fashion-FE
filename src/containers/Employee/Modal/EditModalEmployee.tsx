@@ -15,15 +15,13 @@ type Props = {
 
 function EditModalEmployee(props: Props) {
   const {showEdit, employee, handleCloseEdit } = props
-  const { queryParams } = useEmployeeContext();
-
-  const { mutate } = getEmployees(queryParams);
+  const { control } = useEmployeeContext();
 
   const handleEdit = (data: AddEmployee) => {
     updateEmployee(employee.id, data).then(response => {
       toast.success(response.data.message);
       handleCloseEdit();
-      mutate();
+      control.refresh();
     })
   }
 

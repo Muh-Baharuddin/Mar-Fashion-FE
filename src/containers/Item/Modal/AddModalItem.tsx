@@ -1,11 +1,11 @@
 import React from 'react'
 import Modal from 'react-bootstrap/Modal'
-import { toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import { getItems, postItem } from 'services/item';
-import { AddItem } from 'services/item/types';
-import { useItemContext } from '../Item';
 import FormComp from './FormComp';
+import { toast } from 'react-toastify';
+import { postItem } from 'services/item';
+import { AddItem, Item } from 'services/item/types';
+import { useItemContext } from '../Item';
+import 'react-toastify/dist/ReactToastify.css';
 
 type handleShowType = {
   showAdd: boolean;
@@ -14,13 +14,12 @@ type handleShowType = {
 
 function AddModalItem(props: handleShowType) {
   const { showAdd, handleCloseAdd } = props
-  const { queryParams } = useItemContext();
-  const { mutate } = getItems(queryParams);
+  const {control} = useItemContext();
 
   const handleAdd = (data: AddItem) => {
     postItem(data).then(() => {
       toast.success('Data berhasil ditambahkan');
-      mutate();
+      control.refresh();
       handleCloseAdd();
     }).catch((error) => {
       let errorMessage = "Maaf terjadi kesalahan pada server. Mohon coba kembali dalam beberapa saat.";
