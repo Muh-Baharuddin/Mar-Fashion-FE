@@ -6,6 +6,8 @@ import { AddItem, Item } from 'services/item/types';
 import { getSuppliers } from 'services/supplier';
 import Select, { MultiValue, SingleValue } from 'react-select'
 import CreatableSelect from 'react-select/creatable';
+import * as yup from 'yup';
+import { yupResolver } from '@hookform/resolvers/yup';
 
 type Props = {
   handleForm: (data: AddItem) => void,
@@ -21,9 +23,17 @@ const queryParams = {
   limit: 1000,
 }
 
+const employeeSavingSchema = yup.object().shape({
+  brand: yup.string().required('Merek Tidak Boleh Kosong'),
+  capital_price: yup.string().required('Harga Modal Tidak Boleh Kosong'),
+  wholescale_price: yup.string().required('Harga Grosir Tidak Boleh Kosong'),
+  stock: yup.string().required('Stok Tidak Boleh Kosong'),
+});
+
 const FormComp = ({ handleForm, handleCloseForm, item }: Props) => {
   const { register, handleSubmit, setValue, formState: { errors } } = useForm<AddItem>({
     defaultValues: item,
+    resolver: yupResolver(employeeSavingSchema),
   });
   const [isClearable, setIsClearable] = useState(true);
   
@@ -80,9 +90,7 @@ const FormComp = ({ handleForm, handleCloseForm, item }: Props) => {
           aria-invalid={errors.brand ? "true" : "false"}
           {...register('brand', { required: true })}
         />
-        {errors.brand && errors.brand.type === "required" && (
-          <span role="alert" style={{color:'red'}}>Brand Tidak Boleh Kosong</span>
-        )}
+        {errors.brand && <span role="alert" style={{ color: 'red' }}>{errors.brand.message}</span>}
       </div>
       <div className="mb-3">
         <label className="form-label">
@@ -95,6 +103,7 @@ const FormComp = ({ handleForm, handleCloseForm, item }: Props) => {
           isClearable={isClearable}
           onChange={handleCategoryChange}
           formatCreateLabel={(inputValue) => `Buat kategori baru: ${inputValue}`}
+          aria-invalid={errors.__categories__ ? "true" : "false"}
         />
       </div>
       <div className="mb-3">
@@ -108,9 +117,7 @@ const FormComp = ({ handleForm, handleCloseForm, item }: Props) => {
           aria-invalid={errors.capital_price ? "true" : "false"}
           {...register('capital_price', { required: true })}
         />
-        {errors.capital_price && errors.capital_price.type === "required" && (
-          <span role="alert" style={{color:'red'}}>Harga Modal Tidak Boleh Kosong</span>
-        )}
+        {errors.capital_price && <span role="alert" style={{ color: 'red' }}>{errors.capital_price.message}</span>}
       </div>
       <div className="mb-3">
         <label className="form-label">
@@ -123,9 +130,7 @@ const FormComp = ({ handleForm, handleCloseForm, item }: Props) => {
           aria-invalid={errors.wholescale_price ? "true" : "false"}
           {...register('wholescale_price', { required: true })}
         />
-        {errors.wholescale_price && errors.wholescale_price.type === "required" && (
-          <span role="alert" style={{color:'red'}}>Harga Grosir Tidak Boleh Kosong</span>
-        )}
+        {errors.wholescale_price && <span role="alert" style={{ color: 'red' }}>{errors.wholescale_price.message}</span>}
       </div>
       <div className="mb-3">
         <label className="form-label">
@@ -138,9 +143,7 @@ const FormComp = ({ handleForm, handleCloseForm, item }: Props) => {
           aria-invalid={errors.stock ? "true" : "false"}
           {...register('stock', { required: true })}
         />
-        {errors.stock && errors.stock.type === "required" && (
-          <span role="alert" style={{color:'red'}}>Stok Tidak Boleh Kosong</span>
-        )}
+        {errors.stock && <span role="alert" style={{ color: 'red' }}>{errors.stock.message}</span>}
       </div>
       <div className="mb-3">
         <label className="form-label">
