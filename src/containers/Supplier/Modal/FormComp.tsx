@@ -4,6 +4,8 @@ import { useForm } from 'react-hook-form'
 import { AddSupplier, Supplier } from 'services/supplier/types';
 import Select, { MultiValue } from 'react-select'
 import { getItems } from 'services/item';
+import * as yup from 'yup';
+import { yupResolver } from '@hookform/resolvers/yup';
 
 type Props = {
   handleForm: (data: AddSupplier) => void,
@@ -19,9 +21,26 @@ const queryParams = {
   limit: 1000,
 }
 
+const schema = yup.object().shape({
+  name: yup.string().required('Nama Tidak Boleh Kosong'),
+  address: yup.string().required('Alamat Tidak Boleh Kosong'),
+  city: yup.string().required('Kota Tidak Boleh Kosong'),
+  phone_number: yup
+    .string()
+    .required('Nomor Telepon Tidak Boleh Kosong')
+    .min(10, 'Nomor Telepon Minimal 10 Digit'),
+  account_number: yup
+    .string()
+    .required('Nomor Rekening Tidak Boleh Kosong')
+    .min(10, 'Nomor Rekening Minimal 10 Digit'),
+  account_owner: yup.string().required('Nama Pemilik Rekening Tidak Boleh Kosong'),
+  bank: yup.string().required('Bank Tidak Boleh Kosong'),
+});
+
 const FormComp = ({handleForm, handleCloseForm, supplier}: Props) => {
   const { register, handleSubmit, setValue, formState: { errors } } = useForm<AddSupplier>({
     defaultValues: supplier,
+    resolver: yupResolver(schema),
   });
   const [isClearable, setIsClearable] = useState(true);
 
@@ -58,9 +77,7 @@ const FormComp = ({handleForm, handleCloseForm, supplier}: Props) => {
           aria-invalid={errors.name ? "true" : "false"}
           {...register('name', { required: true })}
         />
-        {errors.name && errors.name.type === "required" && (
-          <span role="alert" style={{color:'red'}}>Nama Tidak Boleh Kosong</span>
-        )}
+        {errors.name && <span role="alert" style={{ color: 'red' }}>{errors.name.message}</span>}
       </div>
       <div className="mb-3">
         <label className="form-label">
@@ -72,9 +89,7 @@ const FormComp = ({handleForm, handleCloseForm, supplier}: Props) => {
           placeholder="Alamat Supplier"
           {...register('address', { required: true })}
         />
-        {errors.address && errors.address.type === "required" && (
-          <span role="alert" style={{color:'red'}}>Alamat Tidak Boleh Kosong</span>
-        )}
+        {errors.address && <span role="alert" style={{ color: 'red' }}>{errors.address.message}</span>}
       </div>
       <div className="mb-3">
         <label className="form-label">
@@ -86,9 +101,7 @@ const FormComp = ({handleForm, handleCloseForm, supplier}: Props) => {
           placeholder="Kota Supplier"
           {...register('city', { required: true })}
         />
-        {errors.city && errors.city.type === "required" && (
-          <span role="alert" style={{color:'red'}}>Kota Tidak Boleh Kosong</span>
-        )}
+        {errors.city && <span role="alert" style={{ color: 'red' }}>{errors.city.message}</span>}
       </div>
       <div className="mb-3">
         <label className="form-label">
@@ -100,12 +113,7 @@ const FormComp = ({handleForm, handleCloseForm, supplier}: Props) => {
           placeholder="Nomor Telepon Supplier"
           {...register('phone_number', { required: true, minLength: 10})}
         />
-        {errors.phone_number && errors.phone_number.type === "required" && (
-          <span role="alert" style={{color:'red'}}>Nomor Telepon Tidak Boleh Kosong</span>
-        )}
-        {errors.phone_number && errors.phone_number.type === "minLength" && (
-          <span role="alert" style={{color:'red'}}>Nomor Telepon Minimal 10 Digit</span>
-        )}
+        {errors.phone_number && <span role="alert" style={{ color: 'red' }}>{errors.phone_number.message}</span>}
       </div>
       <div className="mb-3">
         <label className="form-label">
@@ -117,12 +125,7 @@ const FormComp = ({handleForm, handleCloseForm, supplier}: Props) => {
           placeholder="Nomor Rekening Supplier"
           {...register('account_number', { required: true, minLength: 10 })}
         />
-        {errors.account_number && errors.account_number.type === "required" && (
-          <span role="alert" style={{color:'red'}}>Nomor Rekening Tidak Boleh Kosong</span>
-        )}
-        {errors.account_number && errors.account_number.type === "minLength" && (
-          <span role="alert" style={{color:'red'}}>Nomor Rekening Minimal 10 Digit</span>
-        )}
+        {errors.account_number && <span role="alert" style={{ color: 'red' }}>{errors.account_number.message}</span>}
       </div>
       <div className="mb-3">
         <label className="form-label">
@@ -134,9 +137,7 @@ const FormComp = ({handleForm, handleCloseForm, supplier}: Props) => {
           placeholder="Rekening Atas Nama Supplier"
           {...register('account_owner', { required: true })}
         />
-        {errors.account_owner && errors.account_owner.type === "required" && (
-          <span role="alert" style={{color:'red'}}>Nama Pemilik Rekening Tidak Boleh Kosong</span>
-        )}
+        {errors.account_owner && <span role="alert" style={{ color: 'red' }}>{errors.account_owner.message}</span>}
       </div>
       <div className="mb-3">
         <label className="form-label">
@@ -148,9 +149,7 @@ const FormComp = ({handleForm, handleCloseForm, supplier}: Props) => {
           placeholder="Contoh: Mandiri"
           {...register('bank', { required: true })}
         />
-        {errors.bank && errors.bank.type === "required" && (
-          <span role="alert" style={{color:'red'}}>Bank Tidak Boleh Kosong</span>
-        )}
+        {errors.bank && <span role="alert" style={{ color: 'red' }}>{errors.bank.message}</span>}
       </div>
       <div className="mb-3">
         <label className="form-label">

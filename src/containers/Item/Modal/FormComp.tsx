@@ -13,11 +13,6 @@ type Props = {
   item? : Item;
 };
 
-type Option = {
-  value: string;
-  label: string;
-}
-
 const queryParams = {
   keywords: '',
   orderBy: 'name',
@@ -27,7 +22,7 @@ const queryParams = {
 }
 
 const FormComp = ({ handleForm, handleCloseForm, item }: Props) => {
-  const { register, handleSubmit, setValue } = useForm<AddItem>({
+  const { register, handleSubmit, setValue, formState: { errors } } = useForm<AddItem>({
     defaultValues: item,
   });
   const [isClearable, setIsClearable] = useState(true);
@@ -82,8 +77,12 @@ const FormComp = ({ handleForm, handleCloseForm, item }: Props) => {
         <input
           type="text"
           className="form-control"
+          aria-invalid={errors.brand ? "true" : "false"}
           {...register('brand', { required: true })}
         />
+        {errors.brand && errors.brand.type === "required" && (
+          <span role="alert" style={{color:'red'}}>Brand Tidak Boleh Kosong</span>
+        )}
       </div>
       <div className="mb-3">
         <label className="form-label">
@@ -106,8 +105,12 @@ const FormComp = ({ handleForm, handleCloseForm, item }: Props) => {
           type="number"
           min="0"
           className="form-control"
+          aria-invalid={errors.capital_price ? "true" : "false"}
           {...register('capital_price', { required: true })}
         />
+        {errors.capital_price && errors.capital_price.type === "required" && (
+          <span role="alert" style={{color:'red'}}>Harga Modal Tidak Boleh Kosong</span>
+        )}
       </div>
       <div className="mb-3">
         <label className="form-label">
@@ -117,8 +120,12 @@ const FormComp = ({ handleForm, handleCloseForm, item }: Props) => {
           type="number"
           min="0"
           className="form-control"
+          aria-invalid={errors.wholescale_price ? "true" : "false"}
           {...register('wholescale_price', { required: true })}
         />
+        {errors.wholescale_price && errors.wholescale_price.type === "required" && (
+          <span role="alert" style={{color:'red'}}>Harga Grosir Tidak Boleh Kosong</span>
+        )}
       </div>
       <div className="mb-3">
         <label className="form-label">
@@ -128,8 +135,12 @@ const FormComp = ({ handleForm, handleCloseForm, item }: Props) => {
           type="number"
           min="0"
           className="form-control"
+          aria-invalid={errors.stock ? "true" : "false"}
           {...register('stock', { required: true })}
         />
+        {errors.stock && errors.stock.type === "required" && (
+          <span role="alert" style={{color:'red'}}>Stok Tidak Boleh Kosong</span>
+        )}
       </div>
       <div className="mb-3">
         <label className="form-label">
