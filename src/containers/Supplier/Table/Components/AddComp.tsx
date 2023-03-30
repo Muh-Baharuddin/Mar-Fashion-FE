@@ -3,7 +3,6 @@ import AddModalSupplier from '../../Modal/AddModalSupplier'
 
 const AddComp = () => {
   const [showAdd, setShowAdd] = useState(false)
-
   const handleShowAdd = () => setShowAdd(true)
   const handleCloseAdd = () => setShowAdd(false)
 

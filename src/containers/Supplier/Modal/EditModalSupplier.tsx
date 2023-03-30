@@ -5,7 +5,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { toast } from 'react-toastify';
 import { updateSupplier } from 'services/supplier';
 import { AddSupplier, Supplier } from 'services/supplier/types';
-import { useApiTableContext } from 'src/components/ApiTable';
+import { useTableContext } from 'src/components/ApiTable';
 
 
 type Props = {
@@ -16,13 +16,13 @@ type Props = {
 
 function EditModalSupplier(props: Props) {
   const {showEdit, supplier, handleCloseEdit } = props
-  const { control } = useApiTableContext<Supplier>();
+  const { tableData} = useTableContext<Supplier>();
 
   const handleEdit = (data: AddSupplier) => {
     updateSupplier(supplier.id, data).then(response => {
       toast.success(response.data.message);
       handleCloseEdit();
-      control.refresh();
+      tableData.control.refresh();
     })
   }
 
