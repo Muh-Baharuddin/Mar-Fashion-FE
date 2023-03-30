@@ -4,6 +4,8 @@ import { useForm } from 'react-hook-form'
 import { AddEmployeeSaving, EmployeeSaving } from 'services/employee/types';
 import Select, { SingleValue } from 'react-select'
 import { getEmployees } from 'services/employee';
+import * as yup from 'yup';
+import { yupResolver } from '@hookform/resolvers/yup';
 
 type Props = {
   handleForm: (data: AddEmployeeSaving) => void,
@@ -30,9 +32,16 @@ const EmployeeQueryParams = {
   limit: 1000,
 }
 
+const employeeSavingSchema = yup.object().shape({
+  date: yup.string().required('Tanggal Tidak Boleh Kosong'),
+  total: yup.string().required('Total Tidak Boleh Kosong'),
+  description: yup.string().required('Keterangan Tidak Boleh Kosong'),
+});
+
 const FormComp = ({handleForm, handleCloseForm, employeeSaving}: Props) => {
-  const { register, handleSubmit, setValue } = useForm<AddEmployeeSaving>({
+  const { register, handleSubmit, setValue, formState: { errors } } = useForm<AddEmployeeSaving>({
     defaultValues: employeeSaving,
+    resolver: yupResolver(employeeSavingSchema),
   });
   const [isClearable, setIsClearable] = useState(true);
   const { data } = getEmployees(EmployeeQueryParams);
@@ -76,6 +85,11 @@ const FormComp = ({handleForm, handleCloseForm, employeeSaving}: Props) => {
           className="form-control"
           {...register('date', { required: true })}
         />
+        {errors.date && 
+          <span role="alert" style={{ color: 'red' }}>
+            {errors.date.message}
+          </span>
+        }
       </div>
       <div className="mb-3">
         <label className="form-label">
@@ -98,6 +112,11 @@ const FormComp = ({handleForm, handleCloseForm, employeeSaving}: Props) => {
           className="form-control"
           {...register('total', { required: true, valueAsNumber: true })}
         />
+        {errors.total && 
+          <span role="alert" style={{ color: 'red' }}>
+            {errors.total.message}
+          </span>
+        }
       </div>
       <div className="mb-3">
         <label className="form-label">
@@ -108,6 +127,11 @@ const FormComp = ({handleForm, handleCloseForm, employeeSaving}: Props) => {
           className="form-control"
           {...register('description', { required: true })}
         />
+        {errors.description && 
+          <span role="alert" style={{ color: 'red' }}>
+            {errors.description.message}
+          </span>
+        }
       </div>
       <div className="mb-3">
         <label className="form-label">
