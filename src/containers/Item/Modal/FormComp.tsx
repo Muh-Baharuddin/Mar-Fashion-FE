@@ -23,7 +23,7 @@ const queryParams = {
   limit: 1000,
 }
 
-const employeeSavingSchema = yup.object().shape({
+const itemSchema = yup.object().shape({
   brand: yup.string().required('Merek Tidak Boleh Kosong'),
   capital_price: yup.string().required('Harga Modal Tidak Boleh Kosong'),
   wholescale_price: yup.string().required('Harga Grosir Tidak Boleh Kosong'),
@@ -33,7 +33,7 @@ const employeeSavingSchema = yup.object().shape({
 const FormComp = ({ handleForm, handleCloseForm, item }: Props) => {
   const { register, handleSubmit, setValue, formState: { errors } } = useForm<AddItem>({
     defaultValues: item,
-    resolver: yupResolver(employeeSavingSchema),
+    resolver: yupResolver(itemSchema),
   });
   const [isClearable, setIsClearable] = useState(true);
   
