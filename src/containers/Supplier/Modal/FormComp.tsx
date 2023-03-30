@@ -4,6 +4,8 @@ import { useForm } from 'react-hook-form'
 import { AddSupplier, Supplier } from 'services/supplier/types';
 import Select, { MultiValue } from 'react-select'
 import { getItems } from 'services/item';
+import * as yup from 'yup';
+import { yupResolver } from '@hookform/resolvers/yup';
 
 type Props = {
   handleForm: (data: AddSupplier) => void,
@@ -19,9 +21,27 @@ const queryParams = {
   limit: 1000,
 }
 
+
+const schema = yup.object().shape({
+  name: yup.string().required('Nama Tidak Boleh Kosong'),
+  address: yup.string().required('Alamat Tidak Boleh Kosong'),
+  city: yup.string().required('Kota Tidak Boleh Kosong'),
+  phone_number: yup
+    .string()
+    .required('Nomor Telepon Tidak Boleh Kosong')
+    .min(10, 'Nomor Telepon Minimal 10 Digit'),
+  account_number: yup
+    .string()
+    .required('Nomor Rekening Tidak Boleh Kosong')
+    .min(10, 'Nomor Rekening Minimal 10 Digit'),
+  account_owner: yup.string().required('Nama Pemilik Rekening Tidak Boleh Kosong'),
+  bank: yup.string().required('Bank Tidak Boleh Kosong'),
+});
+
 const FormComp = ({handleForm, handleCloseForm, supplier}: Props) => {
   const { register, handleSubmit, setValue } = useForm<AddSupplier>({
     defaultValues: supplier,
+    resolver: yupResolver(schema),
   });
   const [isClearable, setIsClearable] = useState(true);
 

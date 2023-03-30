@@ -2,13 +2,13 @@ import React from 'react'
 import { useApiTableContext } from '../ApiTable';
 
 export const TableHead = () => {
-  const { control, params, handleSort } = useApiTableContext();
+  const { control } = useApiTableContext();
   const handleSortBy = (column: string) => {
     let newOrderType: 'ASC' | 'DESC' = 'ASC';
-    if (column === params.orderBy && params.orderType === 'ASC') {
+    if (column === control.params.orderBy && control.params.orderType === 'ASC') {
       newOrderType = 'DESC';
     }
-    handleSort(column, newOrderType);
+    control.handleSort(column, newOrderType);
   };
   
   return (
@@ -24,10 +24,10 @@ export const TableHead = () => {
               onClick={() => column.sort && handleSortBy(column.sort)}
             >
               {column.label}
-              { params.orderBy === column.sort && (
+              { control.params.orderBy === column.sort && (
                 <i
                   className={`bi bi-caret-${
-                    params.orderType === 'ASC' ? 'down' : 'up'
+                    control.params.orderType === 'ASC' ? 'down' : 'up'
                   }-fill`}
                 ></i>
               )}

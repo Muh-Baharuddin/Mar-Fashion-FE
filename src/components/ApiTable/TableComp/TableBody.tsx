@@ -5,8 +5,8 @@ import { TableLoading } from './TableLoading';
 import { TableRow } from './TableRow';
 
 export const TableBody = <T extends unknown>() => {
-  const { params, control } = useApiTableContext<T>();
-  const { data, isLoading, mutate } =  getData<T>(control.url, params);
+  const { control } = useApiTableContext<T>();
+  const { data, isLoading, mutate } =  getData<T>(control.url, control.params);
   control.refreshFunction = mutate;
   
   return (

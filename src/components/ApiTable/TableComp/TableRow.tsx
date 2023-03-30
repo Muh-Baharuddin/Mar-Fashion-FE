@@ -7,7 +7,7 @@ interface TableRowProps<T> {
 }
 
 export const TableRow = <T extends unknown>(props: TableRowProps<T>) => {
-  const { control, params } = useApiTableContext<T>();
+  const { control } = useApiTableContext<T>();
   const { data, index } = props;
   control.numbering = true;
   return (
@@ -15,7 +15,7 @@ export const TableRow = <T extends unknown>(props: TableRowProps<T>) => {
       {
         control.numbering && (
           <td>
-            {(params.page-1) * params.limit + index + 1}
+            {(control.params.page-1) * control.params.limit + index + 1}
           </td>
         ) 
       }
