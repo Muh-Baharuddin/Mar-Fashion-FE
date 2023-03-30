@@ -22,7 +22,7 @@ const employeeSchema = yup.object().shape({
   total_saving: yup.string().required('Total Tabungan Tidak Boleh Kosong'),
 });
 
-const FormComp = ({handleForm, handleCloseForm, employee}: Props) => {
+const FormEmployee = ({handleForm, handleCloseForm, employee}: Props) => {
   const { register, handleSubmit, formState: { errors } } = useForm<AddEmployee>({
     defaultValues: employee,
     resolver: yupResolver(employeeSchema),
@@ -132,4 +132,4 @@ const FormComp = ({handleForm, handleCloseForm, employee}: Props) => {
   )
 }
 
-export default FormComp
+export default FormEmployee

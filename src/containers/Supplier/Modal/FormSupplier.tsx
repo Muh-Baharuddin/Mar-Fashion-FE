@@ -37,7 +37,7 @@ const schema = yup.object().shape({
   bank: yup.string().required('Bank Tidak Boleh Kosong'),
 });
 
-const FormComp = ({handleForm, handleCloseForm, supplier}: Props) => {
+const FormSupplier = ({handleForm, handleCloseForm, supplier}: Props) => {
   const { register, handleSubmit, setValue, formState: { errors } } = useForm<AddSupplier>({
     defaultValues: supplier,
     resolver: yupResolver(schema),
@@ -173,4 +173,4 @@ const FormComp = ({handleForm, handleCloseForm, supplier}: Props) => {
   )
 }
 
-export default FormComp
+export default FormSupplier

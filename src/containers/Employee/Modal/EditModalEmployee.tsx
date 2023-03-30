@@ -1,6 +1,6 @@
 import React from 'react';
 import Modal from 'react-bootstrap/Modal';
-import FormComp from './FormComp';
+import FormComp from './FormEmployee';
 import { toast } from 'react-toastify';
 import { useEmployeeContext } from '../Employee';
 import { AddEmployee, Employee } from 'services/employee/types';

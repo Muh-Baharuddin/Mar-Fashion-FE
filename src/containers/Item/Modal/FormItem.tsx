@@ -30,7 +30,8 @@ const itemSchema = yup.object().shape({
   stock: yup.string().required('Stok Tidak Boleh Kosong'),
 });
 
-const FormComp = ({ handleForm, handleCloseForm, item }: Props) => {
+const FormItem
+ = ({ handleForm, handleCloseForm, item }: Props) => {
   const { register, handleSubmit, setValue, formState: { errors } } = useForm<AddItem>({
     defaultValues: item,
     resolver: yupResolver(itemSchema),
@@ -166,4 +167,4 @@ const FormComp = ({ handleForm, handleCloseForm, item }: Props) => {
   )
 }
 
-export default FormComp
+export default FormItem

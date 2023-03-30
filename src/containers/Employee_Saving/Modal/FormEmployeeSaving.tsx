@@ -38,7 +38,7 @@ const employeeSavingSchema = yup.object().shape({
   description: yup.string().required('Keterangan Tidak Boleh Kosong'),
 });
 
-const FormComp = ({handleForm, handleCloseForm, employeeSaving}: Props) => {
+const FormEmployeeSaving = ({handleForm, handleCloseForm, employeeSaving}: Props) => {
   const { register, handleSubmit, setValue, formState: { errors } } = useForm<AddEmployeeSaving>({
     defaultValues: employeeSaving,
     resolver: yupResolver(employeeSavingSchema),
@@ -154,4 +154,4 @@ const FormComp = ({handleForm, handleCloseForm, employeeSaving}: Props) => {
   )
 }
 
-export default FormComp
+export default FormEmployeeSaving
