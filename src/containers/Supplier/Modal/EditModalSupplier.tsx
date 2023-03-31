@@ -1,6 +1,6 @@
 import React from 'react';
 import Modal from 'react-bootstrap/Modal';
-import FormComp from './FormComp';
+import FormComp from './FormSupplier';
 import 'react-toastify/dist/ReactToastify.css';
 import { toast } from 'react-toastify';
 import { updateSupplier } from 'services/supplier';

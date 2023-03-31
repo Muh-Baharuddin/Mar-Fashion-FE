@@ -2,6 +2,8 @@ import React from 'react'
 import Button from 'react-bootstrap/Button';
 import { useForm } from 'react-hook-form'
 import { AddEmployee, Employee } from 'services/employee/types';
+import * as yup from 'yup';
+import { yupResolver } from '@hookform/resolvers/yup';
 
 type Props = {
   handleForm: (data: AddEmployee) => void,
@@ -9,9 +11,21 @@ type Props = {
   employee? : Employee;
 };
 
-const FormComp = ({handleForm, handleCloseForm, employee}: Props) => {
-  const { register, handleSubmit } = useForm<AddEmployee>({
+const employeeSchema = yup.object().shape({
+  name: yup.string().required('Nama Tidak Boleh Kosong'),
+  address: yup.string().required('Alamat Tidak Boleh Kosong'),
+  phone_number: yup
+    .string()
+    .required('Nomor Telepon Tidak Boleh Kosong')
+    .min(10, 'Nomor Telepon Minimal 10 Digit'),
+  entry_date: yup.string().required('Tanggal Masuk Tidak Boleh Kosong'),
+  total_saving: yup.string().required('Total Tabungan Tidak Boleh Kosong'),
+});
+
+const FormEmployee = ({handleForm, handleCloseForm, employee}: Props) => {
+  const { register, handleSubmit, formState: { errors } } = useForm<AddEmployee>({
     defaultValues: employee,
+    resolver: yupResolver(employeeSchema),
   });
 
   return (
@@ -28,6 +42,11 @@ const FormComp = ({handleForm, handleCloseForm, employee}: Props) => {
             required: true,
           })}
         />
+        {errors.name && 
+          <span role="alert" style={{ color: 'red' }}>
+            {errors.name.message}
+          </span>
+        }
       </div>
       <div className="mb-3">
         <label className="form-label">
@@ -39,6 +58,11 @@ const FormComp = ({handleForm, handleCloseForm, employee}: Props) => {
           placeholder="Alamat Karyawan"
           {...register('address', { required: true })}
         />
+        {errors.address && 
+          <span role="alert" style={{ color: 'red' }}>
+            {errors.address.message}
+          </span>
+        }
       </div>
       <div className="mb-3">
         <label className="form-label">
@@ -50,6 +74,11 @@ const FormComp = ({handleForm, handleCloseForm, employee}: Props) => {
           placeholder="Nomor Telepon Karyawan"
           {...register('phone_number', { required: true })}
         />
+        {errors.phone_number && 
+          <span role="alert" style={{ color: 'red' }}>
+            {errors.phone_number.message}
+          </span>
+        }
       </div>
       <div className="mb-3">
         <label className="form-label">
@@ -60,6 +89,11 @@ const FormComp = ({handleForm, handleCloseForm, employee}: Props) => {
           className="form-control"
           {...register('entry_date', { required: true })}
         />
+        {errors.entry_date && 
+          <span role="alert" style={{ color: 'red' }}>
+            {errors.entry_date.message}
+          </span>
+        }
       </div>
       <div className="mb-3">
         <label className="form-label">
@@ -82,6 +116,11 @@ const FormComp = ({handleForm, handleCloseForm, employee}: Props) => {
           placeholder="Tabungan Karyawan"
           {...register('total_saving', { required: true, valueAsNumber: true, })}
         />
+        {errors.total_saving && 
+          <span role="alert" style={{ color: 'red' }}>
+            {errors.total_saving.message}
+          </span>
+        }
       </div>
       <Button variant="primary" onClick={() => handleForm} type="submit">
         Submit
@@ -93,4 +132,4 @@ const FormComp = ({handleForm, handleCloseForm, employee}: Props) => {
   )
 }
 
-export default FormComp
+export default FormEmployee

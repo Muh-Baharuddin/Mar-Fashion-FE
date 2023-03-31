@@ -4,6 +4,8 @@ import { useForm } from 'react-hook-form'
 import { AddSupplier, Supplier } from 'services/supplier/types';
 import Select, { MultiValue } from 'react-select'
 import { getItems } from 'services/item';
+import * as yup from 'yup';
+import { yupResolver } from '@hookform/resolvers/yup';
 
 type Props = {
   handleForm: (data: AddSupplier) => void,
@@ -19,9 +21,26 @@ const queryParams = {
   limit: 1000,
 }
 
-const FormComp = ({handleForm, handleCloseForm, supplier}: Props) => {
-  const { register, handleSubmit, setValue } = useForm<AddSupplier>({
+const schema = yup.object().shape({
+  name: yup.string().required('Nama Tidak Boleh Kosong'),
+  address: yup.string().required('Alamat Tidak Boleh Kosong'),
+  city: yup.string().required('Kota Tidak Boleh Kosong'),
+  phone_number: yup
+    .string()
+    .required('Nomor Telepon Tidak Boleh Kosong')
+    .min(10, 'Nomor Telepon Minimal 10 Digit'),
+  account_number: yup
+    .string()
+    .required('Nomor Rekening Tidak Boleh Kosong')
+    .min(10, 'Nomor Rekening Minimal 10 Digit'),
+  account_owner: yup.string().required('Nama Pemilik Rekening Tidak Boleh Kosong'),
+  bank: yup.string().required('Bank Tidak Boleh Kosong'),
+});
+
+const FormSupplier = ({handleForm, handleCloseForm, supplier}: Props) => {
+  const { register, handleSubmit, setValue, formState: { errors } } = useForm<AddSupplier>({
     defaultValues: supplier,
+    resolver: yupResolver(schema),
   });
   const [isClearable, setIsClearable] = useState(true);
 
@@ -54,8 +73,11 @@ const FormComp = ({handleForm, handleCloseForm, supplier}: Props) => {
         <input
           type="text"
           className="form-control"
+          placeholder="Nama Supplier"
+          aria-invalid={errors.name ? "true" : "false"}
           {...register('name', { required: true })}
         />
+        {errors.name && <span role="alert" style={{ color: 'red' }}>{errors.name.message}</span>}
       </div>
       <div className="mb-3">
         <label className="form-label">
@@ -64,8 +86,10 @@ const FormComp = ({handleForm, handleCloseForm, supplier}: Props) => {
         <input
           type="text"
           className="form-control"
+          placeholder="Alamat Supplier"
           {...register('address', { required: true })}
         />
+        {errors.address && <span role="alert" style={{ color: 'red' }}>{errors.address.message}</span>}
       </div>
       <div className="mb-3">
         <label className="form-label">
@@ -74,8 +98,10 @@ const FormComp = ({handleForm, handleCloseForm, supplier}: Props) => {
         <input
           type="text"
           className="form-control"
+          placeholder="Kota Supplier"
           {...register('city', { required: true })}
         />
+        {errors.city && <span role="alert" style={{ color: 'red' }}>{errors.city.message}</span>}
       </div>
       <div className="mb-3">
         <label className="form-label">
@@ -84,8 +110,10 @@ const FormComp = ({handleForm, handleCloseForm, supplier}: Props) => {
         <input
           type="text"
           className="form-control"
-          {...register('phone_number', { required: true })}
+          placeholder="Nomor Telepon Supplier"
+          {...register('phone_number', { required: true, minLength: 10})}
         />
+        {errors.phone_number && <span role="alert" style={{ color: 'red' }}>{errors.phone_number.message}</span>}
       </div>
       <div className="mb-3">
         <label className="form-label">
@@ -94,8 +122,10 @@ const FormComp = ({handleForm, handleCloseForm, supplier}: Props) => {
         <input
           type="text"
           className="form-control"
-          {...register('account_number', { required: true })}
+          placeholder="Nomor Rekening Supplier"
+          {...register('account_number', { required: true, minLength: 10 })}
         />
+        {errors.account_number && <span role="alert" style={{ color: 'red' }}>{errors.account_number.message}</span>}
       </div>
       <div className="mb-3">
         <label className="form-label">
@@ -104,8 +134,10 @@ const FormComp = ({handleForm, handleCloseForm, supplier}: Props) => {
         <input
           type="text"
           className="form-control"
+          placeholder="Rekening Atas Nama Supplier"
           {...register('account_owner', { required: true })}
         />
+        {errors.account_owner && <span role="alert" style={{ color: 'red' }}>{errors.account_owner.message}</span>}
       </div>
       <div className="mb-3">
         <label className="form-label">
@@ -114,8 +146,10 @@ const FormComp = ({handleForm, handleCloseForm, supplier}: Props) => {
         <input
           type="text"
           className="form-control"
+          placeholder="Contoh: Mandiri"
           {...register('bank', { required: true })}
         />
+        {errors.bank && <span role="alert" style={{ color: 'red' }}>{errors.bank.message}</span>}
       </div>
       <div className="mb-3">
         <label className="form-label">
@@ -139,4 +173,4 @@ const FormComp = ({handleForm, handleCloseForm, supplier}: Props) => {
   )
 }
 
-export default FormComp
+export default FormSupplier

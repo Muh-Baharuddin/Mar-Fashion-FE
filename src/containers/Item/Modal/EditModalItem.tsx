@@ -5,7 +5,7 @@ import { toast } from 'react-toastify';
 import { useItemContext } from '../Item';
 import { updateItem } from 'services/item';
 import { AddItem, Item } from 'services/item/types';
-import FormComp from './FormComp';
+import FormComp from './FormItem';
 
 
 type Props = {
