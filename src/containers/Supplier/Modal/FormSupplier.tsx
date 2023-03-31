@@ -1,11 +1,13 @@
 import { useState } from 'react'
 import Button from 'react-bootstrap/Button';
-import { useForm } from 'react-hook-form'
+import { Controller, useForm } from 'react-hook-form'
 import { AddSupplier, Supplier } from 'services/supplier/types';
 import Select, { MultiValue } from 'react-select'
 import { getItems } from 'services/item';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
+import { TextField } from 'src/components/Form/TextField';
+import { ItemField } from 'src/components/Form/ItemField';
 
 type Props = {
   handleForm: (data: AddSupplier) => void,
@@ -38,31 +40,10 @@ const schema = yup.object().shape({
 });
 
 const FormSupplier = ({handleForm, handleCloseForm, supplier}: Props) => {
-  const { register, handleSubmit, setValue, formState: { errors } } = useForm<AddSupplier>({
+  const { control, register, handleSubmit, setValue, formState: { errors } } = useForm<AddSupplier>({
     defaultValues: supplier,
     resolver: yupResolver(schema),
   });
-  const [isClearable, setIsClearable] = useState(true);
-
-  const { data: itemsData } = getItems(queryParams);
-
-  const itemsDefaultValues = supplier?.__items__?.map((item) => ({
-    value: item.id,
-    label: item.brand,
-  }))
-
-  const itemsOptions = 
-  itemsData?.data.map((item) => ({
-    value: item.id,
-    label: item.brand,
-  }));
-
-  const handleItemsChange = (newValue: MultiValue<{ value: string; label: string; }>) => {
-    const selectedValues = newValue?.map(option => {
-      return {id: option.value, brand: option.label};
-    });
-    setValue('__items__', selectedValues);
-  };
 
   return (
     <form onSubmit={handleSubmit(handleForm)}>
@@ -74,9 +55,19 @@ const FormSupplier = ({handleForm, handleCloseForm, supplier}: Props) => {
           type="text"
           className="form-control"
           placeholder="Nama Supplier"
-          aria-invalid={errors.name ? "true" : "false"}
           {...register('name', { required: true })}
         />
+        {/* <TextField
+          label='Nama Supplier'
+          placeholder="Nama Supplier"
+          {...register('name', { required: true })}
+        /> */}
+        {/* <Controller
+          name="name"
+          control={control}
+          rules={{ required: true }}
+          render={({ field }) => <TextField {...field} />}
+        /> */}
         {errors.name && <span role="alert" style={{ color: 'red' }}>{errors.name.message}</span>}
       </div>
       <div className="mb-3">
@@ -152,7 +143,7 @@ const FormSupplier = ({handleForm, handleCloseForm, supplier}: Props) => {
         {errors.bank && <span role="alert" style={{ color: 'red' }}>{errors.bank.message}</span>}
       </div>
       <div className="mb-3">
-        <label className="form-label">
+        {/* <label className="form-label">
           Barang
         </label>
         <Select
@@ -161,6 +152,14 @@ const FormSupplier = ({handleForm, handleCloseForm, supplier}: Props) => {
           defaultValue={itemsDefaultValues}
           isClearable={isClearable}
           onChange={handleItemsChange}
+        /> */}
+        <ItemField
+          label='Barang'
+          name='__items__'
+          defaultValue={supplier?.__items__}
+          onChange={(items)=>{
+            setValue('__items__', items);
+          }}
         />
       </div>
       <Button variant="primary" onClick={() => handleForm} type="submit">
