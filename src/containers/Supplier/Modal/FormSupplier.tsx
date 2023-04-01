@@ -1,12 +1,9 @@
 import { useState } from 'react'
 import Button from 'react-bootstrap/Button';
-import { Controller, useForm } from 'react-hook-form'
+import { useForm } from 'react-hook-form'
 import { AddSupplier, Supplier } from 'services/supplier/types';
-import Select, { MultiValue } from 'react-select'
-import { getItems } from 'services/item';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { TextField } from 'src/components/Form/TextField';
 import { ItemField } from 'src/components/Form/ItemField';
 
 type Props = {
@@ -14,14 +11,6 @@ type Props = {
   handleCloseForm: () => void,
   supplier? : Supplier;
 };
-
-const queryParams = {
-  keywords: '',
-  orderBy: 'brand',
-  orderType: 'ASC',
-  page: 1,
-  limit: 1000,
-}
 
 const schema = yup.object().shape({
   name: yup.string().required('Nama Tidak Boleh Kosong'),
@@ -40,7 +29,7 @@ const schema = yup.object().shape({
 });
 
 const FormSupplier = ({handleForm, handleCloseForm, supplier}: Props) => {
-  const { control, register, handleSubmit, setValue, formState: { errors } } = useForm<AddSupplier>({
+  const { register, handleSubmit, setValue, formState: { errors } } = useForm<AddSupplier>({
     defaultValues: supplier,
     resolver: yupResolver(schema),
   });
@@ -57,17 +46,6 @@ const FormSupplier = ({handleForm, handleCloseForm, supplier}: Props) => {
           placeholder="Nama Supplier"
           {...register('name', { required: true })}
         />
-        {/* <TextField
-          label='Nama Supplier'
-          placeholder="Nama Supplier"
-          {...register('name', { required: true })}
-        /> */}
-        {/* <Controller
-          name="name"
-          control={control}
-          rules={{ required: true }}
-          render={({ field }) => <TextField {...field} />}
-        /> */}
         {errors.name && <span role="alert" style={{ color: 'red' }}>{errors.name.message}</span>}
       </div>
       <div className="mb-3">
@@ -143,19 +121,10 @@ const FormSupplier = ({handleForm, handleCloseForm, supplier}: Props) => {
         {errors.bank && <span role="alert" style={{ color: 'red' }}>{errors.bank.message}</span>}
       </div>
       <div className="mb-3">
-        {/* <label className="form-label">
-          Barang
-        </label>
-        <Select
-          isMulti
-          options={itemsOptions}
-          defaultValue={itemsDefaultValues}
-          isClearable={isClearable}
-          onChange={handleItemsChange}
-        /> */}
         <ItemField
           label='Barang'
           name='__items__'
+          isMulti={true}
           defaultValue={supplier?.__items__}
           onChange={(items)=>{
             setValue('__items__', items);

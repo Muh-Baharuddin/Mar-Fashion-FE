@@ -1,7 +1,8 @@
 import React, { useState } from 'react'
-import Select, { MultiValue } from 'react-select'
+import Select, { MultiValue, SingleValue } from 'react-select'
 import { getItems } from 'services/item';
 import { Item } from 'services/item/types';
+import debounce from "lodash.debounce";
 
 interface FieldProps {
   label?: string;
@@ -9,6 +10,7 @@ interface FieldProps {
   placeholder?: string;
   defaultValue?: Item[];
   onChange?: (items: Item[]) => void;
+  isMulti: boolean;
 }
 
 export const ItemField = (props: FieldProps) => {
@@ -31,12 +33,19 @@ export const ItemField = (props: FieldProps) => {
     label: item.brand,
   }));
 
-  const handleItemsChange = (newValue: MultiValue<{ value: string; label: string; }>) => {
+  const handleMultiChange = (newValue: MultiValue<{ value: string; label: string; }>) => {
     const selectedValues = newValue?.map(option => {
       return {id: option.value, brand: option.label} as Item;
     });
     props.onChange && props.onChange(selectedValues);
   };
+
+  const handleInputChange = debounce((keywords: string) => {
+    setQueryParams(prev => ({
+      ...prev,
+      keywords,
+    }));
+  }, 500);
 
   return (
     <>
@@ -46,19 +55,11 @@ export const ItemField = (props: FieldProps) => {
       <Select
         isMulti
         name={props.name}
-        onInputChange={(keywords)=>{
-          // TODO: debounce
-          setQueryParams(prev=> {
-            return {
-              ...prev,
-              keywords,
-            }
-          })
-        }}
+        onInputChange={handleInputChange}
         options={itemsOptions}
         defaultValue={itemsDefaultValues}
         isClearable={true}
-        onChange={handleItemsChange}
+        onChange={handleMultiChange}
       />
     </>
   )
