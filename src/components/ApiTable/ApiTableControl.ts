@@ -1,4 +1,5 @@
 import React, { ReactNode } from 'react'
+import { QueryParamsType } from 'services/types';
 
 interface Column<T> {
   label: string;
@@ -6,26 +7,26 @@ interface Column<T> {
   sort?: keyof T | string;
 }
 
+type OrderType = "ASC" | "DESC";
+
 export interface ApiTableControlProps<T> {
   columns: Column<T>[];
   url: string,
   numbering?: boolean;
-  orderType?: "ASC" | "DESC",
+  orderType?: OrderType,
   orderBy?: keyof T,
 }
-
-type OrderType = "ASC" | "DESC";
 
 export class ApiTableControl<T> {
   private columns: Column<T>[] = [];
   private keyName: string = "id";
   url: string = "";
   numbering?: boolean = true;
-  orderType: "ASC" | "DESC" = "DESC";
+  orderType: OrderType = "DESC";
   orderBy: keyof T = "id" as keyof T; 
-  filterFunction: (name: string, value: any)=> void = (name, value) => {};
+  params: QueryParamsType;
+  setParams: React.Dispatch<React.SetStateAction<QueryParamsType>> = () => {} ;
   refreshFunction: ()=> void = () => {};
-  handleSortFunction: (by: string, type: OrderType) => void = (by, type) => {};
 
   constructor (props: ApiTableControlProps<T>) {
     this.columns = props.columns
@@ -37,6 +38,13 @@ export class ApiTableControl<T> {
     if(props.orderType) {
       this.orderType = props.orderType;
     }
+    this.params = {
+      keywords: '',
+      orderBy: this.orderBy as string,
+      orderType: this.orderType,
+      page: 1,
+      limit: 10,
+    };
   }
 
   getColumns() {
@@ -70,12 +78,37 @@ export class ApiTableControl<T> {
   }
 
   filter(name: string, value: any) {
-    this.filterFunction(name, value);
+    this.setParams((prev) => {
+      return { 
+        ...prev, 
+        [name]: value,
+      };
+    });
   }
 
   applySortType(type: OrderType) {
-    this.orderType =  type;
-    this.handleSortFunction(this.orderBy as string, this.orderType);
+    this.orderType = type;
+    this.handleSort(this.orderBy as string, this.orderType);
+  }
+
+  handleSort(by: string, type: OrderType) {
+    this.orderBy = by as keyof T;
+    this.orderType = type;
+    this.setParams((prev) => {
+      return {
+        ...prev,
+        ...{
+          orderBy: by,
+          orderType: type,
+        }
+      }
+    });
+  }
+
+  handlePageClick = (page: number) => {
+    this.setParams((prev) => {
+      return { ...prev, page };
+    });
   }
 
   refresh() {

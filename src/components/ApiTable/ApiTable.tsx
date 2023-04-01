@@ -12,9 +12,6 @@ interface ApiTableProps<T> {
 
 interface ApiTableContextProps<T> {
   control: ApiTableControl<T>;
-  params: QueryParamsType,
-  handleSort: (by: string, type: "ASC" | "DESC")=> void;
-  handlePageClick: (page: number) => void;
 }
 
 const TableContext = createContext<ApiTableContextProps<any>>(undefined as any);
@@ -38,46 +35,12 @@ export const ApiTable = <T extends unknown>({control}: ApiTableProps<T>) => {
   }
 
   const [ params, setParams] = useState<QueryParamsType>(defaulParams);
-
-  const handleSort = (by: string, type: "ASC" | "DESC")=> {
-    control.orderBy = by as keyof T;
-    control.orderType = type;
-    setParams((prev) => {
-      return {
-        ...prev,
-        ...{
-          orderBy: by,
-          orderType: type,
-        }
-      }
-    });
-  }
-
-  control.handleSortFunction = handleSort;
-
-  const handlePageClick = (page: number) => {
-    setParams((prev) => {
-      return { ...prev, page};
-    });
-  }
-
-  const setFilter = (name: string, value: any) => {
-    setParams((prev) => {
-      return { 
-        ...prev, 
-        [name]: value,
-      };
-    });
-  }
-
-  control.filterFunction = setFilter;
+  control.setParams = setParams;
+  control.params = params;
   
   return (
     <TableContext.Provider
       value={{
-        params,
-        handleSort,
-        handlePageClick,
         control,
       }}
     >
