@@ -124,7 +124,6 @@ const FormSupplier = ({handleForm, handleCloseForm, supplier}: Props) => {
         <ItemField
           label='Barang'
           name='__items__'
-          isMulti={true}
           defaultValue={supplier?.__items__}
           onChange={(items)=>{
             setValue('__items__', items);
