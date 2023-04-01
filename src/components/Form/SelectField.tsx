@@ -91,7 +91,7 @@ export const SelectField = <T extends unknown>(props: FieldProps<any>) => {
           options={CategoryOptions}
           defaultValue={DefaultValuesArray}
           isClearable={true}
-          onChange={handleMultiChange}
+          onChange={handleCategoryChange}
           formatCreateLabel={(inputValue) => `Buat kategori baru: ${inputValue}`}
         /> 
         : props.isMulti ?
