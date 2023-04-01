@@ -21,7 +21,6 @@ const queryParams = {
   limit: 1000,
 }
 
-
 const schema = yup.object().shape({
   name: yup.string().required('Nama Tidak Boleh Kosong'),
   address: yup.string().required('Alamat Tidak Boleh Kosong'),
@@ -38,8 +37,8 @@ const schema = yup.object().shape({
   bank: yup.string().required('Bank Tidak Boleh Kosong'),
 });
 
-const FormComp = ({handleForm, handleCloseForm, supplier}: Props) => {
-  const { register, handleSubmit, setValue } = useForm<AddSupplier>({
+const FormSupplier = ({handleForm, handleCloseForm, supplier}: Props) => {
+  const { register, handleSubmit, setValue, formState: { errors } } = useForm<AddSupplier>({
     defaultValues: supplier,
     resolver: yupResolver(schema),
   });
@@ -74,8 +73,11 @@ const FormComp = ({handleForm, handleCloseForm, supplier}: Props) => {
         <input
           type="text"
           className="form-control"
+          placeholder="Nama Supplier"
+          aria-invalid={errors.name ? "true" : "false"}
           {...register('name', { required: true })}
         />
+        {errors.name && <span role="alert" style={{ color: 'red' }}>{errors.name.message}</span>}
       </div>
       <div className="mb-3">
         <label className="form-label">
@@ -84,8 +86,10 @@ const FormComp = ({handleForm, handleCloseForm, supplier}: Props) => {
         <input
           type="text"
           className="form-control"
+          placeholder="Alamat Supplier"
           {...register('address', { required: true })}
         />
+        {errors.address && <span role="alert" style={{ color: 'red' }}>{errors.address.message}</span>}
       </div>
       <div className="mb-3">
         <label className="form-label">
@@ -94,8 +98,10 @@ const FormComp = ({handleForm, handleCloseForm, supplier}: Props) => {
         <input
           type="text"
           className="form-control"
+          placeholder="Kota Supplier"
           {...register('city', { required: true })}
         />
+        {errors.city && <span role="alert" style={{ color: 'red' }}>{errors.city.message}</span>}
       </div>
       <div className="mb-3">
         <label className="form-label">
@@ -104,8 +110,10 @@ const FormComp = ({handleForm, handleCloseForm, supplier}: Props) => {
         <input
           type="text"
           className="form-control"
-          {...register('phone_number', { required: true })}
+          placeholder="Nomor Telepon Supplier"
+          {...register('phone_number', { required: true, minLength: 10})}
         />
+        {errors.phone_number && <span role="alert" style={{ color: 'red' }}>{errors.phone_number.message}</span>}
       </div>
       <div className="mb-3">
         <label className="form-label">
@@ -114,8 +122,10 @@ const FormComp = ({handleForm, handleCloseForm, supplier}: Props) => {
         <input
           type="text"
           className="form-control"
-          {...register('account_number', { required: true })}
+          placeholder="Nomor Rekening Supplier"
+          {...register('account_number', { required: true, minLength: 10 })}
         />
+        {errors.account_number && <span role="alert" style={{ color: 'red' }}>{errors.account_number.message}</span>}
       </div>
       <div className="mb-3">
         <label className="form-label">
@@ -124,8 +134,10 @@ const FormComp = ({handleForm, handleCloseForm, supplier}: Props) => {
         <input
           type="text"
           className="form-control"
+          placeholder="Rekening Atas Nama Supplier"
           {...register('account_owner', { required: true })}
         />
+        {errors.account_owner && <span role="alert" style={{ color: 'red' }}>{errors.account_owner.message}</span>}
       </div>
       <div className="mb-3">
         <label className="form-label">
@@ -134,8 +146,10 @@ const FormComp = ({handleForm, handleCloseForm, supplier}: Props) => {
         <input
           type="text"
           className="form-control"
+          placeholder="Contoh: Mandiri"
           {...register('bank', { required: true })}
         />
+        {errors.bank && <span role="alert" style={{ color: 'red' }}>{errors.bank.message}</span>}
       </div>
       <div className="mb-3">
         <label className="form-label">
@@ -159,4 +173,4 @@ const FormComp = ({handleForm, handleCloseForm, supplier}: Props) => {
   )
 }
 
-export default FormComp
+export default FormSupplier

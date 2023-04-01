@@ -1,6 +1,6 @@
 import React from 'react'
 import Modal from 'react-bootstrap/Modal'
-import FormComp from './FormComp';
+import FormComp from './FormItem';
 import { toast } from 'react-toastify';
 import { postItem } from 'services/item';
 import { AddItem, Item } from 'services/item/types';
