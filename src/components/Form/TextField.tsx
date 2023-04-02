@@ -4,10 +4,11 @@ interface TextFieldProps {
   label?: string;
   name: string;
   placeholder?: string;
+  onChange: (value: string) => void;
 }
-export const TextField = React.forwardRef((props:TextFieldProps, ref) => {
-  const { label, name, placeholder, ...others } = props;
-  console.log(props)
+
+export const TextField = (props:TextFieldProps) => {
+  const { label, name, placeholder, onChange} = props;
   return (
     <>
       { props.label && (
@@ -21,8 +22,10 @@ export const TextField = React.forwardRef((props:TextFieldProps, ref) => {
         className="form-control"
         placeholder={props.placeholder}
         name={props.name}
-        {...others}
+        onChange={(e)=> {
+          onChange(e.target.value);
+        }}
       />
     </>
   )
-})
+}
