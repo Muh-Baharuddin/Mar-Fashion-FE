@@ -6,7 +6,7 @@ import { postItem } from 'services/item';
 import { AddItem, Item } from 'services/item/types';
 import { useItemContext } from '../Item';
 import 'react-toastify/dist/ReactToastify.css';
-import FormItemTest from './FormItemTest';
+import FormItemTest from './FormItem';
 
 type handleShowType = {
   showAdd: boolean;

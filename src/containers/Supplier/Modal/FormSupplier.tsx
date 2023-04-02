@@ -1,10 +1,9 @@
-import { useState } from 'react'
+import React from 'react'
 import Button from 'react-bootstrap/Button';
+import * as yup from 'yup';
 import { useForm } from 'react-hook-form'
 import { AddSupplier, Supplier } from 'services/supplier/types';
-import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { ItemField } from 'src/components/Form/ItemField';
 
 type Props = {
   handleForm: (data: AddSupplier) => void,
@@ -119,16 +118,6 @@ const FormSupplier = ({handleForm, handleCloseForm, supplier}: Props) => {
           {...register('bank', { required: true })}
         />
         {errors.bank && <span role="alert" style={{ color: 'red' }}>{errors.bank.message}</span>}
-      </div>
-      <div className="mb-3">
-        <ItemField
-          label='Barang'
-          name='__items__'
-          defaultValue={supplier?.__items__}
-          onChange={(items)=>{
-            setValue('__items__', items);
-          }}
-        />
       </div>
       <Button variant="primary" onClick={() => handleForm} type="submit">
         Submit

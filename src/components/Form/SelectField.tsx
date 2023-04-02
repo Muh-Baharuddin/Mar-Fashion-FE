@@ -1,118 +1,86 @@
-import React, { useState } from 'react'
-import Select, { MultiValue, SingleValue } from 'react-select'
+import React from 'react'
+import ReactSelect, { MultiValue, SingleValue } from 'react-select'
 import CreatableSelect from 'react-select/creatable';
 import debounce from "lodash.debounce";
-import { getCategorys } from 'services/category';
-import { getSuppliers } from 'services/supplier';
+import { SelectBaseProps } from './types';
 
-export interface FieldProps<T> {
-  label?: string;
-  name: string;
-  placeholder?: string;
-  defaultValue?: T;
-  defaultValueArray?: T[];
-  onChange?: (data: T | T[]) => void;
-  isMulti?: boolean;
-  creatable? : boolean;
+interface SelectValue<T>{
+  value: T[keyof T];
+  label: T[keyof T];
+  __isNew__?: boolean;
 }
 
-export const SelectField = <T extends unknown>(props: FieldProps<any>) => {
-  const [params, setQueryParams] = useState({
-    keywords: '',
-    orderBy: 'name',
-    orderType: 'ASC',
-    page: 1,
-    limit: 10,
-  });
+interface Props<T> extends SelectBaseProps<T> {
+  data: T[];
+  handleInput?: (keywords: string) => void;
+  handleChange?: (value:T | T[]) => void;
+  keyValue?: keyof T;
+  keyLabel?: keyof T;
+}
 
-  const { data: categoryData } = getCategorys(params);
-  const { data: supplierData } = getSuppliers(params);
+export const SelectField = <T extends unknown>(props: Props<T>) => {
+  const { data, name, keyLabel, keyValue, creatable, isMulti, defaultValue} = props;
+  
+  const toSelectValue = (d: T):SelectValue<T>  => {
+    return {
+      value: d[keyValue as keyof T],
+      label: d[keyLabel  as keyof T],
+    }
+  } 
 
-  const DefaultValuesArray = props.defaultValueArray?.map((data) => ({
-    value: data.id,
-    label: data.brand,
-  }))
-
-  const DefaultValue = props.defaultValue? {
-    value: props.defaultValue.id,
-    label: props.defaultValue.name,
-  } : null;
-
-  const CategoryOptions = categoryData?.data.map((category) => ({
-    value: category.id,
-    label: category.name,
-  }));
-
-  const supplierOptions = supplierData?.data.map((supplier) => ({
-      value: supplier.id,
-      label: supplier.name,
-    }));
-
-  const handleMultiChange = (newValue: MultiValue<{ value: string; label: string; }>) => {
-    const selectedValues = newValue?.map(option => {
-      return {id: option.value, brand: option.label};
-    });
-    props.onChange && props.onChange(selectedValues);
-  };
-
-  const handleCategoryChange = (newValue: MultiValue<{ value: string; label: string; }>) => {
-    const selectedValues = newValue?.map(option => {
-      if (option.value === option.label) {
-        return { name: option.label };
-      } else {
-        return { id: option.value, name: option.label };
-      }
-    });
-    props.onChange && props.onChange(selectedValues);
-  };
-
-  const handleSingleChange = (newValue: SingleValue<{ value: string | undefined; label: string | undefined; }>) => {
-    const selectedValue = {id: newValue?.value, brand: newValue?.label}
-    props.onChange && props.onChange(selectedValue);
-  };
+  const dataOptions = data && data.map(toSelectValue);
+  let selectDefaultValue: SelectValue<T> |  Array<SelectValue<T>> | undefined = undefined;
+  if(defaultValue && Array.isArray(defaultValue)) {
+    selectDefaultValue = defaultValue.map(toSelectValue);
+  } else if(defaultValue) {
+    selectDefaultValue = toSelectValue(defaultValue);
+  }
 
   const handleInputChange = debounce((keywords: string) => {
-    setQueryParams(prev => ({
-      ...prev,
-      keywords,
-    }));
+    props.handleInput && props.handleInput(keywords);
   }, 500);
 
+  const generateData = (data: SelectValue<T>) : T => {
+    const d =  {
+      [keyLabel as keyof T]: data.label,
+    } as T;
+
+    if(!data.__isNew__){
+      d[keyValue as keyof T] =  data.value;
+    }
+
+    return d;
+  }
+
+  const handleChange = (newValue: SingleValue<SelectValue<T>> | MultiValue<SelectValue<T>>) => {
+    let data: T | T[];
+    if (Array.isArray(newValue)) {
+      data = newValue.map(generateData);
+    } else {
+      data = generateData(newValue as SelectValue<T>);
+    }
+    props.handleChange && props.handleChange(data as T);
+  }
+
+  const SelectComponent = creatable ?  CreatableSelect : ReactSelect;
+
   return (
-    <>
-      <label className="form-label">
-        {props.label}
-      </label>
-      { props.creatable && props.isMulti ?
-        <CreatableSelect 
-          isMulti
-          name={props.name}
-          onInputChange={handleInputChange}
-          options={CategoryOptions}
-          defaultValue={DefaultValuesArray}
-          isClearable={true}
-          onChange={handleCategoryChange}
-          formatCreateLabel={(inputValue) => `Buat kategori baru: ${inputValue}`}
-        /> 
-        : props.isMulti ?
-          <Select
-            isMulti
-            name={props.name}
-            onInputChange={handleInputChange}
-            options={CategoryOptions}
-            defaultValue={DefaultValuesArray}
-            isClearable={true}
-            onChange={handleMultiChange}
-          /> :
-          <Select
-            name={props.name}
-            onInputChange={handleInputChange}
-            options={supplierOptions}
-            defaultValue={DefaultValue}
-            isClearable={true}
-            onChange={handleSingleChange}
-          />
-      }
-    </>
-  )
+    <SelectComponent
+      isClearable
+      isMulti={isMulti}
+      name={name}
+      onChange={handleChange}
+      options={dataOptions}
+      onInputChange={handleInputChange}
+      defaultValue={selectDefaultValue}
+      formatCreateLabel={(inputValue) => `Buat data baru: ${inputValue}`}
+    />
+  );
+}
+
+SelectField.defaultProps = {
+  keyValue: "id",
+  keyLabel: "name",
+  isMulti: false,
+  creatable: false,
 }

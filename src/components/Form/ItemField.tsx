@@ -1,18 +1,10 @@
 import React, { useState } from 'react'
-import Select, { MultiValue } from 'react-select'
 import { getItems } from 'services/item';
 import { Item } from 'services/item/types';
-import debounce from "lodash.debounce";
+import { SelectFieldProps } from './types';
+import { SelectField } from './SelectField';
 
-interface FieldProps {
-  label?: string;
-  name: string;
-  placeholder?: string;
-  defaultValue?: Item[];
-  onChange?: (items: Item[]) => void;
-}
-
-export const ItemField = (props: FieldProps) => {
+export const ItemField = (props: SelectFieldProps<Item>) => {
   const [params, setQueryParams] = useState({
     keywords: '',
     orderBy: 'brand',
@@ -21,53 +13,30 @@ export const ItemField = (props: FieldProps) => {
     limit: 10,
   });
 
-  const { data: itemsData } = getItems(params);
-  const itemsDefaultValues = props.defaultValue?.map((item) => ({
-    value: item.id,
-    label: item.brand,
-  }))
-
-  const itemsOptions = itemsData?.data.map((item) => ({
-    value: item.id,
-    label: item.brand,
-  }));
-
-  const handleItemsChange = (newValue: MultiValue<{ value: string; label: string; }>) => {
-    const selectedValues = newValue?.map(option => {
-      return {id: option.value, brand: option.label} as Item;
-    });
-    props.onChange && props.onChange(selectedValues);
+  const { data } = getItems(params);
+  const onChange = (data: Item | Item[]) => {
+    props.onChange && props.onChange(data);
   };
 
-  const handleInputChange = debounce((keywords: string) => {
+  const onInput = (keywords: string) => {
     setQueryParams(prev => ({
       ...prev,
       keywords,
     }));
-  }, 500);
+  };
 
   return (
     <>
       <label className="form-label">
         {props.label}
       </label>
-      <Select
-        isMulti
-        name={props.name}
-        onInputChange={handleInputChange}
-        // onInputChange={(keywords)=>{
-        //   // TODO: debounce
-        //   setQueryParams(prev=> {
-        //     return {
-        //       ...prev,
-        //       keywords,
-        //     }
-        //   })
-        // }}
-        options={itemsOptions}
-        defaultValue={itemsDefaultValues}
-        isClearable={true}
-        onChange={handleItemsChange}
+      <SelectField 
+        data={data?.data || []}
+        defaultValue={props.defaultValue}
+        handleInput={onInput}
+        handleChange={onChange}
+        keyLabel='brand'
+        {...props}
       />
     </>
   )

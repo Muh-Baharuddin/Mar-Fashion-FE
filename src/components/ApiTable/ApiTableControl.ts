@@ -86,11 +86,6 @@ export class ApiTableControl<T> {
     });
   }
 
-  applySortType(type: OrderType) {
-    this.orderType = type;
-    this.handleSort(this.orderBy as string, this.orderType);
-  }
-
   handleSort(by: string, type: OrderType) {
     this.orderBy = by as keyof T;
     this.orderType = type;

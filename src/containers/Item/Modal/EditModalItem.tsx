@@ -6,7 +6,7 @@ import { useItemContext } from '../Item';
 import { updateItem } from 'services/item';
 import { AddItem, Item } from 'services/item/types';
 import FormComp from './FormItem';
-import FormItemTest from './FormItemTest';
+import FormItemTest from './FormItem';
 
 
 type Props = {

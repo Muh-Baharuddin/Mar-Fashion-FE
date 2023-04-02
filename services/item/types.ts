@@ -1,3 +1,5 @@
+import { Category } from "services/category/types";
+import { Supplier } from "services/supplier/types";
 import { Data } from "services/types"
 
 export interface Item {
@@ -6,14 +8,8 @@ export interface Item {
   capital_price: number;
   wholescale_price: number;
   stock: number;
-  __supplier__?: {
-    id?: string; 
-    name?: string;
-  };
-  __categories__: Array<{
-    id?: string;
-    name: string;
-  }>;
+  __supplier__?: Supplier;
+  __categories__: Category[];
 }
 
 export type AddItem = Omit<Item, "id">;
