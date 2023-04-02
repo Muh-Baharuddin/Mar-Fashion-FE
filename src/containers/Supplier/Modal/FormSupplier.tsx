@@ -1,10 +1,8 @@
-import { useState } from 'react'
+import React from 'react'
 import Button from 'react-bootstrap/Button';
+import * as yup from 'yup';
 import { useForm } from 'react-hook-form'
 import { AddSupplier, Supplier } from 'services/supplier/types';
-import Select, { MultiValue } from 'react-select'
-import { getItems } from 'services/item';
-import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 
 type Props = {
@@ -12,14 +10,6 @@ type Props = {
   handleCloseForm: () => void,
   supplier? : Supplier;
 };
-
-const queryParams = {
-  keywords: '',
-  orderBy: 'brand',
-  orderType: 'ASC',
-  page: 1,
-  limit: 1000,
-}
 
 const schema = yup.object().shape({
   name: yup.string().required('Nama Tidak Boleh Kosong'),
@@ -42,27 +32,6 @@ const FormSupplier = ({handleForm, handleCloseForm, supplier}: Props) => {
     defaultValues: supplier,
     resolver: yupResolver(schema),
   });
-  const [isClearable, setIsClearable] = useState(true);
-
-  const { data: itemsData } = getItems(queryParams);
-
-  const itemsDefaultValues = supplier?.__items__?.map((item) => ({
-    value: item.id,
-    label: item.brand,
-  }))
-
-  const itemsOptions = 
-  itemsData?.data.map((item) => ({
-    value: item.id,
-    label: item.brand,
-  }));
-
-  const handleItemsChange = (newValue: MultiValue<{ value: string; label: string; }>) => {
-    const selectedValues = newValue?.map(option => {
-      return {id: option.value, brand: option.label};
-    });
-    setValue('__items__', selectedValues);
-  };
 
   return (
     <form onSubmit={handleSubmit(handleForm)}>
@@ -74,7 +43,6 @@ const FormSupplier = ({handleForm, handleCloseForm, supplier}: Props) => {
           type="text"
           className="form-control"
           placeholder="Nama Supplier"
-          aria-invalid={errors.name ? "true" : "false"}
           {...register('name', { required: true })}
         />
         {errors.name && <span role="alert" style={{ color: 'red' }}>{errors.name.message}</span>}
@@ -150,18 +118,6 @@ const FormSupplier = ({handleForm, handleCloseForm, supplier}: Props) => {
           {...register('bank', { required: true })}
         />
         {errors.bank && <span role="alert" style={{ color: 'red' }}>{errors.bank.message}</span>}
-      </div>
-      <div className="mb-3">
-        <label className="form-label">
-          Barang
-        </label>
-        <Select
-          isMulti
-          options={itemsOptions}
-          defaultValue={itemsDefaultValues}
-          isClearable={isClearable}
-          onChange={handleItemsChange}
-        />
       </div>
       <Button variant="primary" onClick={() => handleForm} type="submit">
         Submit

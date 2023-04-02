@@ -6,6 +6,7 @@ import { useItemContext } from '../Item';
 import { updateItem } from 'services/item';
 import { AddItem, Item } from 'services/item/types';
 import FormComp from './FormItem';
+import FormItemTest from './FormItem';
 
 
 type Props = {
@@ -38,7 +39,7 @@ function EditModalItem(props: Props) {
           <Modal.Title>Edit Barang</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <FormComp 
+          <FormItemTest 
             handleForm={handleEdit} 
             handleCloseForm={handleCloseEdit} 
             item={item}
