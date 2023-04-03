@@ -19,7 +19,6 @@ const employeeSchema = yup.object().shape({
     .required('Nomor Telepon Tidak Boleh Kosong')
     .min(10, 'Nomor Telepon Minimal 10 Digit'),
   entry_date: yup.string().required('Tanggal Masuk Tidak Boleh Kosong'),
-  total_saving: yup.string().required('Total Tabungan Tidak Boleh Kosong'),
 });
 
 const FormEmployee = ({handleForm, handleCloseForm, employee}: Props) => {
@@ -28,8 +27,13 @@ const FormEmployee = ({handleForm, handleCloseForm, employee}: Props) => {
     resolver: yupResolver(employeeSchema),
   });
 
+const handleSend = (data: any) => {
+  console.log("data", data)
+  handleForm(data)
+}
+
   return (
-    <form onSubmit={handleSubmit(handleForm)}>
+    <form onSubmit={handleSubmit(handleSend)}>
       <div className="mb-3">
         <label className="form-label">
           Nama
@@ -114,13 +118,8 @@ const FormEmployee = ({handleForm, handleCloseForm, employee}: Props) => {
           min={0}
           className="form-control"
           placeholder="Tabungan Karyawan"
-          {...register('total_saving', { required: true, valueAsNumber: true, })}
+          {...register('total_saving', { required: true, valueAsNumber: true, value: 0})}
         />
-        {errors.total_saving && 
-          <span role="alert" style={{ color: 'red' }}>
-            {errors.total_saving.message}
-          </span>
-        }
       </div>
       <Button variant="primary" onClick={() => handleForm} type="submit">
         Submit
