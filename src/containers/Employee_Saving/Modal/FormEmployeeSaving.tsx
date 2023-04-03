@@ -34,7 +34,6 @@ const EmployeeQueryParams = {
 
 const employeeSavingSchema = yup.object().shape({
   date: yup.string().required('Tanggal Tidak Boleh Kosong'),
-  total: yup.string().required('Total Tidak Boleh Kosong'),
   description: yup.string().required('Keterangan Tidak Boleh Kosong'),
 });
 
@@ -112,11 +111,6 @@ const FormEmployeeSaving = ({handleForm, handleCloseForm, employeeSaving}: Props
           className="form-control"
           {...register('total', { required: true, valueAsNumber: true })}
         />
-        {errors.total && 
-          <span role="alert" style={{ color: 'red' }}>
-            {errors.total.message}
-          </span>
-        }
       </div>
       <div className="mb-3">
         <label className="form-label">
