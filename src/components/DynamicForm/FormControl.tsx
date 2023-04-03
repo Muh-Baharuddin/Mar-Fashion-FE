@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { AnyObject, AnyObjectSchema, AnySchema, Maybe, ObjectSchema, ValidationError } from 'yup';
+import React, { useRef, useState } from 'react';
+import { AnyObject, AnyObjectSchema, ObjectSchema, ValidationError } from 'yup';
 
 type ValidationType<T> = AnyObjectSchema;
 
@@ -15,6 +15,7 @@ export interface Field<T> {
   component: (props: any) => JSX.Element,
   label: string,
   props: (form: ComponentProps<T>) => Record<string, any>;
+  depends?: [Array<keyof T>, (data: T) => T[keyof T]];
 }
 
 interface FormObject<T> {
@@ -26,6 +27,7 @@ interface FormObject<T> {
 export interface ComponentProps<T> {
   error?: string;
   onChange: (value: T[keyof T]) => void;
+  ref: React.MutableRefObject<undefined>,
 }
 
 interface FieldError{
@@ -40,28 +42,69 @@ export class FormControl<T> {
   defaultValue?: T;
   componentProps: ComponentProps<T> = {} as ComponentProps<T>;
   data: T = {} as T;
-  errors?: FormErrors<T>;
-  setError?: React.Dispatch<React.SetStateAction<FormErrors<T>>>;
+  setErrorObj: Record<keyof T, React.Dispatch<React.SetStateAction<string | undefined>>> = {} as Record<keyof T, React.Dispatch<React.SetStateAction<string | undefined>>>;
+  effects: Record<keyof T, Array<keyof T>> =  {} as Record<keyof T, Array<keyof T>>;
+  refs: Record<keyof T, React.MutableRefObject<any>> = {} as Record<keyof T, React.MutableRefObject<any>>;
 
   constructor(){
-    
+
+  }
+
+  setFields(fields: FormFields<T>) {
+    this.fields = fields;
+    this.setDependand(fields);
+  }
+
+  setDependand(fields: FormFields<T>) {
+    Object.keys(fields).map(name => {
+      const field = fields[name as keyof T];
+      if(!field.depends) {
+        return;
+      }
+
+      field.depends[0].map(depend => {
+        if(!this.effects[depend]) {
+          this.effects[depend] = [];
+        }
+
+        this.effects[depend].push(name as keyof T);
+      });
+    });
   }
 
   onSubmit(onSubmit: (data: T)=> void) {
+    if(this.validations) {
+      const errors = this.validate(this.validations, this.data);
+      if(errors) {
+        this.setFormError(errors);
+        return;
+      }
+    }
+
+    onSubmit(this.data);
+  }
+  
+  validate(validations: AnyObject, data: any) {
     try{
       this.validations?.validateSync(this.data, {
         abortEarly: false,
       });
     } catch(e) {
       const error = this.generateError(e as ValidationError);
-      this.setFormError(error);
-      return;
+      return error;
     }
-    onSubmit(this.data);
+    return;
   }
 
   setFormError(errors: FormErrors<T>) {
-    this.setError && this.setError(errors);
+    Object.keys(errors).map(name => {
+      const error = errors[name as keyof T];
+      this.setErrorField(name as keyof T, error);
+    })
+  }
+
+  setErrorField(name: keyof T, error: string | undefined) {
+    this.setErrorObj[name] && this.setErrorObj[name](error);
   }
 
   generateError(errors: ValidationError): FormErrors<T> {
@@ -83,24 +126,59 @@ export class FormControl<T> {
     const self = this;
     return {
       error: undefined,
+      ref: self.refs[name],
       onChange(value: T[keyof T]){
         self.setValue(name, value);
+        self.validateIput(name, value);
+        self.checkEffect(name);
       }
     }
   }
 
+  checkEffect(name: keyof T){
+    if (!this.effects[name]) {
+      return;
+    } 
+
+    this.effects[name].map(effect => {
+      const field = this.fields[effect as keyof T];
+      const depend = field.depends;
+      if(!depend) {
+        return;
+      }
+
+      const dependNames = depend[0];
+      const dependFunction = depend[1];
+
+      const res = dependFunction(this.getDependData(dependNames));
+      this.data[effect] = res;
+      if(this.refs[effect].current) {
+        this.refs[effect].current.value = res;
+      }
+    });
+  }
+
+  getDependData(depends: Array<keyof T>): T {
+    return depends.reduce((data, depend) => {
+      data[depend] = this.data[depend];
+      return data;
+    }, {} as T); 
+  }
+
+  validateIput(name: keyof T, value: T[keyof T]) {
+    const validation = this.validations?.pick([name]);
+    const errors = this.validate(validation as unknown as AnyObjectSchema, {
+      [name]: value
+    });
+
+    this.setErrorField(name, errors && errors[name]);
+  }
+
 }
-
-
 
 export const useForm = <T extends AnyObject>(props: UseFormProps<T>): FormObject<T> => {
   const control = new FormControl<T>();
-  const [ errors, setError ] = useState<FormErrors<T>>({} as FormErrors<T>);
-
-  control.errors = errors;
-  control.setError = setError;
-
-  control.fields = props.fields;
+  control.setFields(props.fields);
   control.defaultValue = props.defaultValue;
   control.validations = props.validations as unknown as AnyObjectSchema;
 
@@ -112,3 +190,23 @@ export const useForm = <T extends AnyObject>(props: UseFormProps<T>): FormObject
     },
   }
 };
+
+export const useError = <T extends unknown>(props: {
+  control: FormControl<T>,
+  name: keyof T,
+}): string | undefined => {
+  const [error, setError] = useState<string | undefined>();
+  props.control.setErrorObj[props.name] = setError;
+  return error;
+};
+
+export const useInputRef = <T extends unknown>(props: {
+  control: FormControl<T>,
+  name: keyof T,
+}) => {
+  const ref = useRef();
+  props.control.refs[props.name] = ref;
+  return ref;
+};
+
+
