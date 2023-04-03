@@ -5,10 +5,11 @@ interface TextFieldProps {
   name: string;
   placeholder?: string;
   onChange: (value: string) => void;
+  innerRef: React.MutableRefObject<any>;
 }
 
 export const TextField = (props:TextFieldProps) => {
-  const { label, name, placeholder, onChange} = props;
+  const { label, name, innerRef, onChange} = props;
   return (
     <>
       { props.label && (
@@ -18,6 +19,7 @@ export const TextField = (props:TextFieldProps) => {
       )}
       
       <input
+        ref={innerRef}
         type="text"
         className="form-control"
         placeholder={props.placeholder}
