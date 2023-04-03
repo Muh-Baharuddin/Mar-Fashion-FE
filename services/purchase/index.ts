@@ -2,7 +2,7 @@ import * as api from "services/api";
 import { QueryParamsType } from 'services/types';
 import { AddPurchase, Purchase, PurchaseData, PurchaseMessage } from "./types";
 
-const purchase_url = `${process.env.API_ENDPOINT}/purchase`
+export const purchase_url = `${process.env.API_ENDPOINT}/purchase`
 
 export const getPurchases = (params: QueryParamsType) => {
   return api.stateGet<PurchaseData, QueryParamsType>(purchase_url, params);

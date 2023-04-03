@@ -2,23 +2,21 @@ import { confirmAlert } from 'react-confirm-alert';
 import { toast } from 'react-toastify';
 import 'react-confirm-alert/src/react-confirm-alert.css';
 import 'react-toastify/dist/ReactToastify.css';
-import { usePurchaseContext } from '../../Purchase';
 import { deletePurchase, getPurchases } from 'services/purchase';
 import { Purchase } from 'services/purchase/types';
+import { useTableContext } from 'src/components/ApiTable';
 
 type Props = {
   purchase: Purchase;
 };
 
 const DeleteComp = ({ purchase }: Props) => {
-  const { queryParams } = usePurchaseContext();
-  const { mutate } = getPurchases(queryParams);
-
+  const { tableData} = useTableContext<Purchase>();
 
   const DeleteConfirm = () => {
     deletePurchase(purchase.id).then((response) => {
       toast.success(response.data.message);
-      mutate();
+      tableData.control.refresh();
     })
     .catch(() => {
       toast.error("Maaf terjadi kesalahan pada server. Mohon coba kembali dalam beberapa saat.");

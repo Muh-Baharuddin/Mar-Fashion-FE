@@ -1,34 +1,12 @@
-import { createContext, useContext, useState } from 'react'
-import { ContextInterface, QueryParamsType } from 'services/types';
+import React from 'react'
+import { ApiTableProvider } from '../../components/ApiTable';
 import AddComp from './Table/Components/AddComp'
 import TablePurchase from './Table/TablePurchase';
 import 'react-toastify/dist/ReactToastify.css';
 
-const defaultState = {
-  queryParams: {
-    keywords: '',
-    orderBy: 'date',
-    orderType: 'DESC',
-    page: 1,
-    limit: 10,
-  },
-  setQueryParams: () => {},
-}
-
-const purchaseContext = createContext<ContextInterface>(defaultState)
-
-export const usePurchaseContext = () => {
-  return useContext(purchaseContext)
-} 
-
 export const DataPurchase = () => {
-  const [queryParams, setQueryParams] = useState<QueryParamsType>(defaultState.queryParams)
-
   return (
-    <purchaseContext.Provider value={{
-      queryParams,
-      setQueryParams,
-    }}>
+    <ApiTableProvider>
       <div className="container">
         <h3>Data Pembelian</h3>
         <div className="card">
@@ -38,6 +16,6 @@ export const DataPurchase = () => {
           <TablePurchase />
         </div>
       </div>
-    </purchaseContext.Provider>
+    </ApiTableProvider>
   )
 }

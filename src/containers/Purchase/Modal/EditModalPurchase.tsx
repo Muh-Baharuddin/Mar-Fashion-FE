@@ -1,11 +1,11 @@
 import React from 'react';
 import Modal from 'react-bootstrap/Modal';
 import { toast } from 'react-toastify';
-import { usePurchaseContext } from '../Purchase';
 import { AddPurchase, Purchase } from 'services/purchase/types';
-import { getPurchases, updatePurchase } from 'services/purchase';
+import { updatePurchase } from 'services/purchase';
 import FormComp from './FormComp';
 import 'react-toastify/dist/ReactToastify.css';
+import { useTableContext } from 'src/components/ApiTable';
 
 
 type Props = {
@@ -16,15 +16,13 @@ type Props = {
 
 function EditModalPurchase(props: Props) {
   const {showEdit, purchase, handleCloseEdit } = props
-  const { queryParams } = usePurchaseContext();
-
-  const { mutate } = getPurchases(queryParams);
+  const { tableData} = useTableContext<Purchase>();
 
   const handleEdit = (data: AddPurchase) => {
     updatePurchase(purchase.id, data).then(response => {
       toast.success(response.data.message);
       handleCloseEdit();
-      mutate();
+      tableData.control.refresh();
     })
   }
 

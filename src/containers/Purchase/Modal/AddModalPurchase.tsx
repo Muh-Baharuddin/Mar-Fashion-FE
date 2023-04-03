@@ -2,10 +2,10 @@ import React from 'react'
 import Modal from 'react-bootstrap/Modal'
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { getPurchases, postPurchase } from 'services/purchase';
-import { AddPurchase } from 'services/purchase/types';
-import { usePurchaseContext } from '../Purchase'
+import { postPurchase } from 'services/purchase';
+import { AddPurchase, Purchase } from 'services/purchase/types';
 import FormComp from './FormComp';
+import { useTableContext } from 'src/components/ApiTable';
 
 type handleShowType = {
   showAdd: boolean;
@@ -14,13 +14,12 @@ type handleShowType = {
 
 function AddModalPurchase(props: handleShowType) {
   const { showAdd, handleCloseAdd } = props
-  const { queryParams } = usePurchaseContext();
-  const { mutate } = getPurchases(queryParams);
+  const { tableData } = useTableContext<Purchase>();
 
   const handleAdd = (data: AddPurchase) => {
     postPurchase(data).then(() => {
       toast.success('Data berhasil ditambahkan');
-      mutate();
+      tableData.control.refresh();
       handleCloseAdd();
     }).catch((error) => {
       let errorMessage = "Maaf terjadi kesalahan pada server. Mohon coba kembali dalam beberapa saat.";
