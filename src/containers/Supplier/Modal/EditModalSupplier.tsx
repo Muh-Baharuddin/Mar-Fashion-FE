@@ -6,6 +6,7 @@ import { toast } from 'react-toastify';
 import { updateSupplier } from 'services/supplier';
 import { AddSupplier, Supplier } from 'services/supplier/types';
 import { useTableContext } from 'src/components/ApiTable';
+import { Button } from 'react-bootstrap';
 
 
 type Props = {
@@ -44,6 +45,12 @@ function EditModalSupplier(props: Props) {
             supplier={supplier}
           />
         </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleCloseEdit}>
+            Close
+          </Button>
+          <Button variant="primary">Submit</Button>
+        </Modal.Footer>
       </Modal>
     </>
   );

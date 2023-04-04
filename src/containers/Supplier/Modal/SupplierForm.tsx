@@ -11,6 +11,7 @@ interface SupplierForm extends SupplierFormOriginal {
   input1: number;
   input2: number;
   input3: number;
+  input4: number;
 }
 
 const fields: FormFields<SupplierForm>= {
@@ -19,7 +20,7 @@ const fields: FormFields<SupplierForm>= {
     component: TextField,
     props: (props) => {
       return {
-        onChange: props.onChange,
+        ...props,
         placeholder: "Nama"
       }
     },
@@ -27,9 +28,9 @@ const fields: FormFields<SupplierForm>= {
   address: {
     label: "Address",
     component: TextField,
-    props: ({onChange}) => {
+    props: (props) => {
       return {
-        onChange,
+        ...props,
         placeholder: "Address"
       }
     },
@@ -37,9 +38,9 @@ const fields: FormFields<SupplierForm>= {
   input1: {
     label: "Input 1",
     component: TextField,
-    props: ({onChange}) => {
+    props: (props) => {
       return {
-        onChange,
+        ...props,
         placeholder: "Input 1"
       }
     },
@@ -47,9 +48,9 @@ const fields: FormFields<SupplierForm>= {
   input2: {
     label: "Input 2",
     component: TextField,
-    props: ({onChange}) => {
+    props: (props) => {
       return {
-        onChange,
+        ...props,
         placeholder: "Input 2"
       }
     },
@@ -57,15 +58,29 @@ const fields: FormFields<SupplierForm>= {
   input3: {
     label: "Input 3",
     component: TextField,
-    props: ({onChange, ref}) => {
+    props: ({ref, ...props}) => {
       return {
-        onChange,
+        ...props,
         placeholder: "Input 3",
         innerRef: ref,
       }
     },
     depends: [['input1', 'input2'], ({input1, input2}) => {
       return Number(input1) + Number(input2);
+    }],
+  },
+  input4: {
+    label: "Input 4",
+    component: TextField,
+    props: ({ref, ...props}) => {
+      return {
+        ...props,
+        placeholder: "Input 4",
+        innerRef:ref,
+      }
+    },
+    depends: [['input3'], ({input3}) => {
+      return `ini ${input3}`
     }],
   },
 };
@@ -96,6 +111,7 @@ const SupplierForm = ({handleForm, handleCloseForm, supplier}: Props) => {
   const { control } = useForm<SupplierForm>({
     fields,
     validations: schema,
+    defaultValue: supplier as any,
   });
 
   return (
