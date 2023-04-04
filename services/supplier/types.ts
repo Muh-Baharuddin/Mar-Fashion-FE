@@ -10,6 +10,7 @@ export interface Supplier {
   account_number: string;
   account_owner: string;
   bank: string;
+  __items__: Item[];
 }
 
 export type AddSupplier = Omit<Supplier, "id">;

@@ -44,7 +44,7 @@ export const ApiTable = <T extends unknown>({control}: ApiTableProps<T>) => {
         control,
       }}
     >
-      <table className="table table-bordered">
+      <table className="table table-bordered ">
         <TableHead/>
         <TableBody/>
       </table>

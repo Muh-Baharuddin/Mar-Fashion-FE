@@ -4,12 +4,13 @@ interface TextFieldProps {
   label?: string;
   name: string;
   placeholder?: string;
-  onChange: (value: string) => void;
+  handleChange: (value: string) => void;
   innerRef: React.MutableRefObject<any>;
+  defaultValue?: string;
 }
 
 export const TextField = (props:TextFieldProps) => {
-  const { label, name, innerRef, onChange} = props;
+  const { innerRef, handleChange} = props;
   return (
     <>
       { props.label && (
@@ -24,8 +25,9 @@ export const TextField = (props:TextFieldProps) => {
         className="form-control"
         placeholder={props.placeholder}
         name={props.name}
+        defaultValue={props.defaultValue}
         onChange={(e)=> {
-          onChange(e.target.value);
+          handleChange(e.target.value);
         }}
       />
     </>

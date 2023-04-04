@@ -26,8 +26,10 @@ interface FormObject<T> {
 
 export interface ComponentProps<T> {
   error?: string;
-  onChange: (value: T[keyof T]) => void;
-  ref: React.MutableRefObject<undefined>,
+  handleChange: (value: T[keyof T]) => void;
+  ref: React.MutableRefObject<undefined>;
+  defaultValue: T[keyof T];
+  name: keyof T;
 }
 
 interface FieldError{
@@ -39,12 +41,13 @@ type FormErrors<T> = Record<keyof T, string>;
 export class FormControl<T> {
   fields: FormFields<T> = {} as FormFields<T>;
   validations?: ValidationType<T>;
-  defaultValue?: T;
+  defaultValue: T = {} as T;
   componentProps: ComponentProps<T> = {} as ComponentProps<T>;
   data: T = {} as T;
   setErrorObj: Record<keyof T, React.Dispatch<React.SetStateAction<string | undefined>>> = {} as Record<keyof T, React.Dispatch<React.SetStateAction<string | undefined>>>;
   effects: Record<keyof T, Array<keyof T>> =  {} as Record<keyof T, Array<keyof T>>;
   refs: Record<keyof T, React.MutableRefObject<any>> = {} as Record<keyof T, React.MutableRefObject<any>>;
+  submitFunction: (data: T) => void = (data) => {}; 
 
   constructor(){
 
@@ -53,6 +56,17 @@ export class FormControl<T> {
   setFields(fields: FormFields<T>) {
     this.fields = fields;
     this.setDependand(fields);
+  }
+
+  setDefaultValue(defaultValue: T) {
+    this.defaultValue = defaultValue;
+    if(!this.defaultValue){
+      return;
+    }
+
+    this.data = {
+      ...this.defaultValue,
+    };
   }
 
   setDependand(fields: FormFields<T>) {
@@ -72,7 +86,7 @@ export class FormControl<T> {
     });
   }
 
-  onSubmit(onSubmit: (data: T)=> void) {
+  submit() {
     if(this.validations) {
       const errors = this.validate(this.validations, this.data);
       if(errors) {
@@ -81,7 +95,7 @@ export class FormControl<T> {
       }
     }
 
-    onSubmit(this.data);
+    this.submitFunction(this.data);
   }
   
   validate(validations: AnyObject, data: any) {
@@ -120,17 +134,51 @@ export class FormControl<T> {
 
   setValue(name: keyof T,value: T[keyof T]): void {
     this.data[name] = value;
+    this.checkEffect(name);
   }
+
+  getValue(name: keyof T): T[keyof T] {
+    return this.data[name];
+  }
+
+  getDefaultValue(name: keyof T): T[keyof T] {
+    if( !this.defaultValue ) {
+      return undefined as T[keyof T];
+    }
+    
+    if(this.defaultValue[name]) {
+      return this.defaultValue[name];
+    }
+
+    const value = this.getDependantValue(name);
+    this.defaultValue[name] = value as NonNullable<T>[keyof T];
+    return value;
+  }
+
+  getDependantValue(name: keyof T): T[keyof T]{
+    const depends = this.getDepends(name);
+    if(!depends){
+      return undefined as T[keyof T];
+    }
+
+    const dependsValue = this.getDependData(depends[0], this.defaultValue);
+    if(Object.values(dependsValue as object).every(val => !val)){
+      return undefined as T[keyof T];
+    }
+
+    return depends[1](dependsValue);
+  };
 
   getComponentProps(name: keyof T):  ComponentProps<T> {
     const self = this;
     return {
+      name,
       error: undefined,
+      defaultValue: self.getDefaultValue(name),
       ref: self.refs[name],
-      onChange(value: T[keyof T]){
+      handleChange(value: T[keyof T]){
         self.setValue(name, value);
         self.validateIput(name, value);
-        self.checkEffect(name);
       }
     }
   }
@@ -141,8 +189,7 @@ export class FormControl<T> {
     } 
 
     this.effects[name].map(effect => {
-      const field = this.fields[effect as keyof T];
-      const depend = field.depends;
+      const depend = this.getDepends(effect as keyof T);
       if(!depend) {
         return;
       }
@@ -150,17 +197,23 @@ export class FormControl<T> {
       const dependNames = depend[0];
       const dependFunction = depend[1];
 
-      const res = dependFunction(this.getDependData(dependNames));
-      this.data[effect] = res;
+      const val = dependFunction(this.getDependData(dependNames));
+      this.setValue(effect, val);
+
       if(this.refs[effect].current) {
-        this.refs[effect].current.value = res;
+        this.refs[effect].current.value = val;
       }
     });
   }
 
-  getDependData(depends: Array<keyof T>): T {
+  getDepends(name: keyof T) {
+    const field = this.fields[name];
+    return field.depends;
+  }
+
+  getDependData(depends: Array<keyof T>, defaultData: T = this.data): T {
     return depends.reduce((data, depend) => {
-      data[depend] = this.data[depend];
+      data[depend] = defaultData[depend];
       return data;
     }, {} as T); 
   }
@@ -173,13 +226,12 @@ export class FormControl<T> {
 
     this.setErrorField(name, errors && errors[name]);
   }
-
 }
 
 export const useForm = <T extends AnyObject>(props: UseFormProps<T>): FormObject<T> => {
   const control = new FormControl<T>();
   control.setFields(props.fields);
-  control.defaultValue = props.defaultValue;
+  control.setDefaultValue(props.defaultValue ? props.defaultValue : {} as T);
   control.validations = props.validations as unknown as AnyObjectSchema;
 
   return {

@@ -8,10 +8,12 @@ interface DynamicFormProps<T>{
 }
 export const DynamicForm = <T extends unknown>(props: DynamicFormProps<T>) => {
   const { control, onSubmit } = props;
+  control.submitFunction = onSubmit;
+  
   return (
     <form onSubmit={(e)=>{
       e.preventDefault();
-      control.onSubmit(onSubmit);
+      control.submit();
     }}>
       {Object.keys(control.fields).map(key => {
         const field = control.getField(key as keyof T);
