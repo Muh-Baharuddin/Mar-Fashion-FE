@@ -5,6 +5,7 @@ import { useTableContext } from './ApiTableProvider';
 import { TableBody } from './TableComp/TableBody';
 import { TableHead } from './TableComp/TableHead';
 import { TablePagination } from './TableComp/TablePagination';
+import Table from 'react-bootstrap/Table';
 
 interface ApiTableProps<T> {
   control: ApiTableControl<T>;
@@ -44,10 +45,10 @@ export const ApiTable = <T extends unknown>({control}: ApiTableProps<T>) => {
         control,
       }}
     >
-      <table className="table table-bordered ">
+      <Table bordered hover responsive>
         <TableHead/>
         <TableBody/>
-      </table>
+      </Table>
       <div className="pagination-container">
         <TablePagination/>
       </div>
