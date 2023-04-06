@@ -1,6 +1,6 @@
 import React from 'react';
 import Modal from 'react-bootstrap/Modal';
-import FormComp from './SupplierForm';
+import SupplierForm from './SupplierForm';
 import 'react-toastify/dist/ReactToastify.css';
 import { toast } from 'react-toastify';
 import { updateSupplier } from 'services/supplier';
@@ -38,8 +38,8 @@ function EditModalSupplier(props: Props) {
         <Modal.Header closeButton>
           <Modal.Title>Edit Supplier</Modal.Title>
         </Modal.Header>
-        <Modal.Body>
-          <FormComp 
+        <Modal.Body style={{ maxHeight: 'calc(100vh - 210px)', overflowY: 'auto' }}>
+          <SupplierForm 
             handleForm={handleEdit} 
             handleCloseForm={handleCloseEdit} 
             supplier={supplier}
@@ -47,9 +47,9 @@ function EditModalSupplier(props: Props) {
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleCloseEdit}>
-            Close
+            Tutup
           </Button>
-          <Button variant="primary">Submit</Button>
+          <Button variant="primary">Kirim</Button>
         </Modal.Footer>
       </Modal>
     </>

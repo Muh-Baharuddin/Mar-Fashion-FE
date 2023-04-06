@@ -36,11 +36,11 @@ const ComponentSection = <T extends unknown>(props: {
   name: keyof T,
 }) => {
   return (
-    <>
+    <div className='mb-2'>
       <div>{props.field.label}</div>
       <InputComponent {...props}/>
       <ErrorComponent {...props} />
-    </>
+    </div>
   )
 }
 

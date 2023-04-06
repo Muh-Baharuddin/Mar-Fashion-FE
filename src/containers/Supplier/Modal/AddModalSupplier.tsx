@@ -1,11 +1,12 @@
 import React from 'react'
 import Modal from 'react-bootstrap/Modal'
-import FormComp from './SupplierForm';
+import SupplierForm from './SupplierForm';
 import 'react-toastify/dist/ReactToastify.css';
 import { toast } from 'react-toastify';
 import { postSupplier } from 'services/supplier'
 import { AddSupplier, Supplier } from 'services/supplier/types'
 import { useTableContext } from 'src/components/ApiTable';
+import { Button } from 'react-bootstrap';
 
 type handleShowType = {
   showAdd: boolean;
@@ -42,9 +43,15 @@ function AddModalSupplier(props: handleShowType) {
         <Modal.Header closeButton>
           <Modal.Title>Tambah Supplier</Modal.Title>
         </Modal.Header>
-        <Modal.Body>
-          <FormComp handleForm={handleAdd} handleCloseForm={handleCloseAdd}/>
+        <Modal.Body style={{ maxHeight: 'calc(100vh - 210px)', overflowY: 'auto' }}>
+          <SupplierForm handleForm={handleAdd} handleCloseForm={handleCloseAdd}/>
         </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleCloseAdd}>
+            Tutup
+          </Button>
+          <Button variant="primary">Kirim</Button>
+        </Modal.Footer>
       </Modal>
     </>
   )
