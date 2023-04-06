@@ -5,7 +5,8 @@ import 'react-toastify/dist/ReactToastify.css';
 import { toast } from 'react-toastify';
 import { updateSupplier } from 'services/supplier';
 import { AddSupplier, Supplier } from 'services/supplier/types';
-import { useTableContext } from 'src/components/ApiTable';
+import { useTableContext } from '../../../components/ApiTable';
+import { useFormContext } from '../../../components/DynamicForm';
 import { Button } from 'react-bootstrap';
 
 
@@ -18,6 +19,7 @@ type Props = {
 function EditModalSupplier(props: Props) {
   const {showEdit, supplier, handleCloseEdit } = props
   const { tableData} = useTableContext<Supplier>();
+  const { formData } = useFormContext<Supplier>()
 
   const handleEdit = (data: AddSupplier) => {
     updateSupplier(supplier.id, data).then(response => {
@@ -49,7 +51,7 @@ function EditModalSupplier(props: Props) {
           <Button variant="secondary" onClick={handleCloseEdit}>
             Tutup
           </Button>
-          <Button variant="primary">Kirim</Button>
+          <Button variant="primary" onClick={() => handleEdit(formData.control.data)}>Kirim</Button>
         </Modal.Footer>
       </Modal>
     </>
