@@ -5,7 +5,8 @@ import 'react-toastify/dist/ReactToastify.css';
 import { toast } from 'react-toastify';
 import { postSupplier } from 'services/supplier'
 import { AddSupplier, Supplier } from 'services/supplier/types'
-import { useTableContext } from 'src/components/ApiTable';
+import { useTableContext } from '../../../components/ApiTable';
+import { useFormContext } from '../../../components/DynamicForm';
 import { Button } from 'react-bootstrap';
 
 type handleShowType = {
@@ -16,6 +17,7 @@ type handleShowType = {
 function AddModalSupplier(props: handleShowType) {
   const { showAdd, handleCloseAdd } = props
   const { tableData } = useTableContext<Supplier>();
+  const { formData } = useFormContext<Supplier>()
 
   const handleAdd = (data: AddSupplier) => {
     postSupplier(data).then(() => {
@@ -31,6 +33,8 @@ function AddModalSupplier(props: handleShowType) {
       handleCloseAdd();
     })
   }
+
+  
 
   return (
     <>
@@ -50,7 +54,7 @@ function AddModalSupplier(props: handleShowType) {
           <Button variant="secondary" onClick={handleCloseAdd}>
             Tutup
           </Button>
-          <Button variant="primary">Kirim</Button>
+          <Button variant="primary" onClick={() => handleAdd(formData.control.data)}>Kirim</Button>
         </Modal.Footer>
       </Modal>
     </>

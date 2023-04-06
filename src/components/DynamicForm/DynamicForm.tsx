@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react'
 import { Field, FormControl, useError, useInputRef } from './FormControl'
 import { Button } from 'react-bootstrap';
+import { useFormContext } from './DynamicFormProvider';
 
 interface DynamicFormProps<T>{
   control: FormControl<T>;
@@ -9,6 +10,11 @@ interface DynamicFormProps<T>{
 export const DynamicForm = <T extends unknown>(props: DynamicFormProps<T>) => {
   const { control, onSubmit } = props;
   control.submitFunction = onSubmit;
+
+  try {
+    const { setControl } = useFormContext<T>();
+    setControl(control);
+  } catch(err) {}
   
   return (
     <form onSubmit={(e)=>{

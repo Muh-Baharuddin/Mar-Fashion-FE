@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import React from 'react';
 import 'bootstrap-icons/font/bootstrap-icons.css'
 import { supplier_url } from 'services/supplier';
 import { ApiTable, ApiTableControl, ApiTableControlProps, KeywordsFilter } from '../../../components/ApiTable'
