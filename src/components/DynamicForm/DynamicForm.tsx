@@ -14,9 +14,7 @@ export const DynamicForm = <T extends unknown>(props: DynamicFormProps<T>) => {
   } catch(err) {}
   
   return (
-    <form onSubmit={(e)=>{
-      e.preventDefault();
-    }}>
+    <form>
       {Object.keys(control.fields).map(key => {
         const field = control.getField(key as keyof T);
         return (
