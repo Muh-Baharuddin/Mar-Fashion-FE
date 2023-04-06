@@ -23,10 +23,9 @@ export const CategoryField = (props: SelectFieldProps<Category>) => {
 
   return (
     <>
-      <label className="form-label">
-        {props.label}
-      </label>
       <SelectField 
+        creatable={true}
+        isMulti={true}
         data={data?.data || []}
         defaultValue={props.defaultValue}
         handleInput={onInput}

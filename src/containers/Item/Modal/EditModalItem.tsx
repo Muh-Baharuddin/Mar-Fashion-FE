@@ -1,12 +1,13 @@
 import React from 'react';
 import Modal from 'react-bootstrap/Modal';
+import ItemForm from './ItemForm';
 import 'react-toastify/dist/ReactToastify.css';
 import { toast } from 'react-toastify';
-import { useItemContext } from '../Item';
+import { Button } from 'react-bootstrap';
 import { updateItem } from 'services/item';
 import { AddItem, Item } from 'services/item/types';
-import FormComp from './FormItem';
-import FormItemTest from './FormItem';
+import { useTableContext } from '../../../components/ApiTable';
+import { useFormContext } from '../../../components/DynamicForm';
 
 
 type Props = {
@@ -17,13 +18,14 @@ type Props = {
 
 function EditModalItem(props: Props) {
   const {showEdit, item, handleCloseEdit } = props
-  const {control} = useItemContext();
+  const { tableData } = useTableContext<Item>();
+  const { formData } = useFormContext<Item>()
 
   const handleEdit = (data: AddItem) => {
     updateItem(item.id, data).then(response => {
       toast.success(response.data.message);
       handleCloseEdit();
-      control.refresh();
+      tableData.control.refresh();
     })
   }
 
@@ -39,12 +41,19 @@ function EditModalItem(props: Props) {
           <Modal.Title>Edit Barang</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <FormItemTest 
+          <ItemForm 
             handleForm={handleEdit} 
-            handleCloseForm={handleCloseEdit} 
             item={item}
           />
         </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleCloseEdit}>
+            Tutup
+          </Button>
+          <Button variant="primary" onClick={() => {formData.control.submit()}}>
+            Kirim
+          </Button>
+        </Modal.Footer>
       </Modal>
     </>
   );
