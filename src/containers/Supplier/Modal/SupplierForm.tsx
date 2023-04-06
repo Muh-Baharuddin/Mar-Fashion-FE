@@ -81,8 +81,6 @@ const fields: FormFields<SupplierForm>= {
 };
 
 type Props = {
-  handleForm: (data: AddSupplier) => void,
-  handleCloseForm: () => void,
   supplier? : Supplier;
 };
 
@@ -102,7 +100,7 @@ const schema = yup.object().shape({
   bank: yup.string().required('Bank Tidak Boleh Kosong'),
 }) as yup.ObjectSchema<SupplierForm>;
 
-const SupplierForm = ({handleForm, handleCloseForm, supplier}: Props) => {
+const SupplierForm = ({ supplier }: Props) => {
   const { control } = useForm<SupplierForm>({
     fields,
     validations: schema,
@@ -112,7 +110,6 @@ const SupplierForm = ({handleForm, handleCloseForm, supplier}: Props) => {
   return (
     <DynamicForm
       control={control}
-      onSubmit={(data)=> console.log("data", data)}
     />
   )
 }

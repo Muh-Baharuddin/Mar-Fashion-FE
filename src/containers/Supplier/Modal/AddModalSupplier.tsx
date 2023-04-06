@@ -53,7 +53,7 @@ function AddModalSupplier(props: handleShowType) {
           <Modal.Title>Tambah Supplier</Modal.Title>
         </Modal.Header>
         <Modal.Body style={{ maxHeight: 'calc(100vh - 210px)', overflowY: 'auto' }}>
-          <SupplierForm handleForm={handleAdd} handleCloseForm={handleCloseAdd}/>
+          <SupplierForm />
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleCloseAdd}>
