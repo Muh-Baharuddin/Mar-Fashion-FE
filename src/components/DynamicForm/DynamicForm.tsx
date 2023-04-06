@@ -5,7 +5,7 @@ import { useFormContext } from './DynamicFormProvider';
 
 interface DynamicFormProps<T>{
   control: FormControl<T>;
-  onSubmit: (data: T) => void;
+  onSubmit?: (data: T) => void;
 }
 export const DynamicForm = <T extends unknown>(props: DynamicFormProps<T>) => {
   const { control, onSubmit } = props;
@@ -27,11 +27,6 @@ export const DynamicForm = <T extends unknown>(props: DynamicFormProps<T>) => {
           <ComponentSection field={field} key={key} control={control} name={key as keyof T}/>
         )
       })}
-      <div>
-        <Button variant="primary" onClick={() => {}} type="submit">
-          Submit
-        </Button>
-      </div>
     </form>
   )
 }

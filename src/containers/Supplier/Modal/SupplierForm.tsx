@@ -5,13 +5,7 @@ import { TextField } from 'src/components/Form/TextField';
 import { DynamicForm, FormFields, useForm } from 'src/components/DynamicForm';
 
 
-type SupplierFormOriginal = Omit<AddSupplier, '__items__'>;
-interface SupplierForm extends SupplierFormOriginal {
-  input1: number;
-  input2: number;
-  input3: number;
-  input4: number;
-}
+type SupplierForm = Omit<AddSupplier, '__items__'>;
 
 const fields: FormFields<SupplierForm>= {
   name: {
@@ -84,54 +78,6 @@ const fields: FormFields<SupplierForm>= {
       }
     },
   },
-  input1: {
-    label: "Input 1",
-    component: TextField,
-    props: (props) => {
-      return {
-        ...props,
-        placeholder: "Input 1"
-      }
-    },
-  },
-  input2: {
-    label: "Input 2",
-    component: TextField,
-    props: (props) => {
-      return {
-        ...props,
-        placeholder: "Input 2"
-      }
-    },
-  },
-  input3: {
-    label: "Input 3",
-    component: TextField,
-    props: ({ref, ...props}) => {
-      return {
-        ...props,
-        placeholder: "Input 3",
-        innerRef: ref,
-      }
-    },
-    depends: [['input1', 'input2'], ({input1, input2}) => {
-      return Number(input1) + Number(input2);
-    }],
-  },
-  input4: {
-    label: "Input 4",
-    component: TextField,
-    props: ({ref, ...props}) => {
-      return {
-        ...props,
-        placeholder: "Input 4",
-        innerRef:ref,
-      }
-    },
-    depends: [['input3'], ({input3}) => {
-      return `ini ${input3}`
-    }],
-  },
 };
 
 type Props = {
@@ -166,7 +112,6 @@ const SupplierForm = ({handleForm, handleCloseForm, supplier}: Props) => {
   return (
     <DynamicForm
       control={control}
-      onSubmit={(data)=> console.log("data", data)}
     />
   )
 }
