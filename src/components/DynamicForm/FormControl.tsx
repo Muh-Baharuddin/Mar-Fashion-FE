@@ -47,7 +47,8 @@ export class FormControl<T> {
   setErrorObj: Record<keyof T, React.Dispatch<React.SetStateAction<string | undefined>>> = {} as Record<keyof T, React.Dispatch<React.SetStateAction<string | undefined>>>;
   effects: Record<keyof T, Array<keyof T>> =  {} as Record<keyof T, Array<keyof T>>;
   refs: Record<keyof T, React.MutableRefObject<any>> = {} as Record<keyof T, React.MutableRefObject<any>>;
-  submitFunction?: (data: T) => void = (data) => {}; 
+  submitFunction?: (data: T) => void = (data) => {};
+  isError?: boolean = true; 
 
   constructor(){
 
@@ -94,7 +95,7 @@ export class FormControl<T> {
         return;
       }
     }
-
+    this.isError = false
     this.submitFunction && this.submitFunction(this.data);
   }
   

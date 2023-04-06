@@ -112,6 +112,7 @@ const SupplierForm = ({handleForm, handleCloseForm, supplier}: Props) => {
   return (
     <DynamicForm
       control={control}
+      onSubmit={(data)=> console.log("data", data)}
     />
   )
 }

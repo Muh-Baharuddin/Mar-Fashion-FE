@@ -34,7 +34,12 @@ function AddModalSupplier(props: handleShowType) {
     })
   }
 
-  
+  const handleSend = (data: AddSupplier) => {
+    formData.control.submit()
+    if(!formData.control.isError) {
+      handleAdd(data)
+    }
+  }
 
   return (
     <>
@@ -54,11 +59,13 @@ function AddModalSupplier(props: handleShowType) {
           <Button variant="secondary" onClick={handleCloseAdd}>
             Tutup
           </Button>
-          <Button variant="primary" onClick={() => handleAdd(formData.control.data)}>Kirim</Button>
+          <Button variant="primary" onClick={() => {handleSend(formData.control.data)}}>
+            Kirim
+          </Button>
         </Modal.Footer>
       </Modal>
     </>
-  )
+  )   
 }
 
 export default AddModalSupplier
