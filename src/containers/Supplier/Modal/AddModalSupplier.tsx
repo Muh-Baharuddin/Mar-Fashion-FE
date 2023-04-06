@@ -1,11 +1,13 @@
 import React from 'react'
 import Modal from 'react-bootstrap/Modal'
-import FormComp from './SupplierForm';
+import SupplierForm from './SupplierForm';
 import 'react-toastify/dist/ReactToastify.css';
 import { toast } from 'react-toastify';
 import { postSupplier } from 'services/supplier'
 import { AddSupplier, Supplier } from 'services/supplier/types'
-import { useTableContext } from 'src/components/ApiTable';
+import { useTableContext } from '../../../components/ApiTable';
+import { useFormContext } from '../../../components/DynamicForm';
+import { Button } from 'react-bootstrap';
 
 type handleShowType = {
   showAdd: boolean;
@@ -15,6 +17,7 @@ type handleShowType = {
 function AddModalSupplier(props: handleShowType) {
   const { showAdd, handleCloseAdd } = props
   const { tableData } = useTableContext<Supplier>();
+  const { formData } = useFormContext<Supplier>()
 
   const handleAdd = (data: AddSupplier) => {
     postSupplier(data).then(() => {
@@ -42,12 +45,20 @@ function AddModalSupplier(props: handleShowType) {
         <Modal.Header closeButton>
           <Modal.Title>Tambah Supplier</Modal.Title>
         </Modal.Header>
-        <Modal.Body>
-          <FormComp handleForm={handleAdd} handleCloseForm={handleCloseAdd}/>
+        <Modal.Body style={{ maxHeight: 'calc(100vh - 210px)', overflowY: 'auto' }}>
+          <SupplierForm handleForm={handleAdd} />
         </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleCloseAdd}>
+            Tutup
+          </Button>
+          <Button variant="primary" onClick={() => {formData.control.submit()}}>
+            Kirim
+          </Button>
+        </Modal.Footer>
       </Modal>
     </>
-  )
+  )   
 }
 
 export default AddModalSupplier

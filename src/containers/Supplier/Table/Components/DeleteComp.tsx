@@ -1,11 +1,10 @@
 import { confirmAlert } from 'react-confirm-alert';
 import { toast } from 'react-toastify';
-import 'react-confirm-alert/src/react-confirm-alert.css';
-import 'react-toastify/dist/ReactToastify.css';
-import { useSupplierContext } from "../../Supplier";
-import { deleteSupplier, getSuppliers } from "services/supplier";
+import { deleteSupplier } from "services/supplier";
 import { Supplier } from "services/supplier/types";
 import { useApiTableContext } from 'src/components/ApiTable';
+import 'react-confirm-alert/src/react-confirm-alert.css';
+import 'react-toastify/dist/ReactToastify.css';
 
 type Props = {
   supplier: Supplier;

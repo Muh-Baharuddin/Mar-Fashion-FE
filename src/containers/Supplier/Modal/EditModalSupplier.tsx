@@ -1,11 +1,12 @@
 import React from 'react';
 import Modal from 'react-bootstrap/Modal';
-import FormComp from './SupplierForm';
+import SupplierForm from './SupplierForm';
 import 'react-toastify/dist/ReactToastify.css';
 import { toast } from 'react-toastify';
 import { updateSupplier } from 'services/supplier';
 import { AddSupplier, Supplier } from 'services/supplier/types';
-import { useTableContext } from 'src/components/ApiTable';
+import { useTableContext } from '../../../components/ApiTable';
+import { useFormContext } from '../../../components/DynamicForm';
 import { Button } from 'react-bootstrap';
 
 
@@ -18,6 +19,7 @@ type Props = {
 function EditModalSupplier(props: Props) {
   const {showEdit, supplier, handleCloseEdit } = props
   const { tableData} = useTableContext<Supplier>();
+  const { formData } = useFormContext<Supplier>()
 
   const handleEdit = (data: AddSupplier) => {
     updateSupplier(supplier.id, data).then(response => {
@@ -38,18 +40,17 @@ function EditModalSupplier(props: Props) {
         <Modal.Header closeButton>
           <Modal.Title>Edit Supplier</Modal.Title>
         </Modal.Header>
-        <Modal.Body>
-          <FormComp 
+        <Modal.Body style={{ maxHeight: 'calc(100vh - 210px)', overflowY: 'auto' }}>
+          <SupplierForm 
             handleForm={handleEdit} 
-            handleCloseForm={handleCloseEdit} 
             supplier={supplier}
           />
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleCloseEdit}>
-            Close
+            Tutup
           </Button>
-          <Button variant="primary">Submit</Button>
+          <Button variant="primary" onClick={() => {formData.control.submit()}}>Kirim</Button>
         </Modal.Footer>
       </Modal>
     </>

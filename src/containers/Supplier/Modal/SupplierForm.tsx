@@ -1,20 +1,11 @@
 import React from 'react'
-import Button from 'react-bootstrap/Button';
 import * as yup from 'yup';
 import { AddSupplier, Supplier } from 'services/supplier/types';
 import { TextField } from 'src/components/Form/TextField';
 import { DynamicForm, FormFields, useForm } from 'src/components/DynamicForm';
 
 
-type SupplierFormOriginal = Pick<Supplier, 'name' | 'address'>;
-interface SupplierForm extends SupplierFormOriginal {
-  input1: number;
-  input2: number;
-  input3: number;
-  input4: number;
-}
-
-const fields: FormFields<SupplierForm>= {
+const fields: FormFields<AddSupplier>= {
   name: {
     label: "Nama",
     component: TextField,
@@ -26,89 +17,90 @@ const fields: FormFields<SupplierForm>= {
     },
   },
   address: {
-    label: "Address",
+    label: "Alamat",
     component: TextField,
     props: (props) => {
       return {
         ...props,
-        placeholder: "Address"
+        placeholder: "Alamat"
       }
     },
   },
-  input1: {
-    label: "Input 1",
+  city: {
+    label: "Kota",
     component: TextField,
     props: (props) => {
       return {
         ...props,
-        placeholder: "Input 1"
+        placeholder: "Kota"
       }
     },
   },
-  input2: {
-    label: "Input 2",
+  phone_number: {
+    label: "Nomor telepon",
     component: TextField,
     props: (props) => {
       return {
         ...props,
-        placeholder: "Input 2"
+        placeholder: "Nomor telepon"
       }
     },
   },
-  input3: {
-    label: "Input 3",
+  account_number: {
+    label: "Nomor Rekening",
     component: TextField,
-    props: ({ref, ...props}) => {
+    props: (props) => {
       return {
         ...props,
-        placeholder: "Input 3",
-        innerRef: ref,
+        placeholder: "Nomor Rekening"
       }
     },
-    depends: [['input1', 'input2'], ({input1, input2}) => {
-      return Number(input1) + Number(input2);
-    }],
   },
-  input4: {
-    label: "Input 4",
+  account_owner: {
+    label: "Atas Nama Rekening",
     component: TextField,
-    props: ({ref, ...props}) => {
+    props: (props) => {
       return {
         ...props,
-        placeholder: "Input 4",
-        innerRef:ref,
+        placeholder: "Atas Nama Rekening"
       }
     },
-    depends: [['input3'], ({input3}) => {
-      return `ini ${input3}`
-    }],
+  },
+  bank: {
+    label: "Bank",
+    component: TextField,
+    props: (props) => {
+      return {
+        ...props,
+        placeholder: "Bank"
+      }
+    },
   },
 };
 
 type Props = {
   handleForm: (data: AddSupplier) => void,
-  handleCloseForm: () => void,
   supplier? : Supplier;
 };
 
 const schema = yup.object().shape({
   name: yup.string().required('Nama Tidak Boleh Kosong'),
   address: yup.string().required('Alamat Tidak Boleh Kosong'),
-  // city: yup.string().required('Kota Tidak Boleh Kosong'),
-  // phone_number: yup
-  //   .string()
-  //   .required('Nomor Telepon Tidak Boleh Kosong')
-  //   .min(10, 'Nomor Telepon Minimal 10 Digit'),
-  // account_number: yup
-  //   .string()
-  //   .required('Nomor Rekening Tidak Boleh Kosong')
-  //   .min(10, 'Nomor Rekening Minimal 10 Digit'),
-  // account_owner: yup.string().required('Nama Pemilik Rekening Tidak Boleh Kosong'),
-  // bank: yup.string().required('Bank Tidak Boleh Kosong'),
-}) as yup.ObjectSchema<SupplierForm>;
+  city: yup.string().required('Kota Tidak Boleh Kosong'),
+  phone_number: yup
+    .string()
+    .required('Nomor Telepon Tidak Boleh Kosong')
+    .min(10, 'Nomor Telepon Minimal 10 Digit'),
+  account_number: yup
+    .string()
+    .required('Nomor Rekening Tidak Boleh Kosong')
+    .min(10, 'Nomor Rekening Minimal 10 Digit'),
+  account_owner: yup.string().required('Nama Pemilik Rekening Tidak Boleh Kosong'),
+  bank: yup.string().required('Bank Tidak Boleh Kosong'),
+}) as yup.ObjectSchema<AddSupplier>;
 
-const SupplierForm = ({handleForm, handleCloseForm, supplier}: Props) => {
-  const { control } = useForm<SupplierForm>({
+const SupplierForm = ({handleForm, supplier}: Props) => {
+  const { control } = useForm<AddSupplier>({
     fields,
     validations: schema,
     defaultValue: supplier as any,
@@ -117,7 +109,7 @@ const SupplierForm = ({handleForm, handleCloseForm, supplier}: Props) => {
   return (
     <DynamicForm
       control={control}
-      onSubmit={(data)=> console.log("data", data)}
+      onSubmit={handleForm}
     />
   )
 }
