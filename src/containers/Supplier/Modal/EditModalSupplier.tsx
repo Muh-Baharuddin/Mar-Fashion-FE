@@ -29,13 +29,6 @@ function EditModalSupplier(props: Props) {
     })
   }
 
-  const handleSend = (data: AddSupplier) => {
-    formData.control.submit()
-    if(!formData.control.isError) {
-      handleEdit(data)
-    }
-  }
-
   return (
     <>
       <Modal
@@ -48,13 +41,16 @@ function EditModalSupplier(props: Props) {
           <Modal.Title>Edit Supplier</Modal.Title>
         </Modal.Header>
         <Modal.Body style={{ maxHeight: 'calc(100vh - 210px)', overflowY: 'auto' }}>
-          <SupplierForm supplier={supplier} />
+          <SupplierForm 
+            handleForm={handleEdit} 
+            supplier={supplier}
+          />
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleCloseEdit}>
             Tutup
           </Button>
-          <Button variant="primary" onClick={() => {handleSend(formData.control.data)}}>Kirim</Button>
+          <Button variant="primary" onClick={() => {formData.control.submit()}}>Kirim</Button>
         </Modal.Footer>
       </Modal>
     </>

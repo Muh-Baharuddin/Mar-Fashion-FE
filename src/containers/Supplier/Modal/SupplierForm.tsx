@@ -5,9 +5,7 @@ import { TextField } from 'src/components/Form/TextField';
 import { DynamicForm, FormFields, useForm } from 'src/components/DynamicForm';
 
 
-type SupplierForm = Omit<AddSupplier, '__items__'>;
-
-const fields: FormFields<SupplierForm>= {
+const fields: FormFields<AddSupplier>= {
   name: {
     label: "Nama",
     component: TextField,
@@ -81,6 +79,7 @@ const fields: FormFields<SupplierForm>= {
 };
 
 type Props = {
+  handleForm: (data: AddSupplier) => void,
   supplier? : Supplier;
 };
 
@@ -98,10 +97,10 @@ const schema = yup.object().shape({
     .min(10, 'Nomor Rekening Minimal 10 Digit'),
   account_owner: yup.string().required('Nama Pemilik Rekening Tidak Boleh Kosong'),
   bank: yup.string().required('Bank Tidak Boleh Kosong'),
-}) as yup.ObjectSchema<SupplierForm>;
+}) as yup.ObjectSchema<AddSupplier>;
 
-const SupplierForm = ({ supplier }: Props) => {
-  const { control } = useForm<SupplierForm>({
+const SupplierForm = ({handleForm, supplier}: Props) => {
+  const { control } = useForm<AddSupplier>({
     fields,
     validations: schema,
     defaultValue: supplier as any,
@@ -110,6 +109,7 @@ const SupplierForm = ({ supplier }: Props) => {
   return (
     <DynamicForm
       control={control}
+      onSubmit={handleForm}
     />
   )
 }

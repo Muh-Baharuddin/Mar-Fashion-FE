@@ -34,13 +34,6 @@ function AddModalSupplier(props: handleShowType) {
     })
   }
 
-  const handleSend = (data: AddSupplier) => {
-    formData.control.submit()
-    if(!formData.control.isError) {
-      handleAdd(data)
-    }
-  }
-
   return (
     <>
       <Modal
@@ -53,13 +46,13 @@ function AddModalSupplier(props: handleShowType) {
           <Modal.Title>Tambah Supplier</Modal.Title>
         </Modal.Header>
         <Modal.Body style={{ maxHeight: 'calc(100vh - 210px)', overflowY: 'auto' }}>
-          <SupplierForm />
+          <SupplierForm handleForm={handleAdd} />
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleCloseAdd}>
             Tutup
           </Button>
-          <Button variant="primary" onClick={() => {handleSend(formData.control.data)}}>
+          <Button variant="primary" onClick={() => {formData.control.submit()}}>
             Kirim
           </Button>
         </Modal.Footer>

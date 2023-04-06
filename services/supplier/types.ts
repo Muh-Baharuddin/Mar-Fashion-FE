@@ -13,7 +13,7 @@ export interface Supplier {
   __items__: Item[];
 }
 
-export type AddSupplier = Omit<Supplier, "id">;
+export type AddSupplier = Omit<Supplier, "id" | "__items__">;
 
 export type SupplierData = Data<Supplier>
 
