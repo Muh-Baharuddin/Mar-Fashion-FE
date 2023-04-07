@@ -24,7 +24,7 @@ const fields: FormFields<AddItem> = {
     props: (props) => {
       return {
         ...props,
-        placeholder: "Kategori"
+        placeholder: "Kategori",
       }
     }
   },
@@ -34,7 +34,8 @@ const fields: FormFields<AddItem> = {
     props: (props) => {
       return {
         ...props,
-        placeholder: "Harga Modal"
+        placeholder: "Harga Modal",
+        currency: true
       }
     }
   },

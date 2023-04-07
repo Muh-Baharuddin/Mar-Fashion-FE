@@ -27,6 +27,7 @@
     "jwt-decode": "^3.1.2",
     "lodash.debounce": "^4.0.8",
     "next": "13.0.1",
+    "numeral": "^2.0.6",
     "react": "^18.2.0",
     "react-bootstrap": "^2.5.0",
     "react-chartjs-2": "^4.3.1",
@@ -47,6 +48,7 @@
   "devDependencies": {
     "@types/lodash.debounce": "^4.0.7",
     "@types/node": "^18.7.23",
+    "@types/numeral": "^2.0.2",
     "@types/react": "^18.0.21",
     "@types/react-dom": "^18.0.6",
     "@typescript-eslint/eslint-plugin": "^5.38.1",
