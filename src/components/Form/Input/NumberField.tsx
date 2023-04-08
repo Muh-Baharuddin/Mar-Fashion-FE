@@ -17,7 +17,7 @@ export const NumberField = (props:NumberFieldProps) => {
         name={props.name}
         defaultValue={props.defaultValue}
         onChange={(e)=> {
-          const value = parseInt(e.target.value, 10);
+          const value = parseInt(e.target.value);
           handleChange(value);
         }}
       />

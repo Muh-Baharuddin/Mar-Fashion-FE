@@ -2,7 +2,7 @@ import React from 'react'
 import ReactSelect, { MultiValue, SingleValue } from 'react-select'
 import CreatableSelect from 'react-select/creatable';
 import debounce from "lodash.debounce";
-import { SelectBaseProps } from './types';
+import { SelectBaseProps } from '../types';
 
 interface SelectValue<T>{
   value: T[keyof T];

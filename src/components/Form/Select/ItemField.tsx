@@ -1,22 +1,23 @@
 import React, { useState } from 'react'
-import { SelectFieldProps } from './types';
-import { getSuppliers } from 'services/supplier';
-import { Supplier } from 'services/supplier/types';
+import { getItems } from 'services/item';
+import { Item } from 'services/item/types';
+import { SelectFieldProps } from '../types';
 import { SelectField } from './SelectField';
 
-export const SupplierField = (props: SelectFieldProps<Supplier>) => {
+export const ItemField = (props: SelectFieldProps<Item>) => {
   const [params, setQueryParams] = useState({
     keywords: '',
-    orderBy: 'name',
+    orderBy: 'brand',
     orderType: 'ASC',
     page: 1,
     limit: 10,
   });
 
-  const { data } = getSuppliers(params);
-  const onChange = (data: Supplier | Supplier[]) => {
+  const { data } = getItems(params);
+  const onChange = (data: Item | Item[]) => {
     props.onChange && props.onChange(data);
   };
+
   const onInput = (keywords: string) => {
     setQueryParams(prev => ({
       ...prev,
@@ -26,11 +27,15 @@ export const SupplierField = (props: SelectFieldProps<Supplier>) => {
 
   return (
     <>
+      <label className="form-label">
+        {props.label}
+      </label>
       <SelectField 
         data={data?.data || []}
         defaultValue={props.defaultValue}
         handleInput={onInput}
         handleChange={onChange}
+        keyLabel='brand'
         {...props}
       />
     </>
