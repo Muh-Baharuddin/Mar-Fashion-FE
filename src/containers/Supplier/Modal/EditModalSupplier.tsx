@@ -22,11 +22,12 @@ function EditModalSupplier(props: Props) {
   const { formData } = useFormContext<Supplier>()
 
   const handleEdit = (data: AddSupplier) => {
-    updateSupplier(supplier.id, data).then(response => {
-      toast.success(response.data.message);
-      handleCloseEdit();
-      tableData.control.refresh();
-    })
+    console.log("data", data)
+    // updateSupplier(supplier.id, data).then(response => {
+    //   toast.success(response.data.message);
+    //   handleCloseEdit();
+    //   tableData.control.refresh();
+    // })
   }
 
   return (
@@ -36,6 +37,7 @@ function EditModalSupplier(props: Props) {
         onHide={handleCloseEdit}
         backdrop="static"
         keyboard={false}
+        size='xl'
       >
         <Modal.Header closeButton>
           <Modal.Title>Edit Supplier</Modal.Title>

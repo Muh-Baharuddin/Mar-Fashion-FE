@@ -1,9 +1,9 @@
 import React, { useRef, useState } from 'react';
 import { AnyObject, AnyObjectSchema, ObjectSchema, ValidationError } from 'yup';
 
-type ValidationType<T> = AnyObjectSchema;
+export type ValidationType<T> = AnyObjectSchema;
 
-interface UseFormProps<T extends AnyObject>{
+export interface UseFormProps<T extends AnyObject>{
   fields: FormFields<T>;
   validations?: ObjectSchema<T>;
   defaultValue?: T,
@@ -18,7 +18,7 @@ export interface Field<T> {
   depends?: [Array<keyof T>, (data: T) => T[keyof T]];
 }
 
-interface FormObject<T> {
+export interface FormObject<T> {
   onChange: (name: keyof T, value: any) => void;
   errors: FormErrors<T>;
   control: FormControl<T>;
@@ -27,22 +27,21 @@ interface FormObject<T> {
 export interface ComponentProps<T> {
   error?: string;
   handleChange: (value: T[keyof T]) => void;
-  ref: React.MutableRefObject<undefined>;
+  innerRef: React.MutableRefObject<undefined>;
   defaultValue: T[keyof T];
   name: keyof T;
 }
 
-interface FieldError{
+export interface FieldError{
   message: string;
 }
 
-type FormErrors<T> = Record<keyof T, string>;
+export type FormErrors<T> = Record<keyof T, string>;
 
 export class FormControl<T> {
   fields: FormFields<T> = {} as FormFields<T>;
   validations?: ValidationType<T>;
   defaultValue: T = {} as T;
-  componentProps: ComponentProps<T> = {} as ComponentProps<T>;
   data: T = {} as T;
   setErrorObj: Record<keyof T, React.Dispatch<React.SetStateAction<string | undefined>>> = {} as Record<keyof T, React.Dispatch<React.SetStateAction<string | undefined>>>;
   effects: Record<keyof T, Array<keyof T>> =  {} as Record<keyof T, Array<keyof T>>;
@@ -174,7 +173,7 @@ export class FormControl<T> {
       name,
       error: undefined,
       defaultValue: self.getDefaultValue(name),
-      ref: self.refs[name],
+      innerRef: self.refs[name],
       handleChange(value: T[keyof T]){
         self.setValue(name, value);
         self.validateIput(name, value);
