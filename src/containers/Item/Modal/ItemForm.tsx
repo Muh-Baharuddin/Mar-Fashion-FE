@@ -2,11 +2,11 @@ import React from 'react'
 import * as yup from 'yup';
 import { AddItem, Item } from 'services/item/types';
 import { DynamicForm, FormFields, useForm } from '../../../components/DynamicForm';
-import { TextField } from '../../../components/Form/TextField';
-import { NumberField } from '../../../components/Form/NumberField';
-import { CategoryField } from '../../../components/Form/CategoryField';
-import { SupplierField } from '../../../components/Form/SupplierField';
-import { CurrencyField } from '../../../components/Form/CurrencyField';
+import { TextField } from '../../../components/Form/Input/TextField';
+import { NumberField } from '../../../components/Form/Input/NumberField';
+import { CategoryField } from '../../../components/Form/Select/CategoryField';
+import { SupplierField } from '../../../components/Form/Select/SupplierField';
+import { CurrencyField } from '../../../components/Form/Input/CurrencyField';
 
 const fields: FormFields<AddItem> = {
   brand: {

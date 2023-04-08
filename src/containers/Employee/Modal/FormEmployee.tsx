@@ -2,9 +2,9 @@ import React from 'react'
 import * as yup from 'yup';
 import { AddEmployee, Employee } from 'services/employee/types';
 import { DynamicForm, FormFields, useForm } from 'src/components/DynamicForm';
-import { TextField } from '../../../components/Form/TextField';
-import { DateField } from '../../../components/Form/DateField';
-import { CurrencyField } from '../../../components/Form/CurrencyField';
+import { TextField } from '../../../components/Form/Input/TextField';
+import { DateField } from '../../../components/Form/Input/DateField';
+import { CurrencyField } from '../../../components/Form/Input/CurrencyField';
 
 const fields: FormFields<AddEmployee> = {
   name: {

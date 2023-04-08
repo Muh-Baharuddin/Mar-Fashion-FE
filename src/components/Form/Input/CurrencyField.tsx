@@ -18,7 +18,7 @@ export const CurrencyField = (props: CurrencyFieldProps) => {
       decimalsLimit={2}
       onValueChange={(value) =>{
         if (value !== undefined) {
-          const parsedValue = parseInt(value, 10);
+          const parsedValue = parseInt(value);
           handleChange(parsedValue);
         }
       }}

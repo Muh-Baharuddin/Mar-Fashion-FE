@@ -1,7 +1,7 @@
 import React from 'react'
 import * as yup from 'yup';
 import { AddSupplier, Supplier } from 'services/supplier/types';
-import { TextField } from 'src/components/Form/TextField';
+import { TextField } from 'src/components/Form/Input/TextField';
 import { DynamicForm, FormFields, useForm } from 'src/components/DynamicForm';
 
 
