@@ -1,11 +1,11 @@
 import 'bootstrap-icons/font/bootstrap-icons.css'
-import { ApiTable, ApiTableControl, KeywordsFilter } from '../../../components/ApiTable'
 import EditComp from './Components/EditComp';
 import DeleteComp from './Components/DeleteComp';
+import { ApiTable, ApiTableControl, ApiTableControlProps, KeywordsFilter } from '../../../components/ApiTable'
 import { Employee } from 'services/employee/types';
 import { employee_url } from 'services/employee';
 
-export const control = new ApiTableControl<Employee>({
+const tableProps: ApiTableControlProps<Employee> = {
   columns: [
     {
       label: "Nama",
@@ -58,10 +58,10 @@ export const control = new ApiTableControl<Employee>({
   url: employee_url,
   orderBy: "name",
   orderType: "ASC"
-});
+};
 
 const TableEmployee = () => {
-
+  const control = new ApiTableControl<Employee>(tableProps);
   return (
     <>
       <div className="card-body">

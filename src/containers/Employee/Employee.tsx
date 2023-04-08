@@ -1,35 +1,23 @@
-import { createContext, useContext, useState } from 'react'
-import { Employee } from 'services/employee/types';
-import { ApiTableControl } from '../../components/ApiTable';
-import { control } from './Table/TableEmployee'
-import TableEmployee from './Table/TableEmployee';
+import React from 'react'
 import AddComp from './Table/Components/AddComp'
-
-interface EmployeeContext {
-  control: ApiTableControl<Employee>
-}
-
-const employeeContext = createContext<EmployeeContext>(undefined as unknown as EmployeeContext)
-
-export const useEmployeeContext = () => {
-  return useContext(employeeContext)
-} 
+import TableEmployee from './Table/TableEmployee';
+import { ApiTableProvider } from '../../components/ApiTable';
+import { DynamicFormProvider } from '../../components/DynamicForm';
 
 export const DataEmployee = () => {
-
   return (
-    <employeeContext.Provider value={{
-      control,
-    }}>
-      <div className="container">
-        <h3>Data Karyawan</h3>
-        <div className="card">
-          <div className="card-header">
-            <AddComp />
+    <ApiTableProvider>
+      <DynamicFormProvider>
+        <div className="container">
+          <h3>Data Karyawan</h3>
+          <div className="card">
+            <div className="card-header">
+              <AddComp />
+            </div>
+            <TableEmployee />
           </div>
-          <TableEmployee />
         </div>
-      </div>
-    </employeeContext.Provider>
+      </DynamicFormProvider>
+    </ApiTableProvider>
   )
 }
