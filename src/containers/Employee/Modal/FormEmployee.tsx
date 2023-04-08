@@ -1,9 +1,9 @@
 import React from 'react'
 import * as yup from 'yup';
-import { useForm } from 'react-hook-form'
 import { AddEmployee, Employee } from 'services/employee/types';
-import { DynamicForm, FormFields } from 'src/components/DynamicForm';
+import { DynamicForm, FormFields, useForm } from 'src/components/DynamicForm';
 import { TextField } from '../../../components/Form/TextField';
+import { CurrencyField } from '../../../components/Form/CurrencyField';
 
 const fields: FormFields<AddEmployee> = {
   name: {
@@ -13,7 +13,6 @@ const fields: FormFields<AddEmployee> = {
       return {
         ...props,
         placeholder: "Nama",
-        type:"text"
       }
     }
   },
@@ -24,7 +23,6 @@ const fields: FormFields<AddEmployee> = {
       return {
         ...props,
         placeholder: "Alamat",
-        type:"text"
       }
     }
   },
@@ -35,7 +33,6 @@ const fields: FormFields<AddEmployee> = {
       return {
         ...props,
         placeholder: "Nomor Telepon",
-        type:"text"
       }
     }
   },
@@ -46,7 +43,6 @@ const fields: FormFields<AddEmployee> = {
       return {
         ...props,
         placeholder: "Tanggal Masuk",
-        type:"date"
       }
     }
   },
@@ -57,19 +53,16 @@ const fields: FormFields<AddEmployee> = {
       return {
         ...props,
         placeholder: "Tanggal Keluar",
-        type:"date"
       }
     }
   },
   total_saving: {
     label: "Total Simpanan",
-    component: TextField,
+    component: CurrencyField,
     props: (props) => {
       return {
         ...props,
         placeholder: "Total Simpanan",
-        type:"number",
-        min:"0"
       }
     }
   },
@@ -88,6 +81,7 @@ const employeeSchema = yup.object().shape({
     .required('Nomor Telepon Tidak Boleh Kosong')
     .min(10, 'Nomor Telepon Minimal 10 Digit'),
   entry_date: yup.string().required('Tanggal Masuk Tidak Boleh Kosong'),
+  total_saving: yup.string().required('Total Simpanan Tidak Boleh Kosong'),
 }) as unknown as yup.ObjectSchema<AddEmployee>;
 
 const FormEmployee = ({handleForm, employee}: Props) => {

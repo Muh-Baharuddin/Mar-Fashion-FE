@@ -1,13 +1,8 @@
 import React from 'react'
 import CurrencyInput from 'react-currency-input-field';
+import { TextFieldProps } from './TextField';
 
-interface CurrencyFieldProps {
-  name: string;
-  placeholder?: string;
-  defaultValue?: string | number;
-  innerRef: React.MutableRefObject<any>;
-  handleChange: (value?: string) => void;
-}
+interface CurrencyFieldProps extends TextFieldProps{}
 
 export const CurrencyField = (props: CurrencyFieldProps) => {
   const { innerRef, handleChange} = props;
@@ -22,7 +17,10 @@ export const CurrencyField = (props: CurrencyFieldProps) => {
       allowNegativeValue={false}
       decimalsLimit={2}
       onValueChange={(value) =>{
-        handleChange(value)
+        if (value !== undefined) {
+          const parsedValue = parseInt(value, 10);
+          handleChange(parsedValue);
+        }
       }}
     />
   )
