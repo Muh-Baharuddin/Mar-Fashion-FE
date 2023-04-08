@@ -1,12 +1,13 @@
 import React from 'react'
 import Modal from 'react-bootstrap/Modal'
-import FormComp from './FormItem';
+import ItemForm from './ItemForm';
+import 'react-toastify/dist/ReactToastify.css';
 import { toast } from 'react-toastify';
 import { postItem } from 'services/item';
 import { AddItem, Item } from 'services/item/types';
-import { useItemContext } from '../Item';
-import 'react-toastify/dist/ReactToastify.css';
-import FormItemTest from './FormItem';
+import { useTableContext } from '../../../components/ApiTable';
+import { useFormContext } from '../../../components/DynamicForm';
+import { Button } from 'react-bootstrap';
 
 type handleShowType = {
   showAdd: boolean;
@@ -15,12 +16,13 @@ type handleShowType = {
 
 function AddModalItem(props: handleShowType) {
   const { showAdd, handleCloseAdd } = props
-  const {control} = useItemContext();
+  const { tableData } = useTableContext<Item>();
+  const { formData } = useFormContext<Item>()
 
   const handleAdd = (data: AddItem) => {
     postItem(data).then(() => {
       toast.success('Data berhasil ditambahkan');
-      control.refresh();
+      tableData.control.refresh();
       handleCloseAdd();
     }).catch((error) => {
       let errorMessage = "Maaf terjadi kesalahan pada server. Mohon coba kembali dalam beberapa saat.";
@@ -44,8 +46,16 @@ function AddModalItem(props: handleShowType) {
           <Modal.Title>Tambah Barang</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <FormItemTest handleForm={handleAdd} handleCloseForm={handleCloseAdd}/>
+          <ItemForm handleForm={handleAdd} />
         </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleCloseAdd}>
+            Tutup
+          </Button>
+          <Button variant="primary" onClick={() => {formData.control.submit()}}>
+            Kirim
+          </Button>
+        </Modal.Footer>
       </Modal>
     </>
   )
