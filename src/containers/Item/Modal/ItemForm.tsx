@@ -5,7 +5,7 @@ import { DynamicForm, FormFields, useForm } from '../../../components/DynamicFor
 import { TextField } from '../../../components/Form/TextField';
 import { CategoryField } from '../../../components/Form/CategoryField';
 import { SupplierField } from '../../../components/Form/SupplierField';
-import { NumberField } from 'src/components/Form/NumberField';
+import { CurrencyField } from 'src/components/Form/CurrencyField';
 
 const fields: FormFields<AddItem> = {
   brand: {
@@ -14,7 +14,8 @@ const fields: FormFields<AddItem> = {
     props: (props) => {
       return {
         ...props,
-        placeholder: "Merek"
+        placeholder: "Merek",
+        type:"text"
       }
     }
   },
@@ -30,32 +31,33 @@ const fields: FormFields<AddItem> = {
   },
   capital_price: {
     label: "Harga Modal",
-    component: NumberField,
+    component: CurrencyField,
     props: (props) => {
       return {
         ...props,
         placeholder: "Harga Modal",
-        currency: true
       }
     }
   },
   wholescale_price: {
     label: "Harga Grosir",
-    component: NumberField,
+    component: CurrencyField,
     props: (props) => {
       return {
         ...props,
-        placeholder: "Harga Grosir"
+        placeholder: "Harga Grosir",
       }
     }
   },
   stock: {
     label: "Stok",
-    component: NumberField,
+    component: TextField,
     props: (props) => {
       return {
         ...props,
-        placeholder: "Stok"
+        placeholder: "Stok",
+        type:"number",
+        min:"0"
       }
     }
   },
@@ -89,7 +91,7 @@ const ItemForm = ({ handleForm, item }: Props) => {
   const { control } = useForm<AddItem>({
     fields,
     validations: itemSchema,
-    defaultValue: item as any,
+    defaultValue: item,
   });
   return (
     <DynamicForm
