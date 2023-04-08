@@ -1,27 +1,24 @@
 import React from 'react'
+import { TextFieldProps } from './TextField';
 
-export interface TextFieldProps {
-  name: string;
-  placeholder?: string;
-  handleChange: (value: string | number) => void;
-  innerRef: React.MutableRefObject<any>;
-  defaultValue?: string;
-}
+interface NumberFieldProps extends TextFieldProps{}
 
-export const TextField = (props:TextFieldProps) => {
+export const NumberField = (props:NumberFieldProps) => {
   const { innerRef, handleChange} = props;
 
   return (
     <>
       <input
         ref={innerRef}
-        type="text"
+        type="number"
+        min="0"
         className="form-control"
         placeholder={props.placeholder}
         name={props.name}
         defaultValue={props.defaultValue}
         onChange={(e)=> {
-          handleChange(e.target.value);
+          const value = parseInt(e.target.value, 10);
+          handleChange(value);
         }}
       />
     </>

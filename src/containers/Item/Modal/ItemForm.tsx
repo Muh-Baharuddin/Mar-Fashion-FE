@@ -3,9 +3,10 @@ import * as yup from 'yup';
 import { AddItem, Item } from 'services/item/types';
 import { DynamicForm, FormFields, useForm } from '../../../components/DynamicForm';
 import { TextField } from '../../../components/Form/TextField';
+import { NumberField } from '../../../components/Form/NumberField';
 import { CategoryField } from '../../../components/Form/CategoryField';
 import { SupplierField } from '../../../components/Form/SupplierField';
-import { CurrencyField } from 'src/components/Form/CurrencyField';
+import { CurrencyField } from '../../../components/Form/CurrencyField';
 
 const fields: FormFields<AddItem> = {
   brand: {
@@ -15,7 +16,6 @@ const fields: FormFields<AddItem> = {
       return {
         ...props,
         placeholder: "Merek",
-        type:"text"
       }
     }
   },
@@ -51,13 +51,11 @@ const fields: FormFields<AddItem> = {
   },
   stock: {
     label: "Stok",
-    component: TextField,
+    component: NumberField,
     props: (props) => {
       return {
         ...props,
         placeholder: "Stok",
-        type:"number",
-        min:"0"
       }
     }
   },
