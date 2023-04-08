@@ -26,9 +26,6 @@ export const SupplierField = (props: SelectFieldProps<Supplier>) => {
 
   return (
     <>
-      <label className="form-label">
-        {props.label}
-      </label>
       <SelectField 
         data={data?.data || []}
         defaultValue={props.defaultValue}

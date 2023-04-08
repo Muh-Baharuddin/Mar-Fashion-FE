@@ -1,12 +1,11 @@
 import 'bootstrap-icons/font/bootstrap-icons.css'
 import { item_url } from 'services/item';
-import { ApiTable, ApiTableControl, KeywordsFilter } from '../../../components/ApiTable'
+import { ApiTable, ApiTableControl, ApiTableControlProps, KeywordsFilter } from '../../../components/ApiTable'
 import EditComp from './Components/EditComp';
 import DeleteComp from './Components/DeleteComp';
 import { Item } from 'services/item/types';
-import { useItemContext } from '../Item';
 
-export const control = new ApiTableControl<Item>({
+const tableProps: ApiTableControlProps<Item> = {
   columns: [
     {
       label: "Merek",
@@ -71,9 +70,10 @@ export const control = new ApiTableControl<Item>({
   url: item_url,
   orderBy: "brand",
   orderType: "ASC"
-});
+};
 
 const TableItem = () => {
+  const control = new ApiTableControl<Item>(tableProps);
   return (
     <>
       <div className="card-body">

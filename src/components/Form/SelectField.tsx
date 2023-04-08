@@ -42,11 +42,11 @@ export const SelectField = <T extends unknown>(props: Props<T>) => {
 
   const generateData = (data: SelectValue<T>) : T => {
     const d =  {
-      [keyLabel as keyof T]: data.label,
+      [keyLabel as keyof T]: data?.label,
     } as T;
 
-    if(!data.__isNew__){
-      d[keyValue as keyof T] =  data.value;
+    if(!data?.__isNew__){
+      d[keyValue as keyof T] =  data?.value;
     }
 
     return d;

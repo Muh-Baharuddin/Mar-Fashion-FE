@@ -1,29 +1,78 @@
 import React from 'react'
-import Button from 'react-bootstrap/Button';
 import * as yup from 'yup';
-import { useForm } from 'react-hook-form'
 import { AddItem, Item } from 'services/item/types';
-import { yupResolver } from '@hookform/resolvers/yup';
-import { SupplierField } from 'src/components/Form/SupplierField';
-import { Supplier } from 'services/supplier/types';
-import { CategoryField } from 'src/components/Form/CategoryField';
-import { Category } from 'services/category/types';
+import { DynamicForm, FormFields, useForm } from '../../../components/DynamicForm';
+import { TextField } from '../../../components/Form/TextField';
+import { NumberField } from '../../../components/Form/NumberField';
+import { CategoryField } from '../../../components/Form/CategoryField';
+import { SupplierField } from '../../../components/Form/SupplierField';
+import { CurrencyField } from '../../../components/Form/CurrencyField';
 
-const formData = {
-  fields: {
-
+const fields: FormFields<AddItem> = {
+  brand: {
+    label: "Merek",
+    component: TextField,
+    props: (props) => {
+      return {
+        ...props,
+        placeholder: "Merek",
+      }
+    }
   },
-  validation: {
-
+  __categories__: {
+    label: "Kategori",
+    component: CategoryField,
+    props: (props) => {
+      return {
+        ...props,
+        placeholder: "Kategori",
+      }
+    }
   },
-  defaultValue: {
-    
-  }
+  capital_price: {
+    label: "Harga Modal",
+    component: CurrencyField,
+    props: (props) => {
+      return {
+        ...props,
+        placeholder: "Harga Modal",
+      }
+    }
+  },
+  wholescale_price: {
+    label: "Harga Grosir",
+    component: CurrencyField,
+    props: (props) => {
+      return {
+        ...props,
+        placeholder: "Harga Grosir",
+      }
+    }
+  },
+  stock: {
+    label: "Stok",
+    component: NumberField,
+    props: (props) => {
+      return {
+        ...props,
+        placeholder: "Stok",
+      }
+    }
+  },
+  __supplier__: {
+    label: "Supplier",
+    component: SupplierField,
+    props: (props) => {
+      return {
+        ...props,
+        placeholder: "Supplier"
+      }
+    }
+  },
 }
 
 type Props = {
   handleForm: (data: AddItem) => void,
-  handleCloseForm: () => void,
   item? : Item;
 };
 
@@ -32,98 +81,22 @@ const itemSchema = yup.object().shape({
   capital_price: yup.string().required('Harga Modal Tidak Boleh Kosong'),
   wholescale_price: yup.string().required('Harga Grosir Tidak Boleh Kosong'),
   stock: yup.string().required('Stok Tidak Boleh Kosong'),
-});
+  __categories__: yup.array().required('Kategori Tidak Boleh Kosong'),
+  __supplier__: yup.object().required('Supplier Tidak Boleh Kosong'),
+}) as unknown as yup.ObjectSchema<AddItem>;
 
-const FormItem = ({ handleForm, handleCloseForm, item }: Props) => {
-  const { register, handleSubmit, setValue, formState: { errors } } = useForm<AddItem>({
-    defaultValues: item,
-    resolver: yupResolver(itemSchema),
+const ItemForm = ({ handleForm, item }: Props) => {
+  const { control } = useForm<AddItem>({
+    fields,
+    validations: itemSchema,
+    defaultValue: item,
   });
-
   return (
-    <form onSubmit={handleSubmit(handleForm)}>
-      <div className="mb-3">
-        <label className="form-label">
-          Merek
-        </label>
-        <input
-          type="text"
-          className="form-control"
-          aria-invalid={errors.brand ? "true" : "false"}
-          {...register('brand', { required: true })}
-        />
-        {errors.brand && <span role="alert" style={{ color: 'red' }}>{errors.brand.message}</span>}
-      </div>
-      <div className="mb-3">
-        <CategoryField
-          isMulti
-          creatable
-          label='Category'
-          name='__categories__'
-          defaultValue={item?.__categories__}
-          onChange={(categories)=>{
-            setValue('__categories__', categories as Category[]);
-          }}
-        />
-      </div>
-      <div className="mb-3">
-        <label className="form-label">
-          Harga Modal
-        </label>
-        <input
-          type="number"
-          min="0"
-          className="form-control"
-          aria-invalid={errors.capital_price ? "true" : "false"}
-          {...register('capital_price', { required: true })}
-        />
-        {errors.capital_price && <span role="alert" style={{ color: 'red' }}>{errors.capital_price.message}</span>}
-      </div>
-      <div className="mb-3">
-        <label className="form-label">
-          Harga Grosir
-        </label>
-        <input
-          type="number"
-          min="0"
-          className="form-control"
-          aria-invalid={errors.wholescale_price ? "true" : "false"}
-          {...register('wholescale_price', { required: true })}
-        />
-        {errors.wholescale_price && <span role="alert" style={{ color: 'red' }}>{errors.wholescale_price.message}</span>}
-      </div>
-      <div className="mb-3">
-        <label className="form-label">
-          Stok
-        </label>
-        <input
-          type="number"
-          min="0"
-          className="form-control"
-          aria-invalid={errors.stock ? "true" : "false"}
-          {...register('stock', { required: true })}
-        />
-        {errors.stock && <span role="alert" style={{ color: 'red' }}>{errors.stock.message}</span>}
-      </div>
-      <div className="mb-3">
-        <SupplierField
-          isMulti={false}
-          label='Supplier'
-          name='__items__'
-          defaultValue={item?.__supplier__}
-          onChange={(supplier)=>{
-            setValue('__supplier__', supplier as Supplier);
-          }}
-        />
-      </div>
-      <Button variant="primary" onClick={() => handleForm} type="submit">
-        Submit
-      </Button>
-      <Button className='mx-2' variant="secondary" onClick={handleCloseForm}>
-        Close
-      </Button>
-    </form>
+    <DynamicForm
+      control={control}
+      onSubmit={handleForm}
+    />
   )
 }
 
-export default FormItem
+export default ItemForm
