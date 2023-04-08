@@ -3,6 +3,7 @@ import * as yup from 'yup';
 import { AddEmployee, Employee } from 'services/employee/types';
 import { DynamicForm, FormFields, useForm } from 'src/components/DynamicForm';
 import { TextField } from '../../../components/Form/TextField';
+import { DateField } from '../../../components/Form/DateField';
 import { CurrencyField } from '../../../components/Form/CurrencyField';
 
 const fields: FormFields<AddEmployee> = {
@@ -38,7 +39,7 @@ const fields: FormFields<AddEmployee> = {
   },
   entry_date: {
     label: "Tanggal Masuk",
-    component: TextField,
+    component: DateField,
     props: (props) => {
       return {
         ...props,
@@ -48,7 +49,7 @@ const fields: FormFields<AddEmployee> = {
   },
   exit_date: {
     label: "Tanggal Keluar",
-    component: TextField,
+    component: DateField,
     props: (props) => {
       return {
         ...props,
