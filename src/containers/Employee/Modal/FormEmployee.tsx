@@ -75,14 +75,14 @@ type Props = {
 };
 
 const employeeSchema = yup.object().shape({
-  name: yup.string().required('Nama Tidak Boleh Kosong'),
-  address: yup.string().required('Alamat Tidak Boleh Kosong'),
+  name: yup.string().required('nama tidak boleh kosong'),
+  address: yup.string().required('alamat tidak boleh kosong'),
   phone_number: yup
     .string()
-    .required('Nomor Telepon Tidak Boleh Kosong')
-    .min(10, 'Nomor Telepon Minimal 10 Digit'),
-  entry_date: yup.string().required('Tanggal Masuk Tidak Boleh Kosong'),
-  total_saving: yup.string().required('Total Simpanan Tidak Boleh Kosong'),
+    .required('nomor telepon tidak boleh kosong')
+    .min(10, 'nomor telepon minimal 10 digit'),
+  entry_date: yup.string().required('tanggal masuk tidak boleh kosong'),
+  total_saving: yup.string().required('total simpanan tidak boleh kosong'),
 }) as unknown as yup.ObjectSchema<AddEmployee>;
 
 const FormEmployee = ({handleForm, employee}: Props) => {
