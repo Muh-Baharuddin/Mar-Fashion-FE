@@ -3,6 +3,8 @@ import * as yup from 'yup';
 import { AddSupplier, Supplier } from 'services/supplier/types';
 import { TextField } from 'src/components/Form/Input/TextField';
 import { DynamicForm, FormFields, useForm } from 'src/components/DynamicForm';
+import { useTableForm } from 'src/components/DynamicForm/TableForm/TableFormControl';
+import { TableForm } from 'src/components/DynamicForm/TableForm/TableForm';
 
 
 const fields: FormFields<AddSupplier>= {
@@ -100,16 +102,16 @@ const schema = yup.object().shape({
 }) as yup.ObjectSchema<AddSupplier>;
 
 const SupplierForm = ({handleForm, supplier}: Props) => {
-  const { control } = useForm<AddSupplier>({
+  const { control } = useTableForm<AddSupplier>({
     fields,
     validations: schema,
-    defaultValue: supplier as any,
+    defaultValue: [supplier] as AddSupplier[],
   });
 
   return (
-    <DynamicForm
+    <TableForm
       control={control}
-      onSubmit={handleForm}
+      onSubmit={handleForm as any}
     />
   )
 }
