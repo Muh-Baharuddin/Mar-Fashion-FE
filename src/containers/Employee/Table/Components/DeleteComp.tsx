@@ -1,6 +1,6 @@
 import { confirmAlert } from 'react-confirm-alert';
 import { toast } from 'react-toastify';
-import { useEmployeeContext } from '../../Employee';
+import { useApiTableContext } from '../../../../components/ApiTable';
 import { Employee } from 'services/employee/types';
 import { deleteEmployee } from 'services/employee';
 import 'react-toastify/dist/ReactToastify.css';
@@ -11,7 +11,7 @@ type Props = {
 };
 
 const DeleteComp = ({ employee }: Props) => {
-  const { control } = useEmployeeContext();
+  const { control } = useApiTableContext<Employee>();
 
   const DeleteConfirm = () => {
     deleteEmployee(employee.id).then((response) => {
