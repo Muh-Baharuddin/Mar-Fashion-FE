@@ -1,20 +1,20 @@
 import { confirmAlert } from 'react-confirm-alert';
 import { toast } from 'react-toastify';
 import { useApiTableContext } from '../../../../components/ApiTable';
-import { Employee } from 'services/employee/types';
-import { deleteEmployee } from 'services/employee';
+import { Customer_Complaint } from 'services/customer_complaint/types';
+import { deleteComplaint } from 'services/customer_complaint';
 import 'react-toastify/dist/ReactToastify.css';
 import 'react-confirm-alert/src/react-confirm-alert.css';
 
 type Props = {
-  employee: Employee;
+  complaint: Customer_Complaint;
 };
 
-const DeleteComp = ({ employee }: Props) => {
-  const { control } = useApiTableContext<Employee>();
+const DeleteComp = ({ complaint }: Props) => {
+  const { control } = useApiTableContext<Customer_Complaint>();
 
   const DeleteConfirm = () => {
-    deleteEmployee(employee.id).then((response) => {
+    deleteComplaint(complaint.id).then((response) => {
       toast.success(response.data.message);
       control.refresh();
     })
@@ -26,7 +26,7 @@ const DeleteComp = ({ employee }: Props) => {
   const handleDelete = () => {
     confirmAlert({
       title: 'Konfirmasi',
-      message: 'Apakah Anda yakin ingin menghapus data dari ' + `${employee.name} ?`,
+      message: 'Apakah Anda yakin ingin menghapus data keluhan dari ' + `${complaint.name} ?`,
       buttons: [
         {
           label: 'Ya',

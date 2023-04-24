@@ -1,13 +1,13 @@
 import { useState } from "react";
-import { Employee } from "services/employee/types";
-import EditModalEmployee from "../../Modal/EditModalEmployee";
+import EditModalComplaint from "../../Modal/EditModalComplaint";
+import { Customer_Complaint } from "services/customer_complaint/types";
 
 
 type Props = {
-  employee: Employee;
+  complaint: Customer_Complaint;
 };
 
-const EditComp = ({ employee }: Props) => {
+const EditComp = ({ complaint }: Props) => {
   const [showEdit, setShowEdit] = useState(false);
 
   const handleShowEdit = () => {
@@ -20,9 +20,9 @@ const EditComp = ({ employee }: Props) => {
 
   return (
     <div>
-      <EditModalEmployee
+      <EditModalComplaint
         showEdit={showEdit}
-        employee={employee}
+        complaint={complaint}
         handleCloseEdit={handleCloseEdit}
       />
       <button

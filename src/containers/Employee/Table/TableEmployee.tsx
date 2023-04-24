@@ -25,18 +25,18 @@ const tableProps: ApiTableControlProps<Employee> = {
     {
       label: "Tanggal Masuk",
       value: (data) => (
-        <div>
+        <>
           {new Date(data.entry_date).toLocaleDateString('id-ID')}
-        </div>
+        </>
       ),
       sort: "entry_date",
     },
     {
       label: "Tanggal Keluar",
       value: (data) => (
-        <div>
+        <>
           {data.exit_date ? new Date(data.exit_date).toLocaleDateString('id-ID') : "-"}
-        </div>
+        </>
       ),
       sort: "exit_date",
     },

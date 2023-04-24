@@ -1,10 +1,10 @@
 import React from 'react'
-import AddComp from './Table/Components/AddComp'
+import AddComplaintComp from './Table/Components/AddComp'
 import TableCustomer_Complaint from './Table/TableCustome_Complaint';
 import { ApiTableProvider } from '../../components/ApiTable';
 import { DynamicFormProvider } from '../../components/DynamicForm';
 
-export const DataCoomplaint = () => {
+export const DataComplaint = () => {
   return (
     <ApiTableProvider>
       <DynamicFormProvider>

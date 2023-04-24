@@ -2,66 +2,60 @@ import 'bootstrap-icons/font/bootstrap-icons.css'
 import EditComp from './Components/EditComp';
 import DeleteComp from './Components/DeleteComp';
 import { ApiTable, ApiTableControl, ApiTableControlProps, KeywordsFilter } from '../../../components/ApiTable'
-import { Employee } from 'services/employee/types';
-import { employee_url } from 'services/employee';
+import { Customer_Complaint } from 'services/customer_complaint/types';
+import { complaint_url } from 'services/customer_complaint';
 
-const tableProps: ApiTableControlProps<Employee> = {
+const tableProps: ApiTableControlProps<Customer_Complaint> = {
   columns: [
     {
       label: "Nama",
-      value: "name",
+      value: (data) => (
+        <>
+          {data?.name || "-"}
+        </>
+      ),
       sort: "name",
     },
     {
       label: "Alamat",
-      value: "address",
+      value: (data) => (
+        <>
+          {data?.address || "-"}
+        </>
+      ),
       sort: "address",
     },
     {
-      label: "Nomor Telepon",
-      value: "phone_number",
-      sort: "phone_number",
-    },
-    {
-      label: "Tanggal Masuk",
+      label: "Kota",
       value: (data) => (
-        <div>
-          {new Date(data.entry_date).toLocaleDateString('id-ID')}
-        </div>
+        <>
+          {data?.city || "-"}
+        </>
       ),
-      sort: "entry_date",
+      sort: "city",
     },
     {
-      label: "Tanggal Keluar",
-      value: (data) => (
-        <div>
-          {data.exit_date ? new Date(data.exit_date).toLocaleDateString('id-ID') : "-"}
-        </div>
-      ),
-      sort: "exit_date",
-    },
-    {
-      label: "Total Tabungan",
-      value: "total_saving",
-      sort: "total_saving",
+      label: "Keluhan",
+      value: "description",
+      sort: "description",
     },
     {
       label: "Actions",
       value: (data) => (
         <div style={{ display: 'flex' }}>
-          <EditComp employee={data} />
-          <DeleteComp employee={data} />
+          <EditComp complaint={data} />
+          <DeleteComp complaint={data} />
         </div>
       )
     },
   ],
-  url: employee_url,
+  url: complaint_url,
   orderBy: "name",
   orderType: "ASC"
 };
 
 const TableCustome_Complaint = () => {
-  const control = new ApiTableControl<Employee>(tableProps);
+  const control = new ApiTableControl<Customer_Complaint>(tableProps);
   return (
     <>
       <div className="card-body">
