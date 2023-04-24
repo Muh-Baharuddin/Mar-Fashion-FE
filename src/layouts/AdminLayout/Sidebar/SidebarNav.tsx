@@ -139,6 +139,7 @@ export default function SidebarNav() {
         <SidebarNavItem icon={faChartPie} href="/supplier">Supplier</SidebarNavItem> 
         : ""
       }
+      <SidebarNavItem icon={faPencil} href="/customer-complaint">Keluhan Pelanggan</SidebarNavItem>
       { user?.role === "ADMIN" ?
         <SidebarNavGroup toggleIcon={faStar} toggleText="User">
         <SidebarNavItem icon={faAddressCard} href="register">Buat Akun</SidebarNavItem>
