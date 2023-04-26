@@ -140,6 +140,7 @@ export default function SidebarNav() {
         : ""
       }
       <SidebarNavItem icon={faPencil} href="/customer-complaint">Keluhan Pelanggan</SidebarNavItem>
+      <SidebarNavItem icon={faPencil} href="/store-location">Informasi Toko</SidebarNavItem>
       { user?.role === "ADMIN" ?
         <SidebarNavGroup toggleIcon={faStar} toggleText="User">
         <SidebarNavItem icon={faAddressCard} href="register">Buat Akun</SidebarNavItem>
