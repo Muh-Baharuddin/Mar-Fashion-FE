@@ -52,7 +52,7 @@ const MarFashionProvider: FC<Props> = ({ children }) => {
         path: '/'
       });
       setDefaultToken(token);
-      router.push('/', undefined, { shallow: true })
+      router.push('/item', undefined, { shallow: true })
     }).catch(() => {
       toast.error("Maaf terjadi kesalahan pada server. Mohon coba kembali dalam beberapa saat.");
     })
@@ -61,7 +61,7 @@ const MarFashionProvider: FC<Props> = ({ children }) => {
   const logout = () => {
     removeCookie("user")
     removeCookie("token")
-    router.push('/', undefined, { shallow: true })
+    router.push('/login', undefined, { shallow: true })
   }
 
   if (isLoading) {
