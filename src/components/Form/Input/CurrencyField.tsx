@@ -6,7 +6,6 @@ interface CurrencyFieldProps extends TextFieldProps{}
 
 export const CurrencyField = (props: CurrencyFieldProps) => {
   const { innerRef, handleChange} = props;
-  console.log("props.defaultValue", props.defaultValue)
   return (
     <CurrencyInput
       prefix='Rp. '

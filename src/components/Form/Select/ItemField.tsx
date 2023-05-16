@@ -10,7 +10,7 @@ export const ItemField = (props: SelectFieldProps<Item>) => {
     orderBy: 'brand',
     orderType: 'ASC',
     page: 1,
-    limit: 10,
+    limit: 100,
   });
 
   const { data } = getItems(params);
@@ -27,9 +27,6 @@ export const ItemField = (props: SelectFieldProps<Item>) => {
 
   return (
     <>
-      <label className="form-label">
-        {props.label}
-      </label>
       <SelectField 
         data={data?.data || []}
         defaultValue={props.defaultValue}

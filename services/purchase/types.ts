@@ -1,3 +1,4 @@
+import { Item } from "services/item/types";
 import { Data } from "services/types"
 
 export interface Purchase {
@@ -5,12 +6,15 @@ export interface Purchase {
   invoice: string;
   date: Date;
   supplier: string;
+  __items__: Item | Item[];
   unit: string;
   debt: number;
-  cost: string;
+  total: number;
 }
 
-export type AddPurchase = Omit<Purchase, "id">;
+export type AddPurchase = Omit<Purchase, "id" | "__items__"> & {
+  items: Item | Item[];
+};
 
 export type PurchaseData = Data<Purchase>
 

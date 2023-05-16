@@ -10,7 +10,7 @@ export const SupplierField = (props: SelectFieldProps<Supplier>) => {
     orderBy: 'name',
     orderType: 'ASC',
     page: 1,
-    limit: 10,
+    limit: 100,
   });
 
   const { data } = getSuppliers(params);

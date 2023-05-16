@@ -1,12 +1,12 @@
 import React from 'react'
 import Modal from 'react-bootstrap/Modal'
-import FormEmployee from './FormEmployee';
+import SaleForm from './SaleForm';
 import { toast } from 'react-toastify';
-import { Button } from 'react-bootstrap';
-import { postEmployee } from 'services/employee';
-import { AddEmployee, Employee } from 'services/employee/types';
 import { useTableContext } from '../../../components/ApiTable';
 import { useFormContext } from '../../../components/DynamicForm';
+import { Button } from 'react-bootstrap';
+import { AddSale, Sale } from 'services/sale/types';
+import { postSale } from 'services/sale';
 import 'react-toastify/dist/ReactToastify.css';
 
 type handleShowType = {
@@ -14,14 +14,13 @@ type handleShowType = {
   handleCloseAdd: () => void;
 }
 
-function AddModalEmployee(props: handleShowType) {
+function AddModalSale(props: handleShowType) {
   const { showAdd, handleCloseAdd } = props
-  const { tableData } = useTableContext<Employee>();
-  const { formData } = useFormContext<Employee>()
-
-  const handleAdd = (data: AddEmployee) => {
-    console.log("asdasd")
-    postEmployee(data).then(() => {
+  const { tableData } = useTableContext<Sale>();
+  const { formData } = useFormContext<Sale>()
+  
+  const handleAdd = (data: AddSale) => {
+    postSale(data).then(() => {
       toast.success('Data berhasil ditambahkan');
       tableData.control.refresh();
       handleCloseAdd();
@@ -44,10 +43,10 @@ function AddModalEmployee(props: handleShowType) {
         keyboard={false}
       >
         <Modal.Header closeButton>
-          <Modal.Title>Tambah Karyawan</Modal.Title>
+          <Modal.Title>Tambah Penjualan</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <FormEmployee handleForm={handleAdd} />
+          <SaleForm handleForm={handleAdd} />
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleCloseAdd}>
@@ -62,4 +61,4 @@ function AddModalEmployee(props: handleShowType) {
   )
 }
 
-export default AddModalEmployee
+export default AddModalSale
