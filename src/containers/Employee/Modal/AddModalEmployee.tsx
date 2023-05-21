@@ -20,7 +20,6 @@ function AddModalEmployee(props: handleShowType) {
   const { formData } = useFormContext<Employee>()
 
   const handleAdd = (data: AddEmployee) => {
-    console.log("asdasd")
     postEmployee(data).then(() => {
       toast.success('Data berhasil ditambahkan');
       tableData.control.refresh();
