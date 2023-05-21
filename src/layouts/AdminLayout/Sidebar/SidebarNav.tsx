@@ -129,7 +129,7 @@ export default function SidebarNav() {
         <SidebarNavGroup toggleIcon={faMoneyBill} toggleText="Keuanga"> 
           <SidebarNavItem href="/">Keuangan</SidebarNavItem>
           <SidebarNavItem href="/purchase">Pembelian</SidebarNavItem>
-          <SidebarNavItem href="/penjualan">Penjualan</SidebarNavItem>
+          <SidebarNavItem href="/sale">Penjualan</SidebarNavItem>
           <SidebarNavItem href="/employee-saving">Simpanan Karyawan</SidebarNavItem>
         </SidebarNavGroup> :
         <SidebarNavItem icon={faMoneyBill} href="/penjualan">Penjualan</SidebarNavItem>

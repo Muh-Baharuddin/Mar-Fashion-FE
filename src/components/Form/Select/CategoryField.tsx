@@ -10,7 +10,7 @@ export const CategoryField = (props: SelectFieldProps<Category>) => {
     orderBy: 'name',
     orderType: 'ASC',
     page: 1,
-    limit: 10,
+    limit: 100,
   });
 
   const { data } = getCategorys(params);
