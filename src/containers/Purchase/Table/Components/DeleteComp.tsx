@@ -1,22 +1,22 @@
 import { confirmAlert } from 'react-confirm-alert';
 import { toast } from 'react-toastify';
+import { deletePurchase } from 'services/purchase';
+import { Purchase } from 'services/purchase/types';
+import { useApiTableContext } from 'src/components/ApiTable';
 import 'react-confirm-alert/src/react-confirm-alert.css';
 import 'react-toastify/dist/ReactToastify.css';
-import { deletePurchase, getPurchases } from 'services/purchase';
-import { Purchase } from 'services/purchase/types';
-import { useTableContext } from 'src/components/ApiTable';
 
 type Props = {
   purchase: Purchase;
 };
 
 const DeleteComp = ({ purchase }: Props) => {
-  const { tableData} = useTableContext<Purchase>();
+  const { control } = useApiTableContext<Purchase>();
 
   const DeleteConfirm = () => {
     deletePurchase(purchase.id).then((response) => {
       toast.success(response.data.message);
-      tableData.control.refresh();
+      control.refresh();
     })
     .catch(() => {
       toast.error("Maaf terjadi kesalahan pada server. Mohon coba kembali dalam beberapa saat.");
@@ -26,7 +26,7 @@ const DeleteComp = ({ purchase }: Props) => {
   const handleDelete = () => {
     confirmAlert({
       title: 'Konfirmasi',
-      message: 'Apakah Anda yakin ingin menghapus data dari invoice bernomor "' + `${purchase.invoice}" ?`,
+      message: 'Apakah Anda yakin ingin menghapus data pembelian dari invoice bernomor "' + `${purchase.invoice}" ?`,
       buttons: [
         {
           label: 'Ya',

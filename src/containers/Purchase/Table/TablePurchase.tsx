@@ -22,9 +22,50 @@ const tableProps: ApiTableControlProps<Purchase> = {
       sort: "date",
     },
     {
+      label: "Barang",
+      value: (data) => {
+        return (
+          <div>
+            {data.__items__?.length > 0 ?
+              data.__items__.map((item: {brand: string}, index: number) => (
+                <span key={index}>{item.brand}{index !== data.__items__.length - 1 ? ', ' : ''}</span>
+              ))
+              :
+              "-"
+            }
+          </div>
+        )
+      },
+      sort: "items",
+    },
+    {
+      label: "Satuan",
+      value: "unit",
+      sort: "unit",
+    },
+    {
+      label: "Jumlah",
+      value: "amount",
+      sort: "amount",
+    },
+    {
       label: "Total",
-      value: "cost",
-      sort: "cost",
+      value: "total",
+      sort: "total",
+    },
+    {
+      label: "Hutang",
+      value: "debt",
+      sort: "debt",
+    },
+    {
+      label: "Supplier",
+      value: (data) => (
+        <div>
+          {data.__supplier__?.name || "-"}
+        </div>
+      ),
+      sort: "supplier",
     },
     {
       label: "Actions",
