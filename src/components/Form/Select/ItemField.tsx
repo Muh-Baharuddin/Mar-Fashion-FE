@@ -14,9 +14,9 @@ export const ItemField = (props: SelectFieldProps<Item>) => {
   });
 
   const { data } = getItems(params);
-  const onChange = (data: Item | Item[]) => {
-    props.onChange && props.onChange(data);
-  };
+  // const onChange = (data: Item[]) => {
+  //   props.onChange && props.onChange(data);
+  // };
 
   const onInput = (keywords: string) => {
     setQueryParams(prev => ({
@@ -27,11 +27,12 @@ export const ItemField = (props: SelectFieldProps<Item>) => {
 
   return (
     <>
-      <SelectField 
+      <SelectField
+        isMulti={true}
         data={data?.data || []}
         defaultValue={props.defaultValue}
         handleInput={onInput}
-        handleChange={onChange}
+        handleChange={props.onChange}
         keyLabel='brand'
         {...props}
       />

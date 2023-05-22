@@ -1,11 +1,13 @@
 import React from 'react'
 import Modal from 'react-bootstrap/Modal'
-import { toast } from 'react-toastify';
+import FormComp from './PurchaseForm';
 import 'react-toastify/dist/ReactToastify.css';
+import { toast } from 'react-toastify';
+import { Button } from 'react-bootstrap';
 import { postPurchase } from 'services/purchase';
 import { AddPurchase, Purchase } from 'services/purchase/types';
-import FormComp from './FormComp';
-import { useTableContext } from 'src/components/ApiTable';
+import { useTableContext } from '../../../components/ApiTable';
+import { useFormContext } from '../../../components/DynamicForm';
 
 type handleShowType = {
   showAdd: boolean;
@@ -15,6 +17,7 @@ type handleShowType = {
 function AddModalPurchase(props: handleShowType) {
   const { showAdd, handleCloseAdd } = props
   const { tableData } = useTableContext<Purchase>();
+  const { formData } = useFormContext<Purchase>();
 
   const handleAdd = (data: AddPurchase) => {
     postPurchase(data).then(() => {
@@ -43,8 +46,16 @@ function AddModalPurchase(props: handleShowType) {
           <Modal.Title>Tambah Pembelian</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <FormComp handleForm={handleAdd} handleCloseForm={handleCloseAdd}/>
+          <FormComp handleForm={handleAdd} />
         </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleCloseAdd}>
+            Tutup
+          </Button>
+          <Button variant="primary" onClick={() => {formData.control.submit()}}>
+            Kirim
+          </Button>
+        </Modal.Footer>
       </Modal>
     </>
   )
