@@ -1,6 +1,6 @@
 import { confirmAlert } from 'react-confirm-alert';
 import { toast } from 'react-toastify';
-import { useTableContext } from 'src/components/ApiTable';
+import { useApiTableContext } from 'src/components/ApiTable';
 import { deleteSale } from 'services/sale';
 import { Sale } from 'services/sale/types';
 import 'react-confirm-alert/src/react-confirm-alert.css';
@@ -11,12 +11,12 @@ type Props = {
 };
 
 const DeleteComp = ({ sale }: Props) => {
-  const { tableData} = useTableContext<Sale>();
+  const { control } = useApiTableContext<Sale>();
 
   const DeleteConfirm = () => {
     deleteSale(sale.id).then((response) => {
       toast.success(response.data.message);
-      tableData.control.refresh();
+      control.refresh();
     })
     .catch(() => {
       toast.error("Maaf terjadi kesalahan pada server. Mohon coba kembali dalam beberapa saat.");
