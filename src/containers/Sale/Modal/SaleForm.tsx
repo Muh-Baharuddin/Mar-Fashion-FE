@@ -86,7 +86,7 @@ type Props = {
 
 const saleSchema = yup.object().shape({
   date: yup.string().required('tanggal Tidak Boleh Kosong'),
-  item: yup.string().required('Barang Tidak Boleh Kosong'),
+  __items__: yup.array().required('Barang Tidak Boleh Kosong'),
   unit: yup.string().required('Satuan Tidak Boleh Kosong'),
   amount: yup.string().required('Jumlah Tidak Boleh Kosong'),
   total: yup.string().required('Total Tidak Boleh Kosong'),

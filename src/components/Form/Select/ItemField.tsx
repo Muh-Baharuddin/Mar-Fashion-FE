@@ -14,10 +14,7 @@ export const ItemField = (props: SelectFieldProps<Item>) => {
   });
 
   const { data } = getItems(params);
-  // const onChange = (data: Item[]) => {
-  //   props.onChange && props.onChange(data);
-  // };
-
+  
   const onInput = (keywords: string) => {
     setQueryParams(prev => ({
       ...prev,

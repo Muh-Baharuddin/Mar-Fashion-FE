@@ -9,7 +9,7 @@ export const DataSale = () => {
     <ApiTableProvider>
       <DynamicFormProvider>
         <div className="container">
-          <h3>Data Pembelian</h3>
+          <h3>Data Penjualan</h3>
           <div className="card">
             <div className="card-header">
               <AddComp />
