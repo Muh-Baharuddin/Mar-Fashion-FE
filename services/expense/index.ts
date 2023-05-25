@@ -2,7 +2,7 @@ import * as api from "services/api";
 import { QueryParamsType } from 'services/types';
 import { AddExpense, ExpenseData, ExpenseMessage } from "./types";
 
-export const expense_url = `${process.env.API_ENDPOINT}/Expense`
+export const expense_url = `${process.env.API_ENDPOINT}/expenses`
 
 export const getExpenses = (params: QueryParamsType) => {
   return api.stateGet<ExpenseData, QueryParamsType>(expense_url, params);
