@@ -130,6 +130,7 @@ export default function SidebarNav() {
           <SidebarNavItem href="/">Keuangan</SidebarNavItem>
           <SidebarNavItem href="/purchase">Pembelian</SidebarNavItem>
           <SidebarNavItem href="/sale">Penjualan</SidebarNavItem>
+          <SidebarNavItem href="/expense">Pengeluaran</SidebarNavItem>
           <SidebarNavItem href="/income">Pendapatan</SidebarNavItem>
           <SidebarNavItem href="/employee-saving">Simpanan Karyawan</SidebarNavItem>
         </SidebarNavGroup> :
