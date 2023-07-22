@@ -5,12 +5,14 @@ import {
   IconDefinition,
 } from '@fortawesome/free-regular-svg-icons'
 import {
-  faChartPie,
   faChevronUp,
+  faNoteSticky,
   faShirt,
-  faPencil,
+  faStoreAlt,
   faRightToBracket,
-  faMoneyBill,
+  faPerson,
+  faMoneyCheckDollar,
+  faBoxesPacking,
 } from '@fortawesome/free-solid-svg-icons'
 import React, {
   PropsWithChildren, useContext, useEffect, useState
@@ -124,28 +126,31 @@ export default function SidebarNav() {
   return (
     <ul className="list-unstyled">
       <SidebarNavTitle>Dashboard</SidebarNavTitle>
-      <SidebarNavItem icon={faShirt} href="item">Barang</SidebarNavItem>
+      <SidebarNavItem icon={faShirt} href="/item">Barang</SidebarNavItem>
       { user?.role === "ADMIN" ? 
-        <SidebarNavGroup toggleIcon={faMoneyBill} toggleText="Keuanga"> 
-          <SidebarNavItem href="/">Keuangan</SidebarNavItem>
+        <SidebarNavGroup toggleIcon={faMoneyCheckDollar} toggleText="Keuanga"> 
           <SidebarNavItem href="/purchase">Pembelian</SidebarNavItem>
           <SidebarNavItem href="/sale">Penjualan</SidebarNavItem>
           <SidebarNavItem href="/expense">Pengeluaran</SidebarNavItem>
           <SidebarNavItem href="/income">Pendapatan</SidebarNavItem>
           <SidebarNavItem href="/employee-saving">Simpanan Karyawan</SidebarNavItem>
         </SidebarNavGroup> :
-        <SidebarNavItem icon={faMoneyBill} href="/penjualan">Penjualan</SidebarNavItem>
+        <SidebarNavItem icon={faMoneyCheckDollar} href="/sale">Penjualan</SidebarNavItem>
       }
-      <SidebarNavItem icon={faPencil} href="/employee">Karyawan</SidebarNavItem>
       { user?.role === "ADMIN" ?
-        <SidebarNavItem icon={faChartPie} href="/supplier">Supplier</SidebarNavItem> 
+        <SidebarNavItem icon={faPerson} href="/employee">Karyawan</SidebarNavItem>
         : ""
       }
-      <SidebarNavItem icon={faPencil} href="/customer-complaint">Keluhan Pelanggan</SidebarNavItem>
-      <SidebarNavItem icon={faPencil} href="/store-location">Informasi Toko</SidebarNavItem>
+      { user?.role === "ADMIN" ?
+        <SidebarNavItem icon={faBoxesPacking} href="/supplier">Supplier</SidebarNavItem> 
+        : ""
+      }
+      <SidebarNavItem icon={faNoteSticky} href="/customer-complaint">Keluhan Pelanggan</SidebarNavItem>
+      <SidebarNavItem icon={faStoreAlt} href="/store-location">Informasi Toko</SidebarNavItem>
       { user?.role === "ADMIN" ?
         <SidebarNavGroup toggleIcon={faStar} toggleText="User">
         <SidebarNavItem icon={faAddressCard} href="register">Buat Akun</SidebarNavItem>
+        <SidebarNavItem icon={faAddressCard} href="user">Kelola Akun</SidebarNavItem>
           <div onClick={logout}>
             <SidebarNavItem icon={faRightToBracket} href="/login">Log Out</SidebarNavItem>
           </div>

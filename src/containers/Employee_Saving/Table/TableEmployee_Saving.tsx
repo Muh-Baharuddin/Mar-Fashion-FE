@@ -32,7 +32,9 @@ export const control = new ApiTableControl<EmployeeSaving>({
     },
     {
       label: "Total",
-      value: "total",
+      value: (data) => {
+        return `Rp. ${data.total}`
+      },
       sort: "total",
     },
     {

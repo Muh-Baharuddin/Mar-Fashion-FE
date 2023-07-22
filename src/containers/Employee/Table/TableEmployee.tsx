@@ -42,7 +42,9 @@ const tableProps: ApiTableControlProps<Employee> = {
     },
     {
       label: "Total Tabungan",
-      value: "total_saving",
+      value: (data) => {
+        return `Rp. ${data.total_saving}`
+      },
       sort: "total_saving",
     },
     {

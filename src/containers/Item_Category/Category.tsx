@@ -1,20 +1,20 @@
 import React from 'react'
-import AddIncomeComp from './Table/Components/AddComp'
-import TableIncome from './Table/TableIncome';
+import AddCategoryComp from './Table/Components/AddComp'
+import TableCategory from './Table/TableCategory';
 import { ApiTableProvider } from '../../components/ApiTable';
 import { DynamicFormProvider } from '../../components/DynamicForm';
 
-export const DataIncome = () => {
+export const DataCategory = () => {
   return (
     <ApiTableProvider>
       <DynamicFormProvider>
         <div className="container">
-          <h3>Data Pendapatan</h3>
+          <h3>Data Kategori Barang</h3>
           <div className="card">
             <div className="card-header">
-              <AddIncomeComp />
+              <AddCategoryComp />
             </div>
-            <TableIncome />
+            <TableCategory />
           </div>
         </div>
       </DynamicFormProvider>

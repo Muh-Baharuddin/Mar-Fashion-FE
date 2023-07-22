@@ -101,7 +101,7 @@ const PurchaseSchema = yup.object().shape({
   date: yup.string().required('Tanggal Tidak Boleh Kosong'),
   __items__: yup.array().required('Barang Tidak Boleh Kosong'),
   unit: yup.string().required('Satuan Tidak Boleh Kosong'),
-  amount: yup.string().required('Jumlah Tidak Boleh Kosong'),
+  amount: yup.number().min(1).required('Jumlah Tidak Boleh Kosong'),
   total: yup.string().required('Total Tidak Boleh Kosong'),
   __supplier__: yup.object().required('Supplier Tidak Boleh Kosong'),
 }) as unknown as yup.ObjectSchema<AddPurchase>;

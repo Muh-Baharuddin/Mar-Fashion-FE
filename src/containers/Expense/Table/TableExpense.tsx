@@ -18,11 +18,13 @@ const tableProps: ApiTableControlProps<Expense> = {
     },
     {
       label: "Total",
-      value: "total",
+      value: (data) => {
+        return `Rp. ${data.total}`
+      },
       sort: "total",
     },
     {
-      label: "Keluhan",
+      label: "Keterangan",
       value: "description",
       sort: "description",
     },

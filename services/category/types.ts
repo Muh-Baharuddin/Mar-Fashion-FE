@@ -5,4 +5,10 @@ export interface Category {
   name: string
 }
 
+export type AddCategory = Omit<Category, "id">
+
 export type DataCategory = Data<Category>
+
+export type CategoryMessage = {
+  message: string,
+}

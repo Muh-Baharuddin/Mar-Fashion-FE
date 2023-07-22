@@ -10,7 +10,7 @@ export const CategoryField = (props: SelectFieldProps<Category>) => {
     orderBy: 'name',
     orderType: 'ASC',
     page: 1,
-    limit: 100,
+    limit: 500,
   });
 
   const { data } = getCategorys(params);
@@ -24,7 +24,6 @@ export const CategoryField = (props: SelectFieldProps<Category>) => {
   return (
     <>
       <SelectField 
-        creatable={true}
         isMulti={true}
         data={data?.data || []}
         defaultValue={props.defaultValue}

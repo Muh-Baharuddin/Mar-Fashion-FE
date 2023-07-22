@@ -16,7 +16,7 @@ export const RegisterForm = () => {
     event.preventDefault()
     axios({
       method: 'post',
-      url: `${process.env.API_ENDPOINT}auth/register`,
+      url: `${process.env.API_ENDPOINT}/auth/register`,
       data: {
         userName,
         password,
