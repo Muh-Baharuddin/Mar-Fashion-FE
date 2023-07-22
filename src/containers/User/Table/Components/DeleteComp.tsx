@@ -1,21 +1,20 @@
 import { confirmAlert } from 'react-confirm-alert';
 import { toast } from 'react-toastify';
-import { Item } from 'services/item/types';
-import { deleteItem } from 'services/item';
-import { useApiTableContext } from 'src/components/ApiTable';
-import 'react-confirm-alert/src/react-confirm-alert.css';
+import { useApiTableContext } from '../../../../components/ApiTable';
+import { User } from 'services/user/types';
+import { deleteUser } from 'services/user';
 import 'react-toastify/dist/ReactToastify.css';
+import 'react-confirm-alert/src/react-confirm-alert.css';
 
 type Props = {
-  item: Item;
+  user: User;
 };
 
-const DeleteComp = ({ item }: Props) => {
-  const { control } = useApiTableContext<Item>();
-
+const DeleteComp = ({ user }: Props) => {
+  const { control } = useApiTableContext<User>();
 
   const DeleteConfirm = () => {
-    deleteItem(item.id).then((response) => {
+    deleteUser(user.id).then((response) => {
       toast.success(response.data.message);
       control.refresh();
     })
@@ -27,7 +26,7 @@ const DeleteComp = ({ item }: Props) => {
   const handleDelete = () => {
     confirmAlert({
       title: 'Konfirmasi',
-      message: 'Apakah Anda yakin ingin menghapus data dari ' + `${item.brand} ?`,
+      message: 'Apakah anda yakin ingin menghapus user dengan username ' + `${user.userName} ?`,
       buttons: [
         {
           label: 'Ya',

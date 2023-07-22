@@ -10,7 +10,7 @@ const tableProps: ApiTableControlProps<Sale> = {
     {
       label: "Invoice",
       value: "invoice",
-      sort: "Invoice",
+      sort: "invoice",
     },
     {
       label: "Tanggal",
@@ -23,7 +23,11 @@ const tableProps: ApiTableControlProps<Sale> = {
     },
     {
       label: "Pelanggan",
-      value: "customer",
+      value: (data) => (
+        <>
+          {data?.customer || "-"}
+        </>
+      ),
       sort: "customer",
     },
     {

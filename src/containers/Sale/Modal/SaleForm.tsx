@@ -6,6 +6,7 @@ import { TextField } from '../../../components/Form/Input/TextField';
 import { NumberField } from '../../../components/Form/Input/NumberField';
 import { DateField } from '../../../components/Form/Input/DateField';
 import { ItemField } from '../../../components/Form/Select/ItemField';
+import { CurrencyField } from '../../../components/Form/Input/CurrencyField';
 
 const fields: FormFields<AddSale> = {
   invoice: {
@@ -69,7 +70,7 @@ const fields: FormFields<AddSale> = {
   },
   total: {
     label: "Total",
-    component: NumberField,
+    component: CurrencyField,
     props: (props) => {
       return {
         ...props,

@@ -1,4 +1,4 @@
-import jwtDecode from "jwt-decode";
+import jwtDecode, { JwtPayload } from "jwt-decode";
 import { useRouter } from "next/router";
 import { createContext, FC, useContext, useEffect, useState } from "react";
 import { useCookies } from "react-cookie";
@@ -32,16 +32,29 @@ const MarFashionProvider: FC<Props> = ({ children }) => {
 
   const [user, setUser] = useState<IUser | undefined>(undefined);
   const [isLoading, setIsLoading] = useState<boolean>(true);
+
+  const isTokenExpired = (token: string) => {
+    const currentTime = Date.now() / 1000;
+    const tokenExpirationTime = jwtDecode<JwtPayload>(token).exp as number;
+    return currentTime > tokenExpirationTime;
+  };
   
   useEffect(() => {
     setUser(cookies.user);
     setDefaultToken(cookies.token);
     setIsLoading(false);  
+
+    // if (isTokenExpired(cookies.token)) {
+    //   removeCookie("user")
+    //   removeCookie("token")
+    //   router.push("/login", undefined, { shallow: true });
+    // }
   }, [])
 
   const login = (userName: string, password: string) => {
     postLogin({
-      userName, password
+      userName,
+      password,
     }).then((response) => {
       const token = response.data.accessToken;
       const userData = jwtDecode<IUser>(token);
@@ -52,7 +65,7 @@ const MarFashionProvider: FC<Props> = ({ children }) => {
         path: '/'
       });
       setDefaultToken(token);
-      router.push('/item', undefined, { shallow: true })
+      router.push('/', undefined, { shallow: true })
     }).catch(() => {
       toast.error("Maaf terjadi kesalahan pada server. Mohon coba kembali dalam beberapa saat.");
     })

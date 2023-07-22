@@ -80,7 +80,7 @@ const itemSchema = yup.object().shape({
   brand: yup.string().required('Merek Tidak Boleh Kosong'),
   capital_price: yup.string().required('Harga Modal Tidak Boleh Kosong'),
   wholescale_price: yup.string().required('Harga Grosir Tidak Boleh Kosong'),
-  stock: yup.string().required('Stok Tidak Boleh Kosong'),
+  stock: yup.number().min(0, "stok barang tidak bisa kurang dari 0").required('Stok Tidak Boleh Kosong'),
   __categories__: yup.array().required('Kategori Tidak Boleh Kosong'),
   __supplier__: yup.object().required('Supplier Tidak Boleh Kosong'),
 }) as unknown as yup.ObjectSchema<AddItem>;

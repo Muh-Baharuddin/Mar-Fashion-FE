@@ -9,7 +9,7 @@ export const DataExpense = () => {
     <ApiTableProvider>
       <DynamicFormProvider>
         <div className="container">
-          <h3>Data Keluhan Pelanggan</h3>
+          <h3>Data Pengeluaran</h3>
           <div className="card">
             <div className="card-header">
               <AddExpenseComp />

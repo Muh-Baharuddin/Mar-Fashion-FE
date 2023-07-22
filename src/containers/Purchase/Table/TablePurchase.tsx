@@ -10,7 +10,7 @@ const tableProps: ApiTableControlProps<Purchase> = {
     {
       label: "Invoice",
       value: "invoice",
-      sort: "Invoice",
+      sort: "invoice",
     },
     {
       label: "Tanggal",
@@ -36,7 +36,7 @@ const tableProps: ApiTableControlProps<Purchase> = {
           </div>
         )
       },
-      sort: "items",
+      sort: "item",
     },
     {
       label: "Satuan",
@@ -50,12 +50,16 @@ const tableProps: ApiTableControlProps<Purchase> = {
     },
     {
       label: "Total",
-      value: "total",
+      value: (data) => {
+        return `Rp. ${data.total}`
+      },
       sort: "total",
     },
     {
       label: "Hutang",
-      value: "debt",
+      value: (data) => {
+        return `Rp. ${data.debt}`
+      },
       sort: "debt",
     },
     {
